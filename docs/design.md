@@ -1,12 +1,12 @@
-Analyse
--------
+## Analyse
 
 Concepts:
+
 - Professeurs
-- Élèves 
+- Élèves
 - Classes
   - Groupes
-- Topique 
+- Topique
   - Nom
 - Activités
   - Avec/Sans qualification
@@ -18,42 +18,39 @@ Concepts:
   - Adaptabilité
   - Historique
 
-
 Fonctionnalité:
-- Joues 
+
+- Joues
+
   - Activites
   - Individuels/groupals/classes
 
-
 - Infra
-    - Database
-    - Services
-    - React
-    - Identity
-    - CICD
+  - Database
+  - Services
+  - React
+  - Identity
+  - CICD
 
-Design
-------
+## Design
 
 Database:
-  Données:
-    Utilisateurs
-    Rôles
-    Permissions
-    Groupes
-      types
-    Activités
-      types (IA, Humain, etc.)
-    Plugiciels Métadonnée
-    Historique
+Données:
+Utilisateurs
+Rôles
+Permissions
+Groupes
+types
+Activités
+types (IA, Humain, etc.)
+Historique
 
-  Données transactionnelles et temporels:
-    Jeux actifs
-      Activités
-      Participants
-    Groupes temporel
+Données transactionnelles et temporels:
+Jeux actifs
+Activités
+Participants
+Groupes temporel
 
-  
 API: /api/v1
 
 /utilisateurs
@@ -65,8 +62,7 @@ API: /api/v1
 /jeux
 /jeux/{id}
 
-Conception de base de données
------------------------------
+## Conception de base de données
 
 Données:
 locataires(id, nom(pas nul))
