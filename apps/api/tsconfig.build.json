@@ -2,7 +2,7 @@
   /* Extend the config that contains the path aliases. */
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/apps/api",
+    "outDir": "./dist",
     "noEmit": false
   },
   "include": ["src/**/*", "src/*"],

@@ -3,6 +3,7 @@
   "description": "Lingv",
   "private": true,
   "workspaces": [
+    "packages/*",
     "apps/*"
   ],
   "scripts": {

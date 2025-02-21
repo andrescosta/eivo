@@ -1,0 +1,17 @@
+{
+  "name": "@lingv/contracts",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@nestjs/mapped-types": "*"
+  },
+  "devDependencies": {
+    "rimraf": "~6.0.0",
+    "typescript": "^5.7.3"
+  }
+}

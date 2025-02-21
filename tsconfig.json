@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.build.json",
-
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./packages",
     "paths": {
-    },
+      "@lingv/contracts": ["contracts/src"],
+    },    
     "noEmit": true
   }
 }
