@@ -1,29 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { UtilisateursService } from './utilisateurs.service';
-import { CreateUtilisateurDto, UpdateUtilisateurDto  } from '@lingv/contracts';
+import { LvUtilisateur  } from '@lingv/contracts';
+import { Utilisateur } from '../entities/utilisateur.entity';
+import { MapInterceptor } from '@automapper/nestjs';
 
 @Controller('utilisateurs')
 export class UtilisateursController {
   constructor(private readonly utilisateursService: UtilisateursService) {}
 
   @Post()
-  create(@Body() createUtilisateurDto: CreateUtilisateurDto) {
-    return this.utilisateursService.create(createUtilisateurDto);
+  create(@Body() utilisateur: LvUtilisateur) {
+    const u = new Utilisateur();
+    return this.utilisateursService.create(u);
   }
 
   @Get()
   findAll() {
-    return this.utilisateursService.findAll();
+    const us= this.utilisateursService.findAll();
+    const l: LvUtilisateur[] = [];
+    return l
   }
 
   @Get(':id')
+  @UseInterceptors(MapInterceptor(Utilisateur, LvUtilisateur))  
   findOne(@Param('id') id: string) {
     return this.utilisateursService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUtilisateurDto: UpdateUtilisateurDto) {
-    return this.utilisateursService.update(+id, updateUtilisateurDto);
+  update(@Param('id') id: string, @Body() utilisateur: LvUtilisateur) {
+    return this.utilisateursService.update(+id, new Utilisateur());
   }
 
   @Delete(':id')
