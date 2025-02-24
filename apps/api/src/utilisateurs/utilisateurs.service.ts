@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUtilisateurDto, UpdateUtilisateurDto  } from '@lingv/contracts';
+import { Utilisateur  } from '../entities/utilisateur.entity';
 
 @Injectable()
 export class UtilisateursService {
-  create(createUtilisateurDto: CreateUtilisateurDto) {
+  create(utilisateur: Utilisateur) {
     return 'This action adds a new utilisateur';
   }
 
@@ -12,10 +12,13 @@ export class UtilisateursService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} utilisateur`;
+    const u  = new Utilisateur();
+    u.id = 1;
+    u.nom = 'toto';
+    return u;
   }
 
-  update(id: number, updateUtilisateurDto: UpdateUtilisateurDto) {
+  update(id: number, utilisateur: Utilisateur) {
     return `This action updates a #${id} utilisateur`;
   }
 
