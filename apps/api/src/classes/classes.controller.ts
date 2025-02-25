@@ -28,8 +28,8 @@ export class ClassesController {
 
   @Patch(':id')
   @UseInterceptors(MapInterceptor(LvClasse, Classe))
-  async update(@Param('id') id: string, @Body() classe: LvClasse): Promise<void> {
-    return this.classesService.update(id, new Classe());
+  async update(@Param('id') id: string, @Body() classe: Classe): Promise<void> {
+    return this.classesService.update(id, classe);
   }
 
   @Delete(':id')

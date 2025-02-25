@@ -27,8 +27,9 @@ export class ApplicationsController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() application: LvApplication): Promise<void> {
-    return this.applicationsService.update(id, new Application());
+  @UseInterceptors(MapInterceptor(LvApplication, Application))
+  async update(@Param('id') id: string, @Body() application: Application): Promise<void> {
+    return this.applicationsService.update(id, application);
   }
 
   @Delete(':id')

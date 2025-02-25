@@ -28,8 +28,8 @@ export class JeuxController {
 
   @Patch(':id')
   @UseInterceptors(MapInterceptor(LvJeu, Jeu))
-  async update(@Param('id') id: string, @Body() jeu: LvJeu): Promise<void> {
-    return this.jeuxService.update(id, new Jeu());
+  async update(@Param('id') id: string, @Body() jeu: Jeu): Promise<void> {
+    return this.jeuxService.update(id, jeu);
   }
 
   @Delete(':id')

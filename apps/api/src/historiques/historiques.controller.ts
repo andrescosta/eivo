@@ -27,8 +27,9 @@ export class HistoriquesController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() historique: LvHistorique): Promise<void> {
-    return this.historiquesService.update(+id, new Historique());
+  @UseInterceptors(MapInterceptor(LvHistorique, Historique))
+  async update(@Param('id') id: string, @Body() historique: Historique): Promise<void> {
+    return this.historiquesService.update(+id, historique);
   }
 
   @Delete(':id')

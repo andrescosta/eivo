@@ -28,8 +28,8 @@ export class DomainesController {
 
   @Patch(':id')
   @UseInterceptors(MapInterceptor(LvDomaine, Domaine))
-  async update(@Param('id') id: string, @Body() domaine: LvDomaine): Promise<void> {
-    return this.domainesService.update(id, new Domaine());
+  async update(@Param('id') id: string, @Body() domaine: Domaine): Promise<void> {
+    return this.domainesService.update(id, domaine);
   }
 
   @Delete(':id')

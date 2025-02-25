@@ -27,8 +27,9 @@ export class ActivitesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() activite: LvActivite) {
-    return this.activitesService.update(id, new Activite());
+  @UseInterceptors(MapInterceptor(LvActivite, Activite))
+  update(@Param('id') id: string, @Body() activite: Activite) {
+    return this.activitesService.update(id, activite);
   }
 
   @Delete(':id')

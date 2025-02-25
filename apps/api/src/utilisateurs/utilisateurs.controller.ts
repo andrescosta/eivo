@@ -26,8 +26,9 @@ export class UtilisateursController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() utilisateur: LvUtilisateur): Promise<void> {
-    return this.utilisateursService.update(+id, new Utilisateur());
+  @UseInterceptors(MapInterceptor(LvUtilisateur, Utilisateur))  
+  async update(@Param('id') id: string, @Body() utilisateur: Utilisateur): Promise<void> {
+    return this.utilisateursService.update(+id, utilisateur);
   }
 
   @Delete(':id')

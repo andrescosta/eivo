@@ -28,8 +28,8 @@ export class TopiquesController {
 
   @Patch(':id')
   @UseInterceptors(MapInterceptor(LvTopique, Topique))
-  async update(@Param('id') id: string, @Body() topique: LvTopique): Promise<void> {
-    return this.topiquesService.update(id, new Topique());
+  async update(@Param('id') id: string, @Body() topique: Topique): Promise<void> {
+    return this.topiquesService.update(id, topique);
   }
 
   @Delete(':id')

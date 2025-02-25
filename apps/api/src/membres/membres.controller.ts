@@ -27,8 +27,9 @@ export class MembresController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() membre: LvMembre): Promise<void> {
-    return this.membresService.update(+id, new Membre());
+  @UseInterceptors(MapInterceptor(LvMembre, Membre))
+  async update(@Param('id') id: string, @Body() membre: Membre): Promise<void> {
+    return this.membresService.update(+id, membre);
   }
 
   @Delete(':id')

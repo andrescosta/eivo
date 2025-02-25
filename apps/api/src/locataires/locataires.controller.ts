@@ -27,8 +27,9 @@ export class LocatairesController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() locataire: LvLocataire): Promise<void> {
-    return this.locatairesService.update(id, new Locataire());
+  @UseInterceptors(MapInterceptor(LvLocataire, Locataire))
+  async update(@Param('id') id: string, @Body() locataire: Locataire): Promise<void> {
+    return this.locatairesService.update(id, locataire);
   }
 
   @Delete(':id')
