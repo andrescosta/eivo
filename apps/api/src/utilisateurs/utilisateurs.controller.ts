@@ -9,31 +9,29 @@ export class UtilisateursController {
   constructor(private readonly utilisateursService: UtilisateursService) {}
 
   @Post()
-  create(@Body() utilisateur: LvUtilisateur) {
-    const u = new Utilisateur();
-    return this.utilisateursService.create(u);
+  @UseInterceptors(MapInterceptor(LvUtilisateur, Utilisateur))  
+  async create(@Body() utilisateur: Utilisateur): Promise<Utilisateur> {
+    return this.utilisateursService.create(utilisateur);
   }
 
   @Get()
-  findAll() {
-    const us= this.utilisateursService.findAll();
-    const l: LvUtilisateur[] = [];
-    return l
+  async findAll():Promise<Utilisateur[]> {
+    return this.utilisateursService.findAll();
   }
 
   @Get(':id')
   @UseInterceptors(MapInterceptor(Utilisateur, LvUtilisateur))  
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Utilisateur | null> {
     return this.utilisateursService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() utilisateur: LvUtilisateur) {
+  async update(@Param('id') id: string, @Body() utilisateur: LvUtilisateur): Promise<void> {
     return this.utilisateursService.update(+id, new Utilisateur());
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<void> {
     return this.utilisateursService.remove(+id);
   }
 }
