@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApplicationsService } from './applications.service';
 import { ApplicationsController } from './applications.controller';
 import { ApplicationProfile } from './application.profile';
-import { Application } from '../entities/application.entity';
+import { applicationProviders } from './application.providers';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Application])],
+  imports: [DatabaseModule],
   controllers: [ApplicationsController],
-  providers: [ApplicationsService, ApplicationProfile],
+  providers: [...applicationProviders, ApplicationsService, ApplicationProfile],
 })
 export class ApplicationsModule {}

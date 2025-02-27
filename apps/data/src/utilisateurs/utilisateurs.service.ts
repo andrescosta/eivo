@@ -6,7 +6,7 @@ import { Utilisateur } from '../entities/utilisateur.entity';
 export class UtilisateursService {
   constructor(
     @Inject('UTILISATEUR_REPOSITORY')
-    private readonly utilisateurRepository: Repository<Utilisateur>,
+    private utilisateurRepository: Repository<Utilisateur>,
   ) {}
 
   async create(utilisateur: Utilisateur): Promise<Utilisateur> {

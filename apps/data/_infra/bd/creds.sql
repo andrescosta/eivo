@@ -26,7 +26,7 @@ CREATE DATABASE lingv
     LC_CTYPE = 'en_US.utf8'
     TEMPLATE = template0;
 
-\connect lingv;
+\c lingv;
 
 -- Create application schema owned by admin
 CREATE SCHEMA IF NOT EXISTS app AUTHORIZATION lingv_admin;

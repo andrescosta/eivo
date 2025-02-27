@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocatairesService } from './locataires.service';
 import { LocatairesController } from './locataires.controller';
-import { Locataire } from '../entities/locataire.entity';
 import { LocataireProfile } from './locataire.profile';
+import { locataireProviders } from './locataire.providers';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Locataire])],
+  imports: [DatabaseModule],
   controllers: [LocatairesController],
-  providers: [LocatairesService, LocataireProfile],
+  providers: [...locataireProviders, LocatairesService, LocataireProfile],
 })
 export class LocatairesModule {}

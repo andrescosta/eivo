@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { HistoriquesService } from './historiques.service';
 import { HistoriquesController } from './historiques.controller';
-import { Historique } from '../entities/historique.entity';
 import { HistoriqueProfile } from './historique.profile';
+import { historiqueProviders } from './historique.providers';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Historique])],
+  imports: [DatabaseModule],
   controllers: [HistoriquesController],
-  providers: [HistoriquesService, HistoriqueProfile],
+  providers: [...historiqueProviders, HistoriquesService, HistoriqueProfile],
 })
 export class HistoriquesModule {}
