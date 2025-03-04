@@ -1,3 +1,4 @@
+--\cc lingv;
 -- Drop existing database and roles
 DROP DATABASE IF EXISTS lingv;
 DROP ROLE IF EXISTS lingv_admin;

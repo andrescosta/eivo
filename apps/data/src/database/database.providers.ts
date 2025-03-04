@@ -6,11 +6,13 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'postgres',
-        host: 'db.jobico.local',
-        port: 5432,
-        username: 'lingv_service',
-        password: 'lingv',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT ?? "5432",10) ,
+        username: process.env.DB_USER,
+        password: process.env.DB_USER_PWD,
         database: 'lingv',
+        synchronize: true,
+        ssl: true,
         extra: {
             ssl: {
                 rejectUnauthorized: false,
@@ -19,8 +21,6 @@ export const databaseProviders = [
         entities: [
             __dirname + '/../**/*.entity{.ts,.js}',
         ],
-        synchronize: true,
-        ssl: true
       });
 
       return dataSource.initialize();

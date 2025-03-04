@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { InitDbCommand } from './init-db.command';
-import { DatabaseInitService } from '../database/init-database.service';
+import { ExecSqlCommand } from './exec-sql.command';
+import { SQLExecutorService } from '../database/sqlexecutor.service';
+import { ConfigModule } from '@nestjs/config';
+
 
 @Module({
-    providers: [DatabaseInitService,InitDbCommand]
+    providers: [SQLExecutorService,ExecSqlCommand],
+    imports: [ConfigModule.forRoot()]
   })
   export class AppModule {}

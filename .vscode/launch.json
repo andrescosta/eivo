@@ -7,11 +7,13 @@
     {
         "type": "node",
         "request": "launch",
-        "name": "Debug Nest Framework",
+        "name": "Debug DB Init",
         "runtimeExecutable": "pnpm",
         "runtimeArgs": [
           "run",
-          "db:init:debug",
+          "--dir",
+          "apps/data/",
+          "db:init",
           "--",
           "--inspect-brk"
         ],

@@ -17,8 +17,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-     "db:init": "nest start --entryFile apps/data/src/cli/main -- init-db",
-     "db:init:debug": "nest start --debug --entryFile apps/data/src/cli/main -- init-db"
+    "db:init": "nest start --entryFile apps/data/src/cli/main -- exec-sql /home/andres/projs/lingv/apps/data/_infra/bd/creds.sql -u \"postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify\"",
+    "db:init:debug": "nest start --debug --entryFile apps/data/src/cli/main -- exec-sql /home/andres/projs/lingv/apps/data/_infra/bd/creds.sql postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify",
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
     "@automapper/classes": "^8.8.1",
@@ -29,6 +30,7 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.0.6",
     "@nestjs/typeorm": "^11.0.0",
     "nest-commander": "^3.16.0",
     "pg": "^8.13.3",
