@@ -84,17 +84,3 @@ applications(id, nom(pas nul), description(nul), p_image(nul), g_image(nul), top
 Données transactionnelles et temporels:
 jeux(id, nom(pas nul), description(nul), membres_ids(pas nul)[], date(pas nul), activite_id(pas nul))
 
-CLI
----
-
-- Generate the _infra script for creating a Kubernetes cluster
-  - Database
-  - Zitadel
-- Initial CLI app creation(Infra, Authentication)
-- Create an API for validating the token using Zitadel API: 
-  * https://zitadel.com/docs/guides/integrate/login-ui/username-password
-  * https://zitadel.com/docs/guides/integrate/login/login-users#zitadels-session-api
-- Add user validation to the API
-- Creates API for the CLI
-- Integrate first lingvlet using ChatGTP
-- Create the CLI
