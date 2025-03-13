@@ -9,6 +9,7 @@ export const AppDataSource= new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_USER_PWD,
     database: 'lingv',
+    schema: "app",
     synchronize: true,
     ssl: true,
     extra: {
@@ -17,6 +18,6 @@ export const AppDataSource= new DataSource({
         },
     },
     entities: [
-        __dirname + 'src/../**/*.entity{.ts,.js}',
+        './src/../**/entities/*{.ts,.js}',
     ],
   });

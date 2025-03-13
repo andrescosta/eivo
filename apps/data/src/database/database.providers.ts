@@ -11,7 +11,8 @@ export const databaseProviders = [
         username: process.env.DB_USER,
         password: process.env.DB_USER_PWD,
         database: 'lingv',
-        synchronize: true,
+        schema: 'app',
+        // synchronize: true,
         ssl: true,
         extra: {
             ssl: {
@@ -19,7 +20,7 @@ export const databaseProviders = [
             },
         },
         entities: [
-            __dirname + '/../**/*.entity{.ts,.js}',
+            __dirname + '/../**/entities/*{.ts,.js}',
         ],
       });
 

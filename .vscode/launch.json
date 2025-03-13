@@ -5,23 +5,67 @@
   "version": "0.2.0",
   "configurations": [
     {
-        "type": "node",
-        "request": "launch",
-        "name": "Debug DB Init",
-        "runtimeExecutable": "pnpm",
-        "runtimeArgs": [
-          "run",
-          "--dir",
-          "apps/data/",
-          "db:init",
-          "--",
-          "--inspect-brk"
-        ],
-        "autoAttachChildProcesses": true,
-        "restart": true,
-        "sourceMaps": true,
-        "stopOnEntry": false,
-        "console": "integratedTerminal",
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DB Init",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "run",
+        "--dir",
+        "apps/data/",
+        "db:init",
+        "--",
+        "--inspect-brk"
+      ],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "sourceMaps": true,
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Insert Lessons",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "run",
+        "--dir",
+        "apps/data/",
+        "lesson:insert",
+        "--",
+        "--inspect-brk"
+      ],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "sourceMaps": true,
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Console",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "--dir", "apps/console/", "start:debug"],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "sourceMaps": true,
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug MAIN",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "--dir", "apps/console/", "start:main"],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "sourceMaps": true,
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
     }
   ]
 }

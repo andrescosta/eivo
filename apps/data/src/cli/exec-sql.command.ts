@@ -3,12 +3,12 @@ import { SQLExecutorService } from '../database/sqlexecutor.service';
 
 
 @Command({
-  name: 'exec-sql',
+  name: 'db:exec-sql',
   arguments: '<script>',
   description: 'Execute the provided SQL script.',
   options: { isDefault: true },
 })
-export class ExecSqlCommand extends CommandRunner {
+export class DbExecSqlCommand extends CommandRunner {
   constructor(private readonly executorService: SQLExecutorService) {
     super();
   }

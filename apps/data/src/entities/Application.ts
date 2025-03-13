@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
 import { Topic } from './Topic';
+import { Lesson } from './Lesson';
+
 
 export enum ApplicationType {
   Humain = 'Humain',
@@ -17,14 +19,17 @@ export class Application {
   @Column()
   description!: string;
 
-  @Column()
-  smallImage!: string;
+  @Column({nullable: true})
+  smallImage?: string;
 
-  @Column()
-  bigImage!: string;
+  @Column({nullable: true})
+  bigImage?: string;
 
   @ManyToMany(() => Topic, (topics) => topics.applications)
-  topics!: Topic[];
+  topics?: Topic[];
+
+  @OneToMany(() => Lesson, (lesson) => lesson.application)
+  lessons?: Lesson[];
 
   @Column({
     type: 'enum',

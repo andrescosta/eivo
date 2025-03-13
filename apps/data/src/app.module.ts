@@ -13,6 +13,8 @@ import { ActivityModule } from './activites/ActivityModule';
 import { TopicModule } from './topics/TopicModule';
 import { ApplicationModule } from './applications/ApplicationModule';
 import { JeuxModule } from './games/GameModule';
+import { ApplicationService } from './applications/ApplicationService';
+import { applicationProvider } from './applications/ApplicationProvider';
 
 @Module({
   imports: [

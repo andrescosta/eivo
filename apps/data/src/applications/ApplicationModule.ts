@@ -9,5 +9,6 @@ import { DatabaseModule } from '../database/database.module';
   imports: [DatabaseModule],
   controllers: [ApplicationController],
   providers: [...applicationProvider, ApplicationService, ApplicationProfile],
+  exports: [...applicationProvider, ApplicationService, ApplicationProfile],
 })
 export class ApplicationModule {}

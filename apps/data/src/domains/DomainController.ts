@@ -1,10 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  NotFoundException,
+} from '@nestjs/common';
 import { DomainService } from './DomainService';
 import { Domain } from '../entities/Domain';
 import { LvDomain } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { Application } from '../entities/Application';
+import { ApplicationService } from '../applications/ApplicationService';
 
 @Controller('domains')
 export class DomainController {
@@ -21,9 +33,7 @@ export class DomainController {
 
   @Get()
   @ApiResponse({ type: LvDomain, isArray: true })
-  @UseInterceptors(
-    MapInterceptor(Domain, LvDomain, { isArray: true }),
-  )
+  @UseInterceptors(MapInterceptor(Domain, LvDomain, { isArray: true }))
   async findAll(): Promise<Domain[]> {
     return this.domainService.findAll();
   }

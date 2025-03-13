@@ -1,0 +1,53 @@
+# There are input parameters controlled by the generator:
+# - level
+# - qty
+name: "My French classes"
+description: "mmmm"
+type: "IA"
+lessons:
+  - description: "French teacher."
+    prompt:
+      system: "You are a teacher in {{ req.level }} French class."
+      level: "initial"
+    modules:
+      - kind: "conjugation"
+        theme: "groupe"
+        type: "simple"
+        prompt:
+          user: |
+            Generate {{ req.qty }} {{ req.level }} phrases in French using a verbe ending with {{ endings }}. 
+            In each of these phrases the verb is missing and the student must complete it. 
+            Use a mix of personal pronouns and normal French people names.  
+            Provide the solution and verb in the infinitive in the corresponding fields.
+        descriptions:
+          kind: "Conjugation"
+          short: "Le Present({{ data.groups }})"
+          long: "Le Present({{ data.groups }})"
+        mix: true
+        learn:
+          type: "verb"
+        data:
+            - groups: [1, 2, 3]
+        cache:
+          enabled: true
+          id: "{{ kind }}{{ exercise }}{{ type }}{{ variation }}"
+      - kind: "conjugation"
+        theme: "terminaison"
+        type: "simple"
+        prompt:
+          user: |
+            Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ endings }}. 
+            In each of these phrases the verb is missing and the student must complete it. 
+            Use a mix of personal pronouns and normal French people names.  
+            Provide the solution and verb in the infinitive in the corresponding fields.
+        descriptions:
+          kind: "Conjugation"
+          short: "Le Present({{ data.endings }})"
+          long: "Le Present({{ data.endings }})"
+        mix: true
+        learn:
+          type: "verb"
+        data:
+          - endings: ["er"]
+          - endings: ["ir"]
+          - endings: ["dre"]
