@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Application } from './Application';
 
 type Data = Record<string, string | number | object>;
@@ -39,17 +45,17 @@ export class Lesson {
   description!: string;
 
   @Column(() => Prompt)
-  prompt?: Prompt;
-
-  @OneToMany(() => Exercise, () => {})
-  exercises!: Exercise[];
+  prompt!: Prompt;
 
   @OneToMany(
-    () => Application,
-    (application) => {
-      application.lessons;
+    () => Exercise,
+    (exercise) => {
+      exercise.lesson;
     },
   )
+  exercises!: Exercise[];
+
+  @ManyToOne(() => Application)
   application!: Application;
 }
 
@@ -68,7 +74,7 @@ export class Exercise {
   type!: string;
 
   @Column(() => Prompt)
-  prompt?: Prompt;
+  prompt!: Prompt;
 
   @Column(() => Description)
   descriptions!: Description;
@@ -84,5 +90,7 @@ export class Exercise {
 
   @Column(() => Cache)
   cache!: Cache;
-}
 
+  @ManyToOne(() => Lesson)
+  lesson!: Lesson;
+}

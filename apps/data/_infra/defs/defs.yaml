@@ -11,8 +11,8 @@ lessons:
       level: "initial"
     modules:
       - kind: "conjugation"
-        theme: "groupe"
         type: "simple"
+        theme: "groupe"
         prompt:
           user: |
             Generate {{ req.qty }} {{ req.level }} phrases in French using a verbe ending with {{ endings }}. 
