@@ -52,7 +52,7 @@ export class Lesson {
     (exercise) => {
       exercise.lesson;
     },
-    { cascade: true },
+    { cascade: ['insert', 'remove', 'soft-remove'] },
   )
   exercises!: Exercise[];
 

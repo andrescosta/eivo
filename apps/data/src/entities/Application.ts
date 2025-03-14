@@ -33,7 +33,9 @@ export class Application {
   @ManyToMany(() => Topic, (topics) => topics.applications)
   topics?: Topic[];
 
-  @OneToMany(() => Lesson, (lesson) => lesson.application, { cascade: true })
+  @OneToMany(() => Lesson, (lesson) => lesson.application, {
+    cascade: ['insert', 'remove', 'soft-remove'],
+  })
   lessons?: Lesson[];
 
   @Column({
