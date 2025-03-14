@@ -1,5 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Client, ClientConfig } from 'pg';
+import { Injectable } from '@nestjs/common';
+import { Client } from 'pg';
 import * as fs from 'fs/promises';
 import { SQLCommandError } from './sqlcommand.error';
 

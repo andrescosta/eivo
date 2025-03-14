@@ -19,10 +19,30 @@
       "server": "db.jobico.local",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "Lingv",
+      "name": "Postgres",
       "database": "postgres",
       "username": "postgres",
       "password": "postgres"
+    },
+    {
+      "pgOptions": {
+        "ssl": {
+          "rejectUnauthorized": false,
+          "ca": "",
+          "key": "",
+          "cert": "/etc/ssl/certs/jobico.ca.pem"
+        }
+      },
+      "previewLimit": 50,
+      "server": "db.jobico.local",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Lingv",
+      "database": "lingv",
+      "schema":"app",
+      "username": "postgres",
+      "password": "postgres"
     }
+
   ]
 }

@@ -9,7 +9,7 @@ lessons:
     prompt:
       system: "You are a teacher in {{ req.level }} French class."
       level: "initial"
-    modules:
+    exercises:
       - kind: "conjugation"
         type: "simple"
         theme: "groupe"

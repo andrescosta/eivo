@@ -1,7 +1,7 @@
 import { glob } from "glob";
 import path from "path";
 
-async function instanceAll(mpath: string, params: any[]): Promise<any[]> {
+export async function instanceAll(mpath: string, params: any[]): Promise<any[]> {
   const results = Array<any>();
   const files = glob.sync(mpath);
   const r = files
@@ -30,16 +30,3 @@ async function instance(filePath: string, params: any[]): Promise<any> {
   }
   throw new Error(`No class found in module file ${filePath}`);
 }
-
-async function run(gensPath: string, params: any[]) {
-  const rs = await instanceAll(gensPath, params);
-  rs.forEach((p) => {
-    if (typeof p["run"] === "function") {
-      p.run();
-    } else {
-      console.log(`warning, no run method for ${p}. `);
-    }
-  });
-}
-
-run("files/*.ts", ["a", "b"]);

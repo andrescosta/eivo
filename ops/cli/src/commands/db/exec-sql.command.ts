@@ -1,5 +1,5 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
-import { SQLExecutorService } from '../database/sqlexecutor.service';
+import { SQLExecutorService } from '../../database/sqlexecutor.service';
 
 
 @Command({

@@ -1,7 +1,7 @@
 import { CommandFactory } from 'nest-commander';
-import { DbCommandModule } from './db.cmd.module';
+import { DbCommandModule } from './commands/db/db.cmd.module';
 import { NestFactory } from '@nestjs/core';
-import { AppCommandModule } from './app.cmd.module';
+import { AppCommandModule } from './commands/app/app.cmd.module';
 
 const bootstrap = async () => {
   try {

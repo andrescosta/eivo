@@ -22,18 +22,18 @@ export class Description {
   long!: string;
 }
 export class Cache {
-  @Column('boolean')
+  @Column('boolean', { nullable: true })
   enabled!: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   id!: string;
 }
 export class Prompt {
-  @Column()
-  system!: string;
+  @Column({ nullable: true })
+  system?: string;
 
-  @Column()
-  level!: string;
+  @Column({ nullable: true })
+  level?: string;
 }
 
 @Entity()
@@ -52,6 +52,7 @@ export class Lesson {
     (exercise) => {
       exercise.lesson;
     },
+    { cascade: true },
   )
   exercises!: Exercise[];
 

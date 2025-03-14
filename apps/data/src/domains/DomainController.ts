@@ -15,8 +15,6 @@ import { LvDomain } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError';
-import { Application } from '../entities/Application';
-import { ApplicationService } from '../applications/ApplicationService';
 
 @Controller('domains')
 export class DomainController {

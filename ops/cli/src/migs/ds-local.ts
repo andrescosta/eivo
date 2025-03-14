@@ -18,6 +18,6 @@ export const AppDataSource= new DataSource({
         },
     },
     entities: [
-        './src/../**/entities/*{.ts,.js}',
+        '../../apps/data/src/../**/entities/*{.ts,.js}',
     ],
   });

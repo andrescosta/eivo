@@ -12,7 +12,7 @@
       "runtimeArgs": [
         "run",
         "--dir",
-        "apps/data/",
+        "ops/cli/",
         "db:init",
         "--",
         "--inspect-brk"
@@ -31,36 +31,11 @@
       "runtimeArgs": [
         "run",
         "--dir",
-        "apps/data/",
+        "ops/cli/",
         "lesson:insert",
         "--",
         "--inspect-brk"
       ],
-      "autoAttachChildProcesses": true,
-      "restart": true,
-      "sourceMaps": true,
-      "stopOnEntry": false,
-      "console": "integratedTerminal"
-    },
-
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug Console",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "--dir", "apps/console/", "start:debug"],
-      "autoAttachChildProcesses": true,
-      "restart": true,
-      "sourceMaps": true,
-      "stopOnEntry": false,
-      "console": "integratedTerminal"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug MAIN",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "--dir", "apps/console/", "start:main"],
       "autoAttachChildProcesses": true,
       "restart": true,
       "sourceMaps": true,
