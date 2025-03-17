@@ -1,6 +1,11 @@
 {
   "name": "@lingv/contracts",
   "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf ./dist",
@@ -8,7 +13,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@nestjs/mapped-types": "*"
+    "@nestjs/mapped-types": "*",
+    "@nestjs/swagger": "^11.0.6"
   },
   "devDependencies": {
     "rimraf": "~6.0.0",

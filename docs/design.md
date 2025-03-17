@@ -83,3 +83,7 @@ applications(id, nom(pas nul), description(nul), p_image(nul), g_image(nul), top
 
 Données transactionnelles et temporels:
 jeux(id, nom(pas nul), description(nul), membres_ids(pas nul)[], date(pas nul), activite_id(pas nul))
+
+
+- Tool to feed the database with the exercises
+- API in data to get the exercises
