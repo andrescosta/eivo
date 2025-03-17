@@ -18,6 +18,7 @@
     "declarationMap": true,
     "noEmitOnError": true,
     "esModuleInterop": true,
+    "noEmit": false    
   },
   "exclude": [
     "node_modules",

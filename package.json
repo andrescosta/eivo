@@ -12,8 +12,7 @@
     "clean": "pnpm run -r clean",
     "build": "pnpm run -r build",
     "test": "pnpm run -r test",
-    "lint": "eslint --fix --ext js,ts,tsx .",
-    "db:init": "pnpm run --dir apps/data db:init"
+    "lint": "eslint --fix --ext js,ts,tsx ."
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { ConfigModule } from '@nestjs/config';
+import { SnakeCaseNamingStrategy } from "@lingv/data";
 
 ConfigModule.forRoot()
 export const AppDataSource= new DataSource({
@@ -11,6 +12,7 @@ export const AppDataSource= new DataSource({
     database: 'lingv',
     schema: "app",
     synchronize: true,
+    namingStrategy: new SnakeCaseNamingStrategy(), 
     ssl: true,
     extra: {
         ssl: {

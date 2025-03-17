@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { SnakeCaseNamingStrategy } from './SnakeCaseNamingStrategy';
 
 export const databaseProviders = [
   {
@@ -12,7 +13,8 @@ export const databaseProviders = [
         password: process.env.DB_USER_PWD,
         database: 'lingv',
         schema: 'app',
-        // synchronize: true,
+        logging: true,
+        namingStrategy: new SnakeCaseNamingStrategy(), 
         ssl: true,
         extra: {
             ssl: {

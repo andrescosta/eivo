@@ -5,8 +5,14 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "nest build",
+    "build": "pnpm run clean && nest build",
+    "clean": "rimraf ./dist",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -16,11 +22,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:init": "nest start --entryFile apps/data/src/cli/main -- db:exec-sql /home/andres/projs/lingv/apps/data/_infra/bd/creds.sql -u \"postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify\"",
-    "db:init:debug": "nest start --debug --entryFile apps/data/src/cli/main -- exec-sql /home/andres/projs/lingv/apps/data/_infra/bd/creds.sql postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify",
-    "lesson:insert": "nest start --entryFile apps/data/src/cli/main -- app:lesson add /home/andres/projs/lingv/apps/data/_infra/defs/defs.yaml",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.25",
@@ -47,6 +49,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "rimraf": "~6.0.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",

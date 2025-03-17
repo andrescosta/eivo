@@ -5,13 +5,18 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "db:create": "nest start -- db:exec-sql /home/andres/projs/lingv/_infra/bd/creds.sql -u \"postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify\"",
     "db:create:debug": "nest start --debug -- exec-sql /home/andres/projs/lingv/_infra/bd/creds.sql postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify",
     "db:schema": "npm run typeorm schema:sync -- -d src/migs/ds-local.ts",
-    "lesson:insert": "nest start -- app:lesson add /home/andres/projs/lingv/_infra/defs/defs.yaml -y",
+    "lesson:insert": "nest start -- app:lesson add /home/andres/projs/lingv/_infra/defs/defs.yaml -d",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
@@ -27,6 +32,7 @@
     "@nestjs/typeorm": "^11.0.0",
     "@types/js-yaml": "^4.0.9",
     "@lingv/data": "workspace:*",
+    "@lingv/contracts": "workspace:*",
     "glob": "^11.0.1",
     "js-yaml": "^4.1.0",
     "nest-commander": "^3.16.0",

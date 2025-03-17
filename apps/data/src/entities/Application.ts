@@ -34,9 +34,12 @@ export class Application {
   topics?: Topic[];
 
   @OneToMany(() => Lesson, (lesson) => lesson.application, {
-    cascade: ['insert', 'remove', 'soft-remove'],
+    cascade: true,
   })
-  lessons?: Lesson[];
+  lessons!: Lesson[];
+
+  @Column('json', { nullable: true })
+  schema?: Record<string, string | number | object>;
 
   @Column({
     type: 'enum',
