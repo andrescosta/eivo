@@ -1,27 +1,8 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES2023",
-    "declaration": true,
+    "sourceMap": false,
     "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "incremental": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
-    "strictBindCallApply": true,
-    "noFallthroughCasesInSwitch": true,
-    "declarationMap": true,
-    "noEmitOnError": true,
-    "esModuleInterop": true,
-    "noEmit": false    
+    "noEmitOnError": true
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["node_modules", "dist", "test", "**/*.spec.ts", "**/*.test.ts"]
 }

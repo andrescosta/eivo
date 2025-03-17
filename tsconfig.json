@@ -1,12 +1,30 @@
 {
-  "extends": "./tsconfig.build.json",
   "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2023",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "noFallthroughCasesInSwitch": true,
+    "declarationMap": true,
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true,
     "baseUrl": "./",
     "paths": {
       "@lingv/contracts/*": ["packages/contracts/src/*"],
       "@lingv/llm/*": ["packages/llm/src/*"],
       "@lingv/data/*": ["apps/data/src/*"]
-    },
-    "noEmit": true
+    }
   }
 }
