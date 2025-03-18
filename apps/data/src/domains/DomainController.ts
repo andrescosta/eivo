@@ -10,11 +10,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { DomainService } from './DomainService';
-import { Domain } from '../entities/Domain';
+import { Domain } from '../entities/Domain.entity';
 import { LvDomain } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Controller('domains')
 export class DomainController {

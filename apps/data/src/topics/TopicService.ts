@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Topic } from '../entities/Topic';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { Topic } from '../entities/Topic.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Injectable()
 export class TopicService {

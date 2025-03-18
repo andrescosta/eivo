@@ -13,8 +13,6 @@ import { ActivityModule } from './activites/ActivityModule';
 import { TopicModule } from './topics/TopicModule';
 import { ApplicationModule } from './applications/ApplicationModule';
 import { JeuxModule } from './games/GameModule';
-import { ExerciseModule } from './exercises/ExerciseModule';
-import { LessonModule } from './lessons/LessonModule';
 
 @Module({
   imports: [
@@ -29,8 +27,6 @@ import { LessonModule } from './lessons/LessonModule';
     TopicModule,
     ApplicationModule,
     JeuxModule,
-    ExerciseModule,
-    LessonModule,
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),

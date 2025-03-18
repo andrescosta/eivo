@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Tenant } from '../entities/Tenant';
+import { Tenant } from '../entities/Tenant.entity';
 
 export const tenantProvider = [
     {

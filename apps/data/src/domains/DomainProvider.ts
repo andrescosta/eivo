@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Domain } from '../entities/Domain';
+import { Domain } from '../entities/Domain.entity';
 
 export const domainProvider = [
     {

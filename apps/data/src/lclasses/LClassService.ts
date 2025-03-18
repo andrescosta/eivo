@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { LClass } from '../entities/LClass';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { LClass } from '../entities/LClass.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Injectable()
 export class LClassService {

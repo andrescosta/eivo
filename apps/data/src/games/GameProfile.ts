@@ -1,7 +1,7 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { createMap, type Mapper } from '@automapper/core';
 import { Injectable } from '@nestjs/common';
-import { Game } from '../entities/Game';
+import { Game } from '../entities/Game.entity';
 import { LvGame } from '@lingv/contracts';
 
 @Injectable()

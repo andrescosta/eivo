@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, NotFoundException } from '@nestjs/common';
 import { ActivityService } from './ActivityService';
 import { LvActivity } from '@lingv/contracts';
-import { Activity } from '../entities/Activity';
+import { Activity } from '../entities/Activity.entity';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Controller('activities')
 export class ActivityController {

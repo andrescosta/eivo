@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { UserService } from './UserService';
 import { LvUser } from '@lingv/contracts';
-import { User } from '../entities/User';
+import { User } from '../entities/User.entity';
 import { InjectMapper, MapInterceptor } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Controller('users')
 export class UserController {

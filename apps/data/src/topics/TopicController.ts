@@ -10,10 +10,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { TopicService } from './TopicService';
-import { Topic } from '../entities/Topic';
+import { Topic } from '../entities/Topic.entity';
 import { LvTopic } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
 
 @Controller('topiques')

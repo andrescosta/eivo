@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Domain } from '../entities/Domain';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { Domain } from '../entities/Domain.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Injectable()
 export class DomainService {

@@ -10,11 +10,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { MemberService } from './MemberService';
-import { Member } from '../entities/Member';
+import { Member } from '../entities/Member.entity';
 import { LvMember } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Controller('members')
 export class MemberController {

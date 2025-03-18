@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { ArchiveEntry } from '../entities/ArchiveEntry';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { ArchiveEntry } from '../entities/ArchiveEntry.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Injectable()
 export class ArchiveService {

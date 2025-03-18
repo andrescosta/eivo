@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Application } from '../entities/Application';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
-import { LessonTemplate } from '../entities/LessonTemplate';
+import { Application } from '../entities/Application.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { LessonTemplate } from '../entities/LessonTemplate.entity';
 
 @Injectable()
 export class ApplicationService {
@@ -23,7 +23,8 @@ export class ApplicationService {
   }
 
   async findAll(): Promise<Application[]> {
-    return this.applicationRepository.find();
+    const apps = await this.applicationRepository.find();
+    return apps;
   }
 
   async findOne(id: number): Promise<Application | null> {
@@ -31,10 +32,11 @@ export class ApplicationService {
       where: { id },
     });
   }
-
-  async findWithExercises(id: number): Promise<Application | null> {
+  async findWithLessonsExercises(id: number): Promise<Application | null> {
     return await this.applicationRepository.findOne({
-      where: { id },
+      where: {
+        id: id,
+      },
       relations: [
         'lessons',
         'lessons.exercises',
@@ -45,16 +47,42 @@ export class ApplicationService {
     });
   }
 
-  async findExercise(id: number, lesId:number, exId:number): Promise<Application | null> {
+  async findWithExercises(
+    id: number,
+    lesId: number,
+  ): Promise<Application | null> {
     return await this.applicationRepository.findOne({
-      where: { id: id,
+      where: {
+        id: id,
+        lessons: {
+          id: lesId,
+        },
+      },
+      relations: [
+        'lessons',
+        'lessons.exercises',
+        'lessons.exercises.lesson',
+        'lessons.exercises.lesson.application',
+        'lessons.application',
+      ],
+    });
+  }
+
+  async findExercise(
+    id: number,
+    lesId: number,
+    exId: number,
+  ): Promise<Application | null> {
+    return await this.applicationRepository.findOne({
+      where: {
+        id: id,
         lessons: {
           id: lesId,
           exercises: {
-            id:exId
-          }
-        }
-       },
+            id: exId,
+          },
+        },
+      },
       relations: [
         'lessons',
         'lessons.exercises',
@@ -64,7 +92,6 @@ export class ApplicationService {
       ],
     });
   }
-
 
   async update(id: number, application: Application): Promise<Application> {
     const res = await this.applicationRepository.update(id, application);

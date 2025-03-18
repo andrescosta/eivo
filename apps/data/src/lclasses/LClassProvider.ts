@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { LClass } from '../entities/LClass';
+import { LClass } from '../entities/LClass.entity';
 
 export const lclassProvider = [
     {

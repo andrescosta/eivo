@@ -10,11 +10,19 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ApplicationService } from './ApplicationService';
-import { LvApplication } from '@lingv/contracts';
-import { Application } from '../entities/Application';
+import {
+  LvApplication,
+  LvExercise,
+  LvLesson,
+  LvVarions,
+} from '@lingv/contracts';
+import { Application } from '../entities/Application.entity';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { Lesson } from '../entities/Lesson.entity';
+import { generate } from '../llm/Llm';
+import { render } from 'mustache';
 
 @Controller('applications')
 export class ApplicationController {
@@ -30,17 +38,18 @@ export class ApplicationController {
   }
 
   @Get()
-  @ApiResponse({ type: LvApplication, isArray: true })
+  // @ApiResponse({ type: LvApplication, isArray: true })
   @UseInterceptors(
     MapInterceptor(Application, LvApplication, { isArray: true }),
   )
   async findAll(): Promise<Application[]> {
-    return this.applicationService.findAll();
+    const apps = await this.applicationService.findAll();
+    return apps;
   }
 
   @Get(':id')
-  @UseInterceptors(MapInterceptor(Application, LvApplication))
   @ApiResponse({ type: LvApplication, isArray: false })
+  @UseInterceptors(MapInterceptor(Application, LvApplication))
   async findOne(@Param('id') id: string): Promise<Application | null> {
     return this.applicationService.findOne(+id);
   }
@@ -72,5 +81,54 @@ export class ApplicationController {
       }
       throw error;
     }
+  }
+
+  @Get(':app_id/lessons/:les_id')
+  @ApiResponse({ type: Lesson, isArray: true })
+  async findExercises(
+    @Param('app_id') appId: number,
+    @Param('les_id') lesId: number,
+  ): Promise<LvLesson[] | undefined> {
+    const app = await this.applicationService.findWithExercises(appId, lesId);
+    const lvls = app?.lessons.map((l) => {
+      const lvl = new LvLesson();
+      lvl.description = l.description;
+      lvl.exercises = l.exercises.flatMap((e) => {
+        return e.variations.flatMap((vv) => {
+          return Object.keys(vv).flatMap((vk) => {
+            return vv[vk].anyOf.flatMap((vari) => {
+              const lve = new LvExercise();
+              lve.id = e.id;
+              lve.variations = { [`${vk}`]: vari };
+              lve.kind = e.kind;
+              lve.shortDescription = render(e.descriptions.short, {
+                variations: { [`${vk}`]: vari },
+              });
+              lve.longDescription = render(e.descriptions.long, {
+                variations: { [`${vk}`]: vari },
+              });
+              return lve;
+            });
+          });
+        });
+      });
+      return lvl;
+    });
+    return lvls;
+  }
+  @Post(':app_id/lessons/:les_id/exercises/:ex_id')
+  @ApiResponse({ type: Lesson, isArray: false })
+  async findExercise(
+    @Body() vv: LvVarions,
+    @Param('app_id') appId: number,
+    @Param('les_id') lesId: number,
+    @Param('ex_id') exId: number,
+  ): Promise<Lesson | null> {
+    const a = await this.applicationService.findExercise(appId, lesId, exId);
+    const e = a?.lessons[0]?.exercises[0];
+    if (e != null) {
+      return await generate(e, vv);
+    }
+    return null;
   }
 }

@@ -1,7 +1,7 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { createMap, type Mapper } from '@automapper/core';
 import { Injectable } from '@nestjs/common';
-import { ArchiveEntry } from '../entities/ArchiveEntry';
+import { ArchiveEntry } from '../entities/ArchiveEntry.entity';
 import { LvArchiveEntry } from '@lingv/contracts';
 
 @Injectable()

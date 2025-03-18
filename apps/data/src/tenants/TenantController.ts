@@ -10,11 +10,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { TenantService } from './TenantService';
-import { Tenant } from '../entities/Tenant';
+import { Tenant } from '../entities/Tenant.entity';
 import { LvTenant } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 
 @Controller('tenant')
 export class TenantController {
