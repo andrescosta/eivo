@@ -1,76 +1,33 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseInterceptors,
-  NotFoundException,
-} from '@nestjs/common';
-import { ApplicationService } from './ExerciseService';
-import { LvApplication } from '@lingv/contracts';
-import { Application } from '../entities/Application';
-import { MapInterceptor } from '@automapper/nestjs';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+import { Controller, Post, Param, Body } from '@nestjs/common';
+import { ApplicationService } from '../applications/ApplicationService';
+import { ApiResponse } from '@nestjs/swagger';
+import { Lesson } from '../entities/Lesson';
+import { generate } from '../llm/ExercisesGenService';
 
-@Controller('exercises')
+export class VV {
+  variations!: Record<string, string>;
+}
+
+@Controller('gen')
 export class ExerciseController {
   constructor(private readonly applicationService: ApplicationService) {}
 
-  @Post()
-  @UseInterceptors(MapInterceptor(Application, LvApplication))
-  @UseInterceptors(MapInterceptor(LvApplication, Application))
-  @ApiResponse({ type: LvApplication })
-  @ApiBody({ type: LvApplication })
-  async create(@Body() domain: Application): Promise<Application> {
-    return await this.applicationService.create(domain);
-  }
-
-  @Get()
-  @ApiResponse({ type: LvApplication, isArray: true })
-  @UseInterceptors(
-    MapInterceptor(Application, LvApplication, { isArray: true }),
-  )
-  async findAll(): Promise<Application[]> {
-    return this.applicationService.findAll();
-  }
-
-  @Get(':id')
-  @UseInterceptors(MapInterceptor(Application, LvApplication))
-  @ApiResponse({ type: LvApplication, isArray: false })
-  async findOne(@Param('id') id: string): Promise<Application | null> {
-    return this.applicationService.findOne(+id);
-  }
-
-  @Patch(':id')
-  @UseInterceptors(MapInterceptor(LvApplication, Application))
-  @ApiBody({ type: LvApplication })
-  async update(
-    @Param('id') id: string,
-    @Body() utilisateur: Application,
-  ): Promise<Application> {
-    try {
-      return this.applicationService.update(+id, utilisateur);
-    } catch (error) {
-      if (error instanceof EntityNotFoundError) {
-        throw new NotFoundException(error.message);
-      }
-      throw error;
+  @Post('applications/:app_id/lessons/:les_id/exercises/:ex_id')
+  @ApiResponse({ type: Lesson, isArray: false })
+  async findOne(
+    @Body() vv:VV,
+    @Param('app_id') appId: number,
+    @Param('les_id') lesId: number,
+    @Param('ex_id') exId: number,
+    
+  ): Promise<Lesson | null> {
+    console.log(appId, lesId, exId);
+    const a = await this.applicationService.findExercise(appId, lesId, exId);
+    const e = a?.lessons[0]?.exercises[0];
+    if (e != null) {
+      return await generate(e, vv);
     }
-  }
-
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    try {
-      this.applicationService.remove(+id);
-    } catch (error) {
-      if (error instanceof EntityNotFoundError) {
-        throw new NotFoundException(error.message);
-      }
-      throw error;
-    }
+    return null;
   }
 }
+

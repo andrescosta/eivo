@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Topic } from './Topic';
-import { Lesson } from './Lesson';
+import { LessonTemplate } from './LessonTemplate';
 
 export enum ApplicationType {
   Humain = 'Humain',
@@ -33,10 +33,10 @@ export class Application {
   @ManyToMany(() => Topic, (topics) => topics.applications)
   topics?: Topic[];
 
-  @OneToMany(() => Lesson, (lesson) => lesson.application, {
+  @OneToMany(() => LessonTemplate, (lesson) => lesson.application, {
     cascade: true,
   })
-  lessons!: Lesson[];
+  lessons!: LessonTemplate[];
 
   @Column('json', { nullable: true })
   schema?: Record<string, string | number | object>;

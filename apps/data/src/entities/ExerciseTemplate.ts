@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Prompt, Lesson } from './Lesson';
+import { Prompt, LessonTemplate } from './LessonTemplate';
 
 export class Learn {
   @Column()
@@ -22,7 +22,7 @@ export class Cache {
 }
 
 @Entity()
-export class Exercise {
+export class ExerciseTemplate {
   @PrimaryGeneratedColumn('increment')
   id!: number;
 
@@ -48,11 +48,13 @@ export class Exercise {
   learn!: Learn;
 
   @Column('json')
-  data!: Record<string, string | number | object>;
+  variations!: Array<Record<string, anyOf>>;
 
   @Column(() => Cache)
   cache!: Cache;
 
-  @ManyToOne(() => Lesson, (lesson) => lesson.exercises)
-  lesson!: Lesson;
+  @ManyToOne(() => LessonTemplate, (lesson) => lesson.exercises)
+  lesson!: LessonTemplate;
 }
+
+type anyOf = Record<"anyOf",Array<string | number>>;

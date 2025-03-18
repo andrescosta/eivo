@@ -7,59 +7,69 @@ type: 'IA'
 schema:
   type: object
   properties:
-    phrase:
-      type: string
-      description: Phrase with the verbe to complete.
-    solution:
-      type: string
-      description: Solution.
-    verb:
-      type: string
-      description: Verbe in the infinitve.
+    exercises:
+      type: array
+      element:
+        type: object
+        properties:
+          phrase:
+            type: string
+            description: Phrase with the verbe to complete.
+          solution:
+            type: string
+            description: Solution.
+          verb:
+            type: string
+            description: Verbe in the infinitve.
+          tense:
+            type: string
+            description: Tense of the verb to complete.
 lessons:
   - description: 'French teacher.'
     prompt:
-      system: 'You are a teacher in {{ req.level }} French class.'
+      prompt: 'You are a teacher in {{ req.level }} French class.'
       level: 'initial'
     exercises:
       - kind: 'conjugation'
         type: 'simple'
         theme: 'groupe'
+        variations:
+          - group: 
+              anyOf:
+                ["first", "second", "third"]
         prompt:
-          user: |
-            Generate {{ req.qty }} {{ req.level }} phrases in French using a verbe ending with {{ endings }}. 
+          prompt: |
+            Generate {{ req.qty }} {{ req.level }} French phrases in present tense and using only verbs of the {{ variations.group }} group. 
             In each of these phrases the verb is missing and the student must complete it. 
             Use a mix of personal pronouns and normal French people names.  
             Provide the solution and verb in the infinitive in the corresponding fields.
         descriptions:
           kind: 'Conjugation'
-          short: 'Le Present({{ data.groups }})'
-          long: 'Le Present({{ data.groups }})'
+          short: 'Le Present({{ variations.group }} group)'
+          long: 'Le Present({{ variations.group }} group)'
         mix: true
         learn:
           type: 'verb'
-        data:
-          - groups: [1, 2, 3]
         cache:
           enabled: true
           id: '{{ kind }}{{ exercise }}{{ type }}{{ variation }}'
-      # - kind: 'conjugation'
-      #   theme: 'terminaison'
-      #   type: 'simple'
-      #   prompt:
-      #     user: |
-      #       Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ endings }}. 
-      #       In each of these phrases the verb is missing and the student must complete it. 
-      #       Use a mix of personal pronouns and normal French people names.  
-      #       Provide the solution and verb in the infinitive in the corresponding fields.
-      #   descriptions:
-      #     kind: 'Conjugation'
-      #     short: 'Le Present({{ data.endings }})'
-      #     long: 'Le Present({{ data.endings }})'
-      #   mix: true
-      #   learn:
-      #     type: 'verb'
-      #   data:
-      #     - endings: ['er']
-      #     - endings: ['ir']
-      #     - endings: ['dre']
+      - kind: 'conjugation'
+        theme: 'terminaison'
+        type: 'simple'
+        variations:
+          - ending: 
+              anyOf:
+                ['er','ir','dre']
+        prompt:
+          user: |
+            Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ variations.ending }}.
+            In each of these phrases the verb is missing and the student must complete it.
+            Use a mix of personal pronouns and normal French people names.
+            Provide the solution and verb in the infinitive in the corresponding fields.
+        descriptions:
+          kind: 'Conjugation'
+          short: 'Le Present({{ variations.ending }})'
+          long: 'Le Present({{ variations.ending }})'
+        mix: true
+        learn:
+          type: 'verb'

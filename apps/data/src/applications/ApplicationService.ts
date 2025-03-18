@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Application } from '../entities/Application';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError';
-import { Lesson } from '../entities/Lesson';
+import { LessonTemplate } from '../entities/LessonTemplate';
 
 @Injectable()
 export class ApplicationService {
@@ -32,12 +32,39 @@ export class ApplicationService {
     });
   }
 
-  async findFull(id: number): Promise<Application | null> {
+  async findWithExercises(id: number): Promise<Application | null> {
     return await this.applicationRepository.findOne({
       where: { id },
-      relations: ['lessons', 'lessons.exercises'],
+      relations: [
+        'lessons',
+        'lessons.exercises',
+        'lessons.exercises.lesson',
+        'lessons.exercises.lesson.application',
+        'lessons.application',
+      ],
     });
   }
+
+  async findExercise(id: number, lesId:number, exId:number): Promise<Application | null> {
+    return await this.applicationRepository.findOne({
+      where: { id: id,
+        lessons: {
+          id: lesId,
+          exercises: {
+            id:exId
+          }
+        }
+       },
+      relations: [
+        'lessons',
+        'lessons.exercises',
+        'lessons.exercises.lesson',
+        'lessons.exercises.lesson.application',
+        'lessons.application',
+      ],
+    });
+  }
+
 
   async update(id: number, application: Application): Promise<Application> {
     const res = await this.applicationRepository.update(id, application);

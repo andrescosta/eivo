@@ -23,7 +23,7 @@ export class AppLessonAddCommand extends CommandRunner {
     if (options['debug']) {
       console.log('=============================================');
       console.log(`Loading application ${app.id} from DB.`);
-      const a = await this.svc.findFull(app.id);
+      const a = await this.svc.findWithExercises(app.id);
       console.log(`Retrieved application ${app.id} from DB.`);
       console.log('=============================================');
       console.log(JSON.stringify(a, null, 2));
