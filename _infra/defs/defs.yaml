@@ -1,4 +1,4 @@
-name: 'My French classes'
+name: 'My French classes' # class (menu)
 description: 'mmmm'
 type: 'IA'
 schemas:
@@ -23,12 +23,12 @@ schemas:
               type: string
               description: Tense of the verb to complete.
 lessons:
-  - description: 'French teacher.'
+  - description: 'French teacher.' # lesson (menu)
     prompt:
       prompt: 'You are a teacher in {{ req.level }} French class.'
-      level: 'initial'
+      level: 'initial' # level (global)
     exercises:
-      - kind: 'conjugation'
+      - kind: 'conjugation' 
         type: 'simple'
         theme: 'groupe'
         variations:
