@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Application } from '../entities/Application.entity';
+import { LearningTemplate } from '../entities/Application.entity';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
 import { LessonTemplate } from '../entities/LessonTemplate.entity';
 
@@ -8,10 +8,10 @@ import { LessonTemplate } from '../entities/LessonTemplate.entity';
 export class ApplicationService {
   constructor(
     @Inject('APPLICATION_REPOSITORY')
-    private readonly applicationRepository: Repository<Application>,
+    private readonly applicationRepository: Repository<LearningTemplate>,
   ) {}
 
-  async create(application: Application): Promise<Application> {
+  async create(application: LearningTemplate): Promise<LearningTemplate> {
     // Fixing an issue with the foreign keys inserted as null for second level relationships(exercise and lesson) during cascade.
     // application.lessons?.forEach((l) => {
     //   l.application = application;
@@ -22,17 +22,17 @@ export class ApplicationService {
     return this.applicationRepository.save(application);
   }
 
-  async findAll(): Promise<Application[]> {
+  async findAll(): Promise<LearningTemplate[]> {
     const apps = await this.applicationRepository.find();
     return apps;
   }
 
-  async findOne(id: number): Promise<Application | null> {
+  async findOne(id: number): Promise<LearningTemplate | null> {
     return await this.applicationRepository.findOne({
       where: { id },
     });
   }
-  async findWithLessonsExercises(id: number): Promise<Application | null> {
+  async findWithLessonsExercises(id: number): Promise<LearningTemplate | null> {
     return await this.applicationRepository.findOne({
       where: {
         id: id,
@@ -50,7 +50,7 @@ export class ApplicationService {
   async findWithExercises(
     id: number,
     lesId: number,
-  ): Promise<Application | null> {
+  ): Promise<LearningTemplate | null> {
     return await this.applicationRepository.findOne({
       where: {
         id: id,
@@ -72,7 +72,7 @@ export class ApplicationService {
     id: number,
     lesId: number,
     exId: number,
-  ): Promise<Application | null> {
+  ): Promise<LearningTemplate | null> {
     return await this.applicationRepository.findOne({
       where: {
         id: id,
@@ -93,7 +93,7 @@ export class ApplicationService {
     });
   }
 
-  async update(id: number, application: Application): Promise<Application> {
+  async update(id: number, application: LearningTemplate): Promise<LearningTemplate> {
     const res = await this.applicationRepository.update(id, application);
     if (res.affected == 0) {
       throw new EntityNotFoundError('Domain');

@@ -5,9 +5,9 @@ import {
   Column,
   OneToMany,
 } from 'typeorm';
-import { LClass } from './LClass.entity';
 import { User } from './User.entity';
-import { ArchiveEntry } from './ArchiveEntry.entity';
+import { Course } from './Course.entity';
+import { Activity } from './Activity.entity';
 
 export enum Role {
   ETUDIANT = 'ETUDIANT',
@@ -23,11 +23,11 @@ export class Member {
   @ManyToOne(() => User, (user) => user.members)
   user!: User;
 
-  @ManyToOne(() => LClass, (lvclass) => lvclass.members)
-  myclass!: LClass;
+  @ManyToOne(() => Course, (course) => course.members)
+  course!: Course;
 
-  @OneToMany(() => ArchiveEntry, (historicalinfo) => historicalinfo.member)
-  historicinfo!: ArchiveEntry[];
+  @OneToMany(() => Activity, (activity) => activity.member)
+  activities!: Activity[];
 
   @Column({
     type: 'enum',

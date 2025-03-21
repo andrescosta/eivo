@@ -16,7 +16,7 @@ import {
   LvLesson,
   LvVarions,
 } from '@lingv/contracts';
-import { Application } from '../entities/Application.entity';
+import { LearningTemplate } from '../entities/Application.entity';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
@@ -29,38 +29,38 @@ export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
 
   @Post()
-  @UseInterceptors(MapInterceptor(Application, LvApplication))
-  @UseInterceptors(MapInterceptor(LvApplication, Application))
+  @UseInterceptors(MapInterceptor(LearningTemplate, LvApplication))
+  @UseInterceptors(MapInterceptor(LvApplication, LearningTemplate))
   @ApiResponse({ type: LvApplication })
   @ApiBody({ type: LvApplication })
-  async create(@Body() domain: Application): Promise<Application> {
+  async create(@Body() domain: LearningTemplate): Promise<LearningTemplate> {
     return await this.applicationService.create(domain);
   }
 
   @Get()
   // @ApiResponse({ type: LvApplication, isArray: true })
   @UseInterceptors(
-    MapInterceptor(Application, LvApplication, { isArray: true }),
+    MapInterceptor(LearningTemplate, LvApplication, { isArray: true }),
   )
-  async findAll(): Promise<Application[]> {
+  async findAll(): Promise<LearningTemplate[]> {
     const apps = await this.applicationService.findAll();
     return apps;
   }
 
   @Get(':id')
   @ApiResponse({ type: LvApplication, isArray: false })
-  @UseInterceptors(MapInterceptor(Application, LvApplication))
-  async findOne(@Param('id') id: string): Promise<Application | null> {
+  @UseInterceptors(MapInterceptor(LearningTemplate, LvApplication))
+  async findOne(@Param('id') id: string): Promise<LearningTemplate | null> {
     return this.applicationService.findOne(+id);
   }
 
   @Patch(':id')
-  @UseInterceptors(MapInterceptor(LvApplication, Application))
+  @UseInterceptors(MapInterceptor(LvApplication, LearningTemplate))
   @ApiBody({ type: LvApplication })
   async update(
     @Param('id') id: string,
-    @Body() utilisateur: Application,
-  ): Promise<Application> {
+    @Body() utilisateur: LearningTemplate,
+  ): Promise<LearningTemplate> {
     try {
       return this.applicationService.update(+id, utilisateur);
     } catch (error) {

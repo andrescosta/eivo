@@ -5,12 +5,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Prompt, LessonTemplate } from './LessonTemplate.entity';
-import { Description, Learn, AnyOf } from './Template';
+import { LessonTemplate } from './LessonTemplate.entity';
+import { AnyOf, Description, Learn, Prompt } from './Template';
 
 
 @Entity()
-export class ExerciseTemplate {
+export class MaterialTemplate {
   @PrimaryGeneratedColumn('increment')
   id!: number;
 
@@ -44,7 +44,6 @@ export class ExerciseTemplate {
   @Column(() => Cache)
   cache!: Cache;
 
-  @ManyToOne(() => LessonTemplate, (lesson) => lesson.exercises)
+  @ManyToOne(() => LessonTemplate, (lesson) => lesson.material)
   lesson!: LessonTemplate;
 }
-

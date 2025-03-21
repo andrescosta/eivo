@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+} from 'typeorm';
+import { Tenant } from './Tenant.entity';
 import { Member } from './Member.entity';
 
 @Entity()
@@ -9,6 +16,10 @@ export class User {
   @Column()
   public name!: string;
 
-  @OneToMany(() => Member, (membre) => membre.user)
-  public members!: Member[];
+  @ManyToMany(() => Tenant, (tenant) => tenant.users)
+  public tenants!: Tenant[];
+
+  @OneToMany(() => Member, (member) => member.user)
+  public members?: Member[];
+
 }

@@ -1,7 +1,7 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { createMap, type Mapper } from '@automapper/core';
 import { Injectable } from '@nestjs/common';
-import { Application } from '../entities/Application.entity';
+import { LearningTemplate } from '../entities/Application.entity';
 import { LvApplication } from '@lingv/contracts';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class ApplicationProfile extends AutomapperProfile {
 
   override get profile() {
     return (mapper: Mapper) => {
-      createMap(mapper, Application, LvApplication);
-      createMap(mapper, LvApplication, Application);
+      createMap(mapper, LearningTemplate, LvApplication);
+      createMap(mapper, LvApplication, LearningTemplate);
     };
   }
 }

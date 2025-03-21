@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, NotFoundException } from '@nestjs/common';
 import { LClassService } from './LClassService';
-import { LClass } from '../entities/LClass.entity';
+import { Curriculum } from '../entities/Curriculum.entity';
 import { LvClass } from '@lingv/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
@@ -11,32 +11,32 @@ export class LClassController {
   constructor(private readonly lclassService: LClassService) {}
 
   @Post()
-  @UseInterceptors(MapInterceptor(LClass, LvClass))
-  @UseInterceptors(MapInterceptor(LvClass, LClass))
+  @UseInterceptors(MapInterceptor(Curriculum, LvClass))
+  @UseInterceptors(MapInterceptor(LvClass, Curriculum))
   @ApiResponse({ type: LvClass })
   @ApiBody({ type: LvClass })
-  async create(@Body() lclass: LClass): Promise<LClass> {
+  async create(@Body() lclass: Curriculum): Promise<Curriculum> {
     return this.lclassService.create(lclass);
   }
 
   @Get()
   @ApiResponse({ type: LvClass, isArray: true })
-  @UseInterceptors(MapInterceptor(LClass, LvClass, { isArray: true }))
-  async findAll(): Promise<LClass[]> {
+  @UseInterceptors(MapInterceptor(Curriculum, LvClass, { isArray: true }))
+  async findAll(): Promise<Curriculum[]> {
     return this.lclassService.findAll();
   }
 
   @Get(':id')
-  @UseInterceptors(MapInterceptor(LClass, LvClass))
+  @UseInterceptors(MapInterceptor(Curriculum, LvClass))
   @ApiResponse({ type: LvClass, isArray: false })
-  async findOne(@Param('id') id: string): Promise<LClass | null> {
+  async findOne(@Param('id') id: string): Promise<Curriculum | null> {
     return this.lclassService.findOne(+id);
   }
 
   @Patch(':id')
-  @UseInterceptors(MapInterceptor(LvClass, LClass))
+  @UseInterceptors(MapInterceptor(LvClass, Curriculum))
   @ApiBody({ type: LvClass })
-  async update(@Param('id') id: string, @Body() lclass: LClass): Promise<void> {
+  async update(@Param('id') id: string, @Body() lclass: Curriculum): Promise<void> {
     try {
       return this.lclassService.update(+id, lclass);
     } catch (error) {

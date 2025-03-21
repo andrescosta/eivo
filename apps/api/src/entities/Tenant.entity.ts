@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Topic } from './Topic.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+} from 'typeorm';
+import { Curriculum } from './Curriculum.entity';
+import { User } from './User.entity';
+import { Course } from './Course.entity';
 
 @Entity()
 export class Tenant {
@@ -12,6 +20,13 @@ export class Tenant {
   @Column({ nullable: true })
   public description?: string;
 
-  @OneToMany(() => Topic, (topic) => topic.tenant)
-  public topics!: Topic[];
+  @OneToMany(() => Curriculum, (program) => program.tenant)
+  public curriculums!: Curriculum[];
+
+  @ManyToMany(() => User, (user) => user.tenants)
+  public users!: User[];
+
+  @OneToMany(() => Course, (course) => course.tenant)
+  public courses!: Course[];
+
 }
