@@ -24,6 +24,8 @@ schemas:
               description: Tense of the verb to complete.
 lessons:
   - description: 'French teacher.' # lesson (menu)
+    translations:
+      - laguageCode: us
     prompt:
       prompt: 'You are a teacher in {{ req.level }} French class.'
       level: 'initial' # level (global)

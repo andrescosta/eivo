@@ -1,4 +1,6 @@
 name: 'andres'
+translations:
+  - languageCode: us
 llmSchemas:
   - one_verb:
     type: object
@@ -26,23 +28,33 @@ curriculums:
     description:
       long: 'mmmm'
       short: 'mmmm'
+    translations:
+      - languageCode: us
     # type: 'IA'
     subjects:
       - name: 'Grammar' # subject(grammar, verbs, etc.) (menu)
         description:
           long: 'Grammar'
           short: 'Grammar'
+        translations:
+          - languageCode: us
         kind: grammar
         prompt: |
           bla bla
         units:
           - name: 'Present.'
-            description: 'Present.' # lesson (menu)
+            description:
+              long: 'Present'
+              short: 'Present'
+            translations:
+              - languageCode: us
             kind: 'conjugation'
             learn:
               type: 'verb'
             lessonTemplates:
               - name: "aaa"
+                translations:
+                  - languageCode: us
                 prompt: 'You are a teacher in {{ req.level }} French class.'
                 materialTemplates:
                   - kind: 'flashcard'
@@ -63,6 +75,8 @@ curriculums:
                     description:
                       short: 'Le Present({{ variations.ending }})'
                       long: 'Le Present({{ variations.ending }})'
+                    translations:
+                      - languageCode: us
                 exerciseTemplates:
                   - kind: 'complete' # crosswords, listening, multiplechoice
                     type: 'LLM'
@@ -70,6 +84,8 @@ curriculums:
                     description:
                       short: 'Le Present({{ variations.group }} group)'
                       long: 'Le Present({{ variations.group }} group)'
+                    translations:
+                      - languageCode: us
                     variations:
                       - group:
                           anyOf: ['first', 'second', 'third']

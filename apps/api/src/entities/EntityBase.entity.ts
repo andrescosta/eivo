@@ -1,9 +1,8 @@
-import {
-  Column,
-  PrimaryGeneratedColumn
-} from 'typeorm';
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export type ID = number;
+
+export const DEFAULT_CULTURE = 'us';
 
 export class EivoEntity {
   @PrimaryGeneratedColumn('increment')
@@ -72,3 +71,59 @@ export type Translation<T> = {
 export type TranslatableKeys<T, U = Omit<T, 'translations'>> = {
   [K in keyof U]: U[K] extends LocaleString ? K : never;
 }[keyof U];
+
+export function translateAll(tt: any) {
+  if (tt != null && typeof tt === 'object') {
+    if (tt['translations'] != null) {
+      const trans = tt['translations'] as any[];
+      if (trans != null && trans.length == 1) {
+        for (const [key, value] of Object.entries(trans[0])) {
+          if (
+            key !== 'base' &&
+            key !== 'id' &&
+            key !== 'createdAt' &&
+            key !== 'updatedAt' &&
+            key !== 'languageCode'
+          ) {
+            tt[key] = value ?? '';
+          }
+        }
+      }
+    }
+    for (const [key, value] of Object.entries(tt)) {
+      if (value != null) {
+        if (Array.isArray(value)) {
+          for (const ki of value) {
+            translateAll(ki);
+          }
+        } else {
+          translateAll(value);
+        }
+      }
+    }
+  }
+}
+
+export function copyToTranslations(tt: any) {
+  if (tt != null && typeof tt === 'object') {
+    if (Array.isArray(tt['translations']) && tt['translations'].length == 1) {
+      if (tt['name'] != null) {
+        tt['translations'][0]['name'] = tt['name'];
+      }
+      if (tt['description'] != null) {
+        tt['translations'][0]['description'] = tt['description'];
+      }
+    }
+    for (const [key, value] of Object.entries(tt)) {
+      if (value != null) {
+        if (Array.isArray(value)) {
+          for (const ki of value) {
+            copyToTranslations(ki);
+          }
+        } else {
+          copyToTranslations(value);
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Curriculum } from './Curriculum.entity';
-import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
-import { Translatable, Translation } from './EntityBase.entity';
+import { EivoNamedEntity, EivoNamedEntityTranslation, Translatable, Translation } from './EntityBase.entity';
 import { Member } from './Member.entity';
 import { Tenant } from './Tenant.entity';
 
@@ -31,3 +30,4 @@ export class CourseTranslation
   @ManyToOne(() => Course)
   base!: Course;
 }
+

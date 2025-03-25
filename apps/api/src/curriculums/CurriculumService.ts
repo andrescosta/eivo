@@ -1,8 +1,16 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Any, Equal, IsNull, Or, Repository } from 'typeorm';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError';
-import { Curriculum, CurriculumTranslation } from '../entities/Curriculum.entity';
-import { LanguageCode } from '../entities/EntityBase.entity';
+import {
+  Curriculum,
+  CurriculumTranslation,
+} from '../entities/Curriculum.entity';
+import {
+  DEFAULT_CULTURE,
+  EivoEntity,
+  LanguageCode,
+  translateAll,
+} from '../entities/EntityBase.entity';
 
 @Injectable()
 export class CurriculumService {
@@ -27,67 +35,64 @@ export class CurriculumService {
   }
   async findComplete(
     curriculum: number,
-    culture: LanguageCode,
     tenant: number,
+    findculture?: LanguageCode,
   ): Promise<Curriculum | null> {
-    return await this.curriculumRepository.findOne({
-      where: {
-        id: curriculum,
-        tenant: {
-          id: tenant,
-        },
-        translations: {
-          languageCode: Or(Equal(culture), IsNull()),
-        },
-        subjects: {
+    const culture = findculture ?? DEFAULT_CULTURE;
+    return await this.curriculumRepository
+      .findOne({
+        where: {
+          id: curriculum,
+          tenant: {
+            id: tenant,
+          },
           translations: {
             languageCode: Or(Equal(culture), IsNull()),
           },
-          units: {
+          subjects: {
             translations: {
               languageCode: Or(Equal(culture), IsNull()),
             },
-            lessonTemplates: {
+            units: {
               translations: {
                 languageCode: Or(Equal(culture), IsNull()),
               },
-              exerciseTemplates: {
+              lessonTemplates: {
                 translations: {
                   languageCode: Or(Equal(culture), IsNull()),
                 },
-              },
-              materialTemplates: {
-                translations: {
-                  languageCode: Or(Equal(culture), IsNull()),
+                exerciseTemplates: {
+                  translations: {
+                    languageCode: Or(Equal(culture), IsNull()),
+                  },
+                },
+                materialTemplates: {
+                  translations: {
+                    languageCode: Or(Equal(culture), IsNull()),
+                  },
                 },
               },
             },
           },
         },
-      },
-      relations: [
-        'translations',
-        'subjects',
-        'subjects.translations',
-        'subjects.units',
-        'subjects.units.translations',
-        'subjects.units.lessonTemplates',
-        'subjects.units.lessonTemplates.translations',
-        'subjects.units.lessonTemplates.exerciseTemplates',
-        'subjects.units.lessonTemplates.exerciseTemplates.translations',
-        'subjects.units.lessonTemplates.materialTemplates',
-        'subjects.units.lessonTemplates.materialTemplates.translations',
-
-        // 'curriculums',
-        // 'curriculums.subjects',
-        // 'curriculums.subjects.units',
-        // 'curriculums.subjects.units.lessonTemplates',
-        // 'curriculums.subjects.units.lessonTemplates.exercises',
-        // 'curriculums.subjects.units.lessonTemplates.material',
-
-        // 'curriculums.subjects.units.curriculum',
-      ],
-    });
+        relations: [
+          'translations',
+          'subjects',
+          'subjects.translations',
+          'subjects.units',
+          'subjects.units.translations',
+          'subjects.units.lessonTemplates',
+          'subjects.units.lessonTemplates.translations',
+          'subjects.units.lessonTemplates.exerciseTemplates',
+          'subjects.units.lessonTemplates.exerciseTemplates.translations',
+          'subjects.units.lessonTemplates.materialTemplates',
+          'subjects.units.lessonTemplates.materialTemplates.translations',
+        ],
+      })
+      .then((p) => {
+        translateAll(p);
+        return p;
+      });
   }
 
   // async findSubjectComplete(
