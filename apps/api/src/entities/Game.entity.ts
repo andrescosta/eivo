@@ -1,20 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Activity } from './Activity.entity';
+import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
+import { Translatable, Translation } from './EntityBase.entity';
 
 @Entity()
-export class Game {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
-
-  @Column()
-  name!: string;
-
-  @Column({ nullable: true })
-  description?: string;
-
+export class Game extends EivoNamedEntity implements Translatable {
   @Column()
   date!: Date;
 
   @ManyToOne(() => Activity)
   activity!: Activity;
+
+  /**
+   * @autoMapIgnore
+   */
+  @OneToMany(() => GameTranslation, (translation) => translation.base, {
+    eager: true,
+    cascade: true
+  })
+  translations!: Array<Translation<Game>>;
+}
+
+@Entity()
+export class GameTranslation
+  extends EivoNamedEntityTranslation
+  implements Translation<Game>
+{
+  @ManyToOne(() => Game)
+  base!: Game;
 }

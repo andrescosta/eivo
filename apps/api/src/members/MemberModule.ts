@@ -5,6 +5,7 @@ import { MemberProfile } from './MemberProfile';
 import { memberProvider } from './MemberProvider';
 import { DatabaseModule } from '../database/database.module';
 
+
 @Module({
   controllers: [MemberController],
   imports: [DatabaseModule],

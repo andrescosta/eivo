@@ -1,43 +1,43 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, NotFoundException } from '@nestjs/common';
 import { ActivityService } from './ActivityService';
-import { LvActivity } from '@lingv/contracts';
+import { ActivityData } from '@eivo/contracts';
 import { Activity } from '../entities/Activity.entity';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError';
 
 @Controller('activities')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
   @Post()
-  @UseInterceptors(MapInterceptor(Activity, LvActivity))
-  @UseInterceptors(MapInterceptor(LvActivity, Activity))
-  @ApiResponse({ type: LvActivity })
-  @ApiBody({ type: LvActivity })
+  @UseInterceptors(MapInterceptor(Activity, ActivityData))
+  @UseInterceptors(MapInterceptor(ActivityData, Activity))
+  @ApiResponse({ type: ActivityData })
+  @ApiBody({ type: ActivityData })
   async create(@Body() domain: Activity): Promise<Activity> {
     return await this.activityService.create(domain);
   }
 
   @Get()
-  @ApiResponse({ type: LvActivity, isArray: true })
+  @ApiResponse({ type: ActivityData, isArray: true })
   @UseInterceptors(
-    MapInterceptor(Activity, LvActivity, { isArray: true }),
+    MapInterceptor(Activity, ActivityData, { isArray: true }),
   )
   async findAll(): Promise<Activity[]> {
     return this.activityService.findAll();
   }
 
   @Get(':id')
-  @UseInterceptors(MapInterceptor(Activity, LvActivity))
-  @ApiResponse({ type: LvActivity, isArray: false })
+  @UseInterceptors(MapInterceptor(Activity, ActivityData))
+  @ApiResponse({ type: ActivityData, isArray: false })
   async findOne(@Param('id') id: string): Promise<Activity | null> {
     return this.activityService.findOne(+id);
   }
 
   @Patch(':id')
-  @UseInterceptors(MapInterceptor(LvActivity, Activity))
-  @ApiBody({ type: LvActivity })
+  @UseInterceptors(MapInterceptor(ActivityData, Activity))
+  @ApiBody({ type: ActivityData })
   async update(
     @Param('id') id: string,
     @Body() utilisateur: Activity,

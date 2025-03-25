@@ -1,19 +1,10 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { Prompt, LessonTemplate } from './LessonTemplate.entity';
-import { Description, Learn, AnyOf } from './Template';
-
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { EivoNamedEntity, EivoNamedEntityTranslation, Translatable, Translation } from './EntityBase.entity';
+import { LessonTemplate } from './LessonTemplate.entity';
+import { AnyOf, ResultsCache, Learn } from './Template.entity';
 
 @Entity()
-export class ExerciseTemplate {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
-
+export class ExerciseTemplate extends EivoNamedEntity implements Translatable {
   @Column()
   kind!: string;
 
@@ -23,14 +14,11 @@ export class ExerciseTemplate {
   @Column()
   type!: string;
 
-  @Column(() => Prompt)
-  prompt!: Prompt;
+  @Column()
+  prompt!: string;
 
   @Column()
   schema!: string;
-
-  @Column(() => Description)
-  descriptions!: Description;
 
   @Column(() => Learn)
   learn!: Learn;
@@ -41,10 +29,31 @@ export class ExerciseTemplate {
   @Column('json')
   variations!: Array<Record<string, AnyOf>>;
 
-  @Column(() => Cache)
-  cache!: Cache;
+  @Column(() => ResultsCache)
+  cache!: ResultsCache;
 
-  @ManyToOne(() => LessonTemplate, (lesson) => lesson.exercises)
-  lesson!: LessonTemplate;
+  @ManyToOne(() => LessonTemplate)
+  lessonTemplate!: LessonTemplate;
+
+  /**
+   * @autoMapIgnore
+   */
+  @OneToMany(
+    () => ExerciseTemplateTranslation,
+    (translation) => translation.base,
+    {
+      eager: true,
+      cascade: true
+    },
+  )
+  translations!: Array<Translation<ExerciseTemplate>>;
 }
 
+@Entity()
+export class ExerciseTemplateTranslation
+  extends EivoNamedEntityTranslation
+  implements Translation<ExerciseTemplate>
+{
+  @ManyToOne(() => ExerciseTemplate)
+  base!: ExerciseTemplate;
+}

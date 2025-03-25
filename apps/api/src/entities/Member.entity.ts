@@ -1,13 +1,8 @@
-import {
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-} from 'typeorm';
-import { User } from './User.entity';
-import { Course } from './Course.entity';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Activity } from './Activity.entity';
+import { Course } from './Course.entity';
+import { EivoEntity } from './EntityBase.entity';
+import { User } from './User.entity';
 
 export enum Role {
   ETUDIANT = 'ETUDIANT',
@@ -16,17 +11,14 @@ export enum Role {
 }
 
 @Entity()
-export class Member {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class Member extends EivoEntity {
   @ManyToOne(() => User, (user) => user.members)
   user!: User;
 
   @ManyToOne(() => Course, (course) => course.members)
   course!: Course;
 
-  @OneToMany(() => Activity, (activity) => activity.member)
+  @OneToMany(() => Activity, (activity) => activity.member, { cascade: true })
   activities!: Activity[];
 
   @Column({

@@ -1,32 +1,63 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
+  JoinTable,
   ManyToMany,
+  ManyToOne,
+  OneToMany
 } from 'typeorm';
-import { Curriculum } from './Curriculum.entity';
-import { User } from './User.entity';
 import { Course } from './Course.entity';
+import { Curriculum } from './Curriculum.entity';
+import {
+  EivoNamedEntity,
+  EivoNamedEntityTranslation,
+  Translatable,
+  Translation,
+} from './EntityBase.entity';
+import { User } from './User.entity';
+import { LLMSchema } from './LLMSchema.entity';
 
 @Entity()
-export class Tenant {
-  @PrimaryGeneratedColumn('increment')
-  public id?: string;
-
-  @Column()
-  public name!: string;
-
-  @Column({ nullable: true })
-  public description?: string;
-
-  @OneToMany(() => Curriculum, (program) => program.tenant)
+export class Tenant extends EivoNamedEntity implements Translatable {
+  @OneToMany((type) => Curriculum, (curriculum) => curriculum.tenant, {
+    cascade: true,
+    eager: true,
+  })
   public curriculums!: Curriculum[];
 
-  @ManyToMany(() => User, (user) => user.tenants)
+  @OneToMany((type) => LLMSchema, (schema) => schema.tenant, {
+    eager: true,
+    cascade: true,
+  })
+  public llmSchemas!: LLMSchema[];
+
+  @ManyToMany((type) => User, (user) => user.tenants, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinTable()
   public users!: User[];
 
-  @OneToMany(() => Course, (course) => course.tenant)
+  @OneToMany((type) => Course, (course) => course.tenant, {
+    eager: true,
+    cascade: true,
+  })
   public courses!: Course[];
 
+  /**
+   * @autoMapIgnore
+   */
+  @OneToMany(() => TenantTranslation, (translation) => translation.base, {
+    eager: true,
+    cascade: true,
+  })
+  translations!: Array<Translation<Tenant>>;
+}
+
+@Entity()
+export class TenantTranslation
+  extends EivoNamedEntityTranslation
+  implements Translation<Tenant>
+{
+  @ManyToOne(() => Tenant)
+  base!: Tenant;
 }

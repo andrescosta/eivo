@@ -36,8 +36,8 @@
       "server": "db.jobico.local",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "Lingv",
-      "database": "lingv",
+      "name": "Eivo",
+      "database": "eivo",
       "schema":"app",
       "username": "postgres",
       "password": "postgres"

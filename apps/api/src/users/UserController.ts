@@ -1,54 +1,51 @@
+import { MapInterceptor } from '@automapper/nestjs';
+import { UserData } from '@eivo/contracts';
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseInterceptors,
+  Get,
   NotFoundException,
+  Param,
+  Patch,
+  Post,
+  UseInterceptors,
 } from '@nestjs/common';
-import { UserService } from './UserService';
-import { LvUser } from '@lingv/contracts';
-import { User } from '../entities/User.entity';
-import { InjectMapper, MapInterceptor } from '@automapper/nestjs';
-import { Mapper } from '@automapper/core';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { User } from '../entities/User.entity';
+import { UserService } from './UserService';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @UseInterceptors(MapInterceptor(User, LvUser))
-  @UseInterceptors(MapInterceptor(LvUser, User))
-  @ApiResponse({ type: LvUser })
-  @ApiBody({ type: LvUser })
+  @UseInterceptors(MapInterceptor(User, UserData))
+  @UseInterceptors(MapInterceptor(UserData, User))
+  @ApiResponse({ type: UserData })
+  @ApiBody({ type: UserData })
   async create(@Body() utilisateur: User): Promise<User> {
     return await this.userService.create(utilisateur);
   }
 
   @Get()
-  @ApiResponse({ type: LvUser, isArray: true })
-  @UseInterceptors(
-    MapInterceptor(User, LvUser, { isArray: true }),
-  )
+  @ApiResponse({ type: UserData, isArray: true })
+  @UseInterceptors(MapInterceptor(User, UserData, { isArray: true }))
   async findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @Get(':id')
-  @UseInterceptors(MapInterceptor(User, LvUser))
-  @ApiResponse({ type: LvUser, isArray: false })
+  @UseInterceptors(MapInterceptor(User, UserData))
+  @ApiResponse({ type: UserData, isArray: false })
   async findOne(@Param('id') id: string): Promise<User | null> {
     return this.userService.findOne(+id);
   }
 
   @Patch(':id')
-  @UseInterceptors(MapInterceptor(LvUser, User))
-  @ApiBody({ type: LvUser })
+  @UseInterceptors(MapInterceptor(UserData, User))
+  @ApiBody({ type: UserData })
   async update(
     @Param('id') id: string,
     @Body() utilisateur: User,

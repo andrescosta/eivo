@@ -1,18 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  Column,
-} from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { EivoEntity } from './EntityBase.entity';
+import { Exercise } from './Exercise.entity';
 import { ExerciseTemplate } from './ExerciseTemplate.entity';
-import { Exercise } from './Exercise';
 import { Member } from './Member.entity';
 
 @Entity()
-export class Activity {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
-
+export class Activity extends EivoEntity {
   @ManyToOne(() => ExerciseTemplate)
   exerciseTemplate!: ExerciseTemplate;
 

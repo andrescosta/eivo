@@ -1,8 +1,8 @@
 name: 'andres'
-schemas:
+llmSchemas:
   - one_verb:
     type: object
-    properties:
+    definitions:
       exercises:
         type: array
         element:
@@ -20,14 +20,18 @@ schemas:
             tense:
               type: string
               description: Tense of the verb to complete.
-curriculum:
+curriculums:
   - name: 'My French classes' # class(eng, fra, spa) (menu)
-    kind: 'FRA' # FRA, ENG
-    description: 'mmmm'
-    type: 'IA'
+    # kind: 'FRA' # FRA, ENG
+    description:
+      long: 'mmmm'
+      short: 'mmmm'
+    # type: 'IA'
     subjects:
       - name: 'Grammar' # subject(grammar, verbs, etc.) (menu)
-        description: 'Grammar'
+        description:
+          long: 'Grammar'
+          short: 'Grammar'
         kind: grammar
         prompt: |
           bla bla
@@ -37,43 +41,50 @@ curriculum:
             kind: 'conjugation'
             learn:
               type: 'verb'
-            prompt: 'You are a teacher in {{ req.level }} French class.'
-            lessons:
-              material:
-                - kind: 'flashcard'
-                  theme: 'terminaison'
-                  variations:
-                    - ending:
-                        anyOf: ['er', 'ir', 'dre']
-                  prompt:
-                    user: |
-                      Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ variations.ending }}.
-                      In each of these phrases the verb is missing and the student must complete it.
-                      Use a mix of personal pronouns and normal French people names.
+            lessonTemplates:
+              - name: "aaa"
+                prompt: 'You are a teacher in {{ req.level }} French class.'
+                materialTemplates:
+                  - kind: 'flashcard'
+                    theme: 'terminaison'
+                    type: 'LLM'
+                    variations:
+                      - ending:
+                          anyOf: ['er', 'ir', 'dre']
+                    learn:
+                      type: "verb"
+                    prompt:
+                      user: |
+                        Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ variations.ending }}.
+                        In each of these phrases the verb is missing and the student must complete it.
+                        Use a mix of personal pronouns and normal French people names.
+                        Provide the solution and verb in the infinitive in the corresponding fields.
+                    schema: 'one_verb'
+                    description:
+                      short: 'Le Present({{ variations.ending }})'
+                      long: 'Le Present({{ variations.ending }})'
+                exerciseTemplates:
+                  - kind: 'complete' # crosswords, listening, multiplechoice
+                    type: 'LLM'
+                    theme: 'VERB'
+                    description:
+                      short: 'Le Present({{ variations.group }} group)'
+                      long: 'Le Present({{ variations.group }} group)'
+                    variations:
+                      - group:
+                          anyOf: ['first', 'second', 'third']
+                      - level:
+                          anyOf: ['b1', 'a1']
+                      - difficulty:
+                          anyOf: ['easy', 'medium', 'hard']
+                    prompt: |
+                      Generate {{ req.qty }} {{ req.level }} French phrases in present tense and using ONLY verbs that belongs to the {{ variations.group }} group of French verbs. 
+                      In each of these phrases the verb is missing and the student must complete it. 
+                      Use a mix of personal pronouns and normal French people names.  
                       Provide the solution and verb in the infinitive in the corresponding fields.
-                  schema: 'one_verb'
-                  descriptions:
-                    kind: 'Conjugation'
-                    short: 'Le Present({{ variations.ending }})'
-                    long: 'Le Present({{ variations.ending }})'
-              exercises:
-                - kind: 'complete' # crosswords, listening, multiplechoice
-                  descriptions:
-                    short: 'Le Present({{ variations.group }} group)'
-                    long: 'Le Present({{ variations.group }} group)'
-                  variations:
-                    - group:
-                        anyOf: ['first', 'second', 'third']
-                    - level:
-                        anyOf: ['b1', 'a1']
-                    - difficulty:
-                        anyOf: ['easy', 'medium', 'hard']
-                  prompt: |
-                    Generate {{ req.qty }} {{ req.level }} French phrases in present tense and using ONLY verbs that belongs to the {{ variations.group }} group of French verbs. 
-                    In each of these phrases the verb is missing and the student must complete it. 
-                    Use a mix of personal pronouns and normal French people names.  
-                    Provide the solution and verb in the infinitive in the corresponding fields.
-                  schema: 'one_verb'
-                  cache:
-                    enabled: true
-                    id: '{{ kind }}_{{ exercise }}_{{ type }}_{{ variations.group }}'
+                    schema: 'one_verb'
+                    cache:
+                      enabled: true
+                      id: '{{ kind }}_{{ exercise }}_{{ type }}_{{ variations.group }}'
+                    learn:
+                      type: "verb"

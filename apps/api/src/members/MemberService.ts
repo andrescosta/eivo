@@ -1,7 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Member } from '../entities/Member.entity';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError';
+
 
 @Injectable()
 export class MemberService {

@@ -22,9 +22,8 @@
     "useUnknownInCatchVariables": true,
     "baseUrl": "./",
     "paths": {
-      "@lingv/contracts/*": ["packages/contracts/src/*"],
-      "@lingv/llm/*": ["packages/llm/src/*"],
-      "@lingv/data/*": ["apps/data/src/*"]
+      "@eivo/contracts/*": ["packages/contracts/src/*"],
+      "@eivo/api/*": ["apps/api/src/*"]
     }
   }
 }

@@ -7,23 +7,30 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'postgres',
-        host: process.env.DB_HOST ?? "localhost",
-        port: parseInt(process.env.DB_PORT ?? "5432",10) ,
-        username: process.env.DB_USER ?? "postgres",
-        password: process.env.DB_USER_PWD ??  "postgres",
-        database: 'lingv',
+        host: process.env.DB_HOST ?? 'localhost',
+        port: parseInt(process.env.DB_PORT ?? '5432', 10),
+        username: process.env.DB_USER ?? 'postgres',
+        password: process.env.DB_USER_PWD ?? 'postgres',
+        database: 'eivo',
         schema: 'app',
-        logging: true,
-        namingStrategy: new SnakeCaseNamingStrategy(), 
+        logging: [
+          'query',
+          'schema',
+          'error',
+          'warn',
+          'info',
+          'log',
+          'migration',
+        ],
+        namingStrategy: new SnakeCaseNamingStrategy(),
         ssl: true,
         extra: {
-            ssl: {
-                rejectUnauthorized: false,
-            },
+          ssl: {
+            rejectUnauthorized: false,
+          },
         },
-        entities: [
-            __dirname + '/../**/entities/*{.ts,.js}',
-        ],
+        //entities: ['/home/andres/projs/eivo/apps/api/src/entities/*.entity.ts'],
+        entities: [__dirname + '/../**/entities/*{.ts,.js}'],
       });
 
       return dataSource.initialize();

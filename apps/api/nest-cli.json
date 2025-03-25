@@ -2,15 +2,5 @@
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
-  "entryFile": "main",
-  "compilerOptions": {
-        "plugins": [
-            {
-                "name": "@automapper/classes/transformer-plugin",
-                "options": {
-                    "modelFileNameSuffix": [".data.ts", ".entity.ts"]
-                }
-            }
-        ]
-    }
+  "entryFile": "main"
 }

@@ -6,8 +6,7 @@ import { AppCommandModule } from './commands/app/app.cmd.module';
 const bootstrap = async () => {
   try {
     console.log('Running command...', __dirname);
-    // const app = await NestFactory.create(CliAppModule);
-    
+
     // not ideal hack but ...
     if (contains(process.argv, 'db:')) {
       await CommandFactory.run(DbCommandModule);

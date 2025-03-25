@@ -1,18 +1,18 @@
-import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import { createMap, type Mapper } from '@automapper/core';
-import { Injectable } from '@nestjs/common';
-import { ArchiveEntry } from '../entities/ArchiveEntry.entity';
-import { LvArchiveEntry } from '@lingv/contracts';
+// import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+// import { createMap, type Mapper } from '@automapper/core';
+// import { Injectable } from '@nestjs/common';
+// import { ArchiveEntry } from '../entities/ArchiveEntry.entity';
+// import { LvArchiveEntry } from '@eivo/contracts';
 
-@Injectable()
-export class ArchiveProfile extends AutomapperProfile {
-    constructor(@InjectMapper() mapper: Mapper) {
-        super(mapper);
-    }
+// @Injectable()
+// export class ArchiveProfile extends AutomapperProfile {
+//     constructor(@InjectMapper() mapper: Mapper) {
+//         super(mapper);
+//     }
 
-    override get profile() {
-        return (mapper: Mapper) => {
-            createMap(mapper, ArchiveEntry, LvArchiveEntry);
-        };
-    }
-}
+//     override get profile() {
+//         return (mapper: Mapper) => {
+//             createMap(mapper, ArchiveEntry, LvArchiveEntry);
+//         };
+//     }
+// }

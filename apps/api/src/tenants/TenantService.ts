@@ -1,24 +1,29 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Tenant } from '../entities/Tenant.entity';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError';
 
 @Injectable()
 export class TenantService {
   constructor(
-    @Inject('LOCATAIRE_REPOSITORY')
+    @Inject('TENANT_REPOSITORY')
     private readonly tenantRepository: Repository<Tenant>,
   ) {}
 
-  async create(tenant: Tenant): Promise<Tenant> {
-    return this.tenantRepository.save(tenant);
+  create(tenant: Tenant): Tenant {
+    // tenant.curriculums[0].tenant = tenant;
+    // tenant.schemas[0].tenant = tenant;
+    return this.tenantRepository.create(tenant);
+  }
+  async save(tenant: Tenant): Promise<Tenant> {
+    return await this.tenantRepository.save(tenant);
   }
 
   async findAll(): Promise<Tenant[]> {
     return this.tenantRepository.find();
   }
 
-  async findOne(id: string): Promise<Tenant | null> {
+  async findOne(id: number): Promise<Tenant | null> {
     return this.tenantRepository.findOne({ where: { id } });
   }
 

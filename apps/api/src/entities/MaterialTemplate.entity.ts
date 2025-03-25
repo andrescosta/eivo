@@ -1,19 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
 import { LessonTemplate } from './LessonTemplate.entity';
-import { AnyOf, Description, Learn, Prompt } from './Template';
-
+import { AnyOf, ResultsCache, Learn } from './Template.entity';
+import { Translation } from './EntityBase.entity';
 
 @Entity()
-export class MaterialTemplate {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
-
+export class MaterialTemplate extends EivoNamedEntity {
   @Column()
   kind!: string;
 
@@ -23,14 +15,11 @@ export class MaterialTemplate {
   @Column()
   type!: string;
 
-  @Column(() => Prompt)
-  prompt!: Prompt;
+  @Column()
+  prompt!: string;
 
   @Column()
   schema!: string;
-
-  @Column(() => Description)
-  descriptions!: Description;
 
   @Column(() => Learn)
   learn!: Learn;
@@ -41,9 +30,31 @@ export class MaterialTemplate {
   @Column('json')
   variations!: Array<Record<string, AnyOf>>;
 
-  @Column(() => Cache)
-  cache!: Cache;
+  @Column(() => ResultsCache)
+  cache!: ResultsCache;
 
-  @ManyToOne(() => LessonTemplate, (lesson) => lesson.material)
-  lesson!: LessonTemplate;
+  @ManyToOne(() => LessonTemplate)
+  lessonTemplate!: LessonTemplate;
+
+  /**
+   * @autoMapIgnore
+   */
+  @OneToMany(
+    () => MaterialTemplateTranslation,
+    (translation) => translation.base,
+    {
+      eager: true,
+      cascade: true
+    },
+  )
+  translations!: Array<Translation<MaterialTemplate>>;
+}
+
+@Entity()
+export class MaterialTemplateTranslation
+  extends EivoNamedEntityTranslation
+  implements Translation<MaterialTemplate>
+{
+  @ManyToOne(() => MaterialTemplate)
+  base!: MaterialTemplate;
 }

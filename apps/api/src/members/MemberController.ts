@@ -11,41 +11,41 @@ import {
 } from '@nestjs/common';
 import { MemberService } from './MemberService';
 import { Member } from '../entities/Member.entity';
-import { LvMember } from '@lingv/contracts';
+import { MemberData } from '@eivo/contracts';
 import { MapInterceptor } from '@automapper/nestjs';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+import { EntityNotFoundError } from '../entities/EntityNotFoundError';
 
 @Controller('members')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @Post()
-  @UseInterceptors(MapInterceptor(Member, LvMember))
-  @UseInterceptors(MapInterceptor(LvMember, Member))
-  @ApiResponse({ type: LvMember })
-  @ApiBody({ type: LvMember })
+  @UseInterceptors(MapInterceptor(Member, MemberData))
+  @UseInterceptors(MapInterceptor(MemberData, Member))
+  @ApiResponse({ type: MemberData })
+  @ApiBody({ type: MemberData })
   async create(@Body() membre: Member): Promise<Member> {
     return this.memberService.create(membre);
   }
 
   @Get()
-  @ApiResponse({ type: LvMember, isArray: true })
-  @UseInterceptors(MapInterceptor(Member, LvMember, { isArray: true }))
+  @ApiResponse({ type: MemberData, isArray: true })
+  @UseInterceptors(MapInterceptor(Member, MemberData, { isArray: true }))
   async findAll(): Promise<Member[]> {
     return this.memberService.findAll();
   }
 
   @Get(':id')
-  @UseInterceptors(MapInterceptor(Member, LvMember))
-  @ApiResponse({ type: LvMember, isArray: false })
+  @UseInterceptors(MapInterceptor(Member, MemberData))
+  @ApiResponse({ type: MemberData, isArray: false })
   async findOne(@Param('id') id: string): Promise<Member | null> {
     return this.memberService.findOne(+id);
   }
 
   @Patch(':id')
-  @UseInterceptors(MapInterceptor(LvMember, Member))
-  @ApiBody({ type: LvMember })
+  @UseInterceptors(MapInterceptor(MemberData, Member))
+  @ApiBody({ type: MemberData })
   async update(@Param('id') id: string, @Body() membre: Member): Promise<void> {
     try {
       return this.memberService.update(+id, membre);
