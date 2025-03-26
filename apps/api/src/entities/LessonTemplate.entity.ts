@@ -1,12 +1,11 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import {
-  EivoNamedEntity,
-  EivoNamedEntityTranslation,
-  Translation,
+  EivoNamedEntity
 } from './EntityBase.entity';
 import { ExerciseTemplate } from './ExerciseTemplate.entity';
 import { MaterialTemplate } from './MaterialTemplate.entity';
 import { Unit } from './Unit.entity';
+import { EivoNamedEntityTranslation, Translation } from './i18n';
 
 @Entity()
 export class LessonTemplate extends EivoNamedEntity {

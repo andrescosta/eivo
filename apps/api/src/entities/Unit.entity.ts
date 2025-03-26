@@ -1,12 +1,13 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
+import { EivoNamedEntity } from './EntityBase.entity';
 import { LessonTemplate } from './LessonTemplate.entity';
-import { LLMSchema } from './LLMSchema.entity';
+
 import { Subject } from './Subject.entity';
-import { Translation } from './EntityBase.entity';
+import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
+
 
 @Entity()
-export class Unit extends EivoNamedEntity {
+export class Unit extends EivoNamedEntity implements Translatable {
   /**
    * @autoMapIgnore
    */

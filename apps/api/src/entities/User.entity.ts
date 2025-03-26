@@ -1,11 +1,11 @@
 import { Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
-import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
+import { EivoNamedEntity } from './EntityBase.entity';
 import { Member } from './Member.entity';
 import { Tenant } from './Tenant.entity';
-import { Translation } from './EntityBase.entity';
+import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
-export class User extends EivoNamedEntity {
+export class User extends EivoNamedEntity implements Translatable{
   @ManyToMany(() => Tenant, (tenant) => tenant.users)
   @JoinTable()
   public tenants!: Tenant[];

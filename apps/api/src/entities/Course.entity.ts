@@ -1,8 +1,9 @@
 import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Curriculum } from './Curriculum.entity';
-import { EivoNamedEntity, EivoNamedEntityTranslation, Translatable, Translation } from './EntityBase.entity';
+import { EivoNamedEntity } from './EntityBase.entity';
 import { Member } from './Member.entity';
 import { Tenant } from './Tenant.entity';
+import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
 export class Course extends EivoNamedEntity implements Translatable {

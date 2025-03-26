@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Activity } from './Activity.entity';
-import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
-import { Translatable, Translation } from './EntityBase.entity';
+import { EivoNamedEntity  } from './EntityBase.entity';
+import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
 export class Game extends EivoNamedEntity implements Translatable {

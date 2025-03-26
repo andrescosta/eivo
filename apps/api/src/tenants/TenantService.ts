@@ -11,8 +11,6 @@ export class TenantService {
   ) {}
 
   create(tenant: Tenant): Tenant {
-    // tenant.curriculums[0].tenant = tenant;
-    // tenant.schemas[0].tenant = tenant;
     return this.tenantRepository.create(tenant);
   }
   async save(tenant: Tenant): Promise<Tenant> {

@@ -1,17 +1,14 @@
 import {
-  Column,
   Entity,
   ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
+  OneToMany
 } from 'typeorm';
 import {
   EivoNamedEntity,
-  EivoNamedEntityTranslation,
-  Translation,
 } from './EntityBase.entity';
-import { Tenant } from './Tenant.entity';
 import { Subject } from './Subject.entity';
+import { Tenant } from './Tenant.entity';
+import { EivoNamedEntityTranslation, Translation } from './i18n';
 
 @Entity()
 export class Curriculum extends EivoNamedEntity {

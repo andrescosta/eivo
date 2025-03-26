@@ -9,12 +9,10 @@ import { Course } from './Course.entity';
 import { Curriculum } from './Curriculum.entity';
 import {
   EivoNamedEntity,
-  EivoNamedEntityTranslation,
-  Translatable,
-  Translation,
 } from './EntityBase.entity';
 import { User } from './User.entity';
 import { LLMSchema } from './LLMSchema.entity';
+import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
 export class Tenant extends EivoNamedEntity implements Translatable {

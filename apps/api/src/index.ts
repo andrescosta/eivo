@@ -14,3 +14,4 @@ export * from './curriculums/CurriculumService';
 export * from './tenants/TenantProvider';
 export * from './curriculums/CurriculumProvider';
 export * from './entities/EntityBase.entity';
+export * from './entities/i18n';

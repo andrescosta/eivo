@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { EivoNamedEntity, EivoNamedEntityTranslation } from './EntityBase.entity';
+import { EivoNamedEntity } from './EntityBase.entity';
 import { LessonTemplate } from './LessonTemplate.entity';
 import { AnyOf, ResultsCache, Learn } from './Template.entity';
-import { Translation } from './EntityBase.entity';
+import { EivoNamedEntityTranslation, Translation } from './i18n';
 
 @Entity()
 export class MaterialTemplate extends EivoNamedEntity {
