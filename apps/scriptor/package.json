@@ -1,5 +1,5 @@
 {
-  "name": "@eivo/cli",
+  "name": "@eivo/scriptor",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -13,10 +13,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "db:create": "nest start -- db:exec-sql /home/andres/projs/eivo/_infra/bd/creds.sql -u \"postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify\"",
-    "db:create:debug": "nest start --debug -- exec-sql /home/andres/projs/eivo/_infra/bd/creds.sql postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify",
-    "db:schema": "npm run typeorm schema:sync -- -d src/migs/ds-local.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "lesson:insert": "nest start -- app:lesson add /home/andres/projs/eivo/_infra/defs/def_new.yaml -d"
   },
   "dependencies": {
     "@automapper/classes": "^8.8.1",

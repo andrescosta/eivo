@@ -32,7 +32,7 @@ curriculums:
       - languageCode: us
     # type: 'IA'
     subjects:
-      - name: 'Grammar' # subject(grammar, verbs, etc.) (menu)
+      - name: 'Level A1' # subject(grammar, verbs, etc.) (menu)
         description:
           long: 'Grammar'
           short: 'Grammar'
