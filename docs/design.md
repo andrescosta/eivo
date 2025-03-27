@@ -87,3 +87,47 @@ jeux(id, nom(pas nul), description(nul), membres_ids(pas nul)[], date(pas nul), 
 
 - Tool to feed the database with the exercises
 - API in data to get the exercises
+
+
+
+GET
+/lessons?appId=?
+[
+{
+  id: 1,
+  description: "aaaaaaaaaaaa",
+  exercises: {
+    [
+      {
+        id:1,
+        descriptions: {
+          kind: ""
+          long: "",
+          short: ""
+        },
+        variation:
+          - group: 1
+      },
+      {
+        id:1,
+        descriptions: {
+          kind: ""
+          long: "",
+          short: ""
+        },
+        variation:
+          - group: 2
+      },
+      {
+        descriptions: {
+          kind: ""
+          long: "",
+          short: ""
+        },
+        variation:
+          - group: 3
+      }
+    ]
+  }
+}
+]

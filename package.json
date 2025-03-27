@@ -1,6 +1,6 @@
 {
-  "name": "lingv",
-  "description": "Lingv",
+  "name": "eivo",
+  "description": "eivo",
   "private": true,
   "workspaces": [
     "packages/*",

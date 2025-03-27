@@ -1,52 +1,52 @@
---\cc lingv;
+--\cc eivo;
 -- Drop existing database and roles
-DROP DATABASE IF EXISTS lingv;
-DROP ROLE IF EXISTS lingv_admin;
-DROP ROLE IF EXISTS lingv_service;
+DROP DATABASE IF EXISTS eivo;
+DROP ROLE IF EXISTS eivo_admin;
+DROP ROLE IF EXISTS eivo_service;
 
 -- Create administrative role with full privileges
-CREATE ROLE lingv_admin WITH 
+CREATE ROLE eivo_admin WITH 
     LOGIN 
-    PASSWORD 'lingv'
+    PASSWORD 'eivo'
     CREATEDB 
     CREATEROLE;
 
 -- Create service role with restricted privileges
-CREATE ROLE lingv_service WITH 
+CREATE ROLE eivo_service WITH 
     LOGIN 
-    PASSWORD 'lingv'
+    PASSWORD 'eivo'
     NOCREATEDB 
     NOCREATEROLE;
 
 -- Create application database
-CREATE DATABASE lingv
+CREATE DATABASE eivo
     WITH 
-    OWNER = lingv_admin
+    OWNER = eivo_admin
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.utf8'
     LC_CTYPE = 'en_US.utf8'
     TEMPLATE = template0;
 
-\c lingv;
+\c eivo;
 
 -- Create application schema owned by admin
-CREATE SCHEMA IF NOT EXISTS app AUTHORIZATION lingv_admin;
+CREATE SCHEMA IF NOT EXISTS app AUTHORIZATION eivo_admin;
 
--- Revoke public schema privileges from lingv_service to ensure minimal access
-REVOKE ALL ON SCHEMA public FROM lingv_service;
-REVOKE ALL ON ALL TABLES IN SCHEMA public FROM lingv_service;
-REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM lingv_service;
+-- Revoke public schema privileges from eivo_service to ensure minimal access
+REVOKE ALL ON SCHEMA public FROM eivo_service;
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM eivo_service;
+REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM eivo_service;
 
-GRANT CONNECT ON DATABASE lingv TO lingv_service;
-GRANT USAGE ON SCHEMA app TO lingv_service;
-GRANT USAGE ON SCHEMA public TO lingv_service;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA app TO lingv_service;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA app TO lingv_service;
-ALTER DEFAULT PRIVILEGES FOR ROLE lingv_admin IN SCHEMA app
-    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO lingv_service;
-ALTER DEFAULT PRIVILEGES FOR ROLE lingv_admin IN SCHEMA app
-    GRANT USAGE, SELECT ON SEQUENCES TO lingv_service;
+GRANT CONNECT ON DATABASE eivo TO eivo_service;
+GRANT USAGE ON SCHEMA app TO eivo_service;
+GRANT USAGE ON SCHEMA public TO eivo_service;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA app TO eivo_service;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA app TO eivo_service;
+ALTER DEFAULT PRIVILEGES FOR ROLE eivo_admin IN SCHEMA app
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO eivo_service;
+ALTER DEFAULT PRIVILEGES FOR ROLE eivo_admin IN SCHEMA app
+    GRANT USAGE, SELECT ON SEQUENCES TO eivo_service;
 
 
-ALTER ROLE lingv_admin SET search_path TO app, public;
-ALTER ROLE lingv_service SET search_path TO app, public;
+ALTER ROLE eivo_admin SET search_path TO app, public;
+ALTER ROLE eivo_service SET search_path TO app, public;

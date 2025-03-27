@@ -7,13 +7,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DB Init",
+      "name": "Debug DB:Create",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": [
         "run",
         "--dir",
         "ops/cli/",
-        "db:init",
+        "db:create",
         "--",
         "--inspect-brk"
       ],

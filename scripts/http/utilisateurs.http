@@ -1,0 +1,21 @@
+GET http://localhost:3000/utilisateurs/1 
+
+###
+GET http://localhost:3000/applications
+###
+GET http://localhost:3000/applications/2/lessons/2 HTTP/1.1
+
+###
+
+POST http://localhost:3000/applications/2/lessons/2/exercises/5 HTTP/1.1
+Content-Type: application/json
+
+{
+"variations": {
+     "group": "third"
+ }
+}
+
+###
+
+GET http://localhost:3000/gen/applications/1/lessons/2/exercises/3 HTTP/1.1
