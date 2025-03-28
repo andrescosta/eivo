@@ -1,7 +1,7 @@
 SELECT DISTINCT "distinctAlias"."Curriculum_id" AS "ids_Curriculum_id"
 FROM (
     SELECT "Curriculum"."id" AS "Curriculum_id",
-      "Curriculum"."tenant_id" AS "Curriculum_tenant_id",
+      "Curriculum"."namespace_id" AS "Curriculum_namespace_id",
       "Curriculum__Curriculum_translations"."id" AS "Curriculum__Curriculum_translations_id",
       "Curriculum__Curriculum_translations"."language_code" AS "Curriculum__Curriculum_translations_language_code",
       "Curriculum__Curriculum_translations"."name" AS "Curriculum__Curriculum_translations_name",
@@ -53,10 +53,10 @@ FROM (
       LEFT JOIN "app"."lesson_template" "e1796237532d3c5a831d8f8952756dafdea334f5" ON "e1796237532d3c5a831d8f8952756dafdea334f5"."unit_id" = "dc962db349bee84a11eda447bdea202f19755943"."id"
       LEFT JOIN "app"."exercise_template" "8e10239929b556832519a29ef12bf57997767f3c" ON "8e10239929b556832519a29ef12bf57997767f3c"."lesson_template_id" = "e1796237532d3c5a831d8f8952756dafdea334f5"."id"
       LEFT JOIN "app"."material_template" "6f9f088f3166872fb895ca2e896966df345e78f3" ON "6f9f088f3166872fb895ca2e896966df345e78f3"."lesson_template_id" = "e1796237532d3c5a831d8f8952756dafdea334f5"."id"
-      LEFT JOIN "app"."tenant" "Curriculum__Curriculum_tenant" ON "Curriculum__Curriculum_tenant"."id" = "Curriculum"."tenant_id"
+      LEFT JOIN "app"."namespace" "Curriculum__Curriculum_namespace" ON "Curriculum__Curriculum_namespace"."id" = "Curriculum"."namespace_id"
     WHERE (
         ("Curriculum"."id" = 3)
-        AND ((("Curriculum__Curriculum_tenant"."id" = 3)))
+        AND ((("Curriculum__Curriculum_namespace"."id" = 3)))
         AND (
           (
             (

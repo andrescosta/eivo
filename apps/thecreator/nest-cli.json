@@ -1,0 +1,17 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/my-project/src",
+  "monorepo": true,
+  "root": "src",
+  "compilerOptions": {
+  },
+  "projects": {
+    "cli": {
+      "type": "application",
+      "entryFile": "cli/main",
+      "sourceRoot": "src/cli",
+      "compilerOptions": {
+      }
+    }
+  }
+}

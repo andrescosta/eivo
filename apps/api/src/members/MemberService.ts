@@ -26,14 +26,14 @@ export class MemberService {
   async update(id: number, membre: Partial<Member>): Promise<void> {
     const res = await this.membreRepository.update(id, membre);
     if (res.affected == 0) {
-      throw new EntityNotFoundError('Tenant');
+      throw new EntityNotFoundError('Namespace');
     }
   }
 
   async remove(id: number): Promise<void> {
     const res = await this.membreRepository.delete(id);
     if (res.affected == 0) {
-      throw new EntityNotFoundError('Tenant');
+      throw new EntityNotFoundError('Namespace');
     }
   }
 }

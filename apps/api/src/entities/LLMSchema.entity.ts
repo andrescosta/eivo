@@ -6,7 +6,7 @@ import {
   ManyToOne
 } from 'typeorm';
 import { EivoEntity } from './EntityBase.entity';
-import { Tenant } from './Tenant.entity';
+import { Namespace } from './Namespace.entity';
 
 @Entity()
 export class LLMSchema extends EivoEntity{
@@ -14,8 +14,8 @@ export class LLMSchema extends EivoEntity{
   @Column('json')
   definitions!: Map<string, Record<string, string | number | object>>;
 
-  @ManyToOne(() => Tenant)
-  tenant!: Tenant;
+  @ManyToOne(() => Namespace)
+  namespace!: Namespace;
 
   @AfterRecover()
   @AfterLoad()

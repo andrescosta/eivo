@@ -1,0 +1,232 @@
+kind: maker
+name: maker_for_french
+prompt: You are a French teacher expert who can teach every level. You are creating a curriculum to teach French at every level.
+spec:
+  - name: curriculum
+    prompt: |
+      A curriculum is the principal component of the teaching activity. It provides information precise about what is the course about.
+      The labels are information to show to the users on the UI. Generate the information in French[cultre=FR], 
+      English[culture=US] and Spanish[culture=SP]
+    schema: curriculum
+  - name: syllabus
+    prompt: The French curriculum will be organized in syllabus areas, each of them will be a CEFR Level, generate them.
+    schema: syllabus
+  - name: syllabuses
+    forEach:
+      col: syllabus
+      steps:
+        - name: unit
+          prompt: The CEFR level ${level.learn.objective} will be organized in semantic units. Generate each of them.
+          schema: unit
+        - name: units
+          forEach: 
+            col: unit
+            steps:
+              - name: lesson
+                prompt:  For the CEFR level ${level.learn.objective} and the unit ${unit.learn.objective}. Generate a list of lessons.
+                schema: lesson
+              - name: lessons
+                forEach: 
+                  col: lesson
+                  steps:
+                    - name: material_template
+                      prompt: | 
+                        For this lesson, generate a prompt for a LLM  (could be you) for asking him to learning materia 
+                        when the student request it.
+                      schema: material_template
+                      prompt_schema: material
+                    - name: exercise_template
+                      prompt: | 
+                        For this lesson, generate a prompt for a LLM  (could be you) for asking him to exercises 
+                        when the student request it.
+                      prompt_schema: exercise
+                      schema: exercise_templare
+---
+kind: schema
+name: scriptor_labeled
+spec:
+  type: array
+  description: "A list of labels providing localized information."
+  items:
+    type: object
+    description: "A set of labels in a specific language."
+    properties:
+      culture:
+        type: string
+        description: "The culture or language code (e.g., 'us' for English)."
+      title:
+        type: string
+        description: "A short title for the object."
+      overview:
+        type: string
+        description: "A brief summary."
+      details:
+        type: string
+        description: "A detailed description."
+    required:
+      - culture
+      - title
+      - overview
+      - details
+---
+kind: schema
+name: curriculum
+spec:
+  type: object
+  description: "Schema for a curriculum object, including labels for different languages."
+  properties:
+    kind:
+      type: string
+      enum:
+        - "curriculum"
+      description: "The type of object, fixed to 'curriculum'."
+    labels:
+      $ref: "/schemas/scriptor_labeled"
+      description: "Localized labels containing title, overview, and details."
+  required:
+    - kind
+    - labels
+---
+kind: schema
+name: subject
+spec:
+  type: object
+  description: "Schema for a subject object, including labels for different languages."
+  properties:
+    kind:
+      type: string
+      enum:
+        - "subject"
+      description: "The type of object, fixed to 'subject'."
+    labels:
+      $ref: "/schemas/scriptor_labeled"
+      description: "Localized labels containing title, overview, and details."
+  required:
+    - kind
+    - labels
+---
+kind: schema
+name: unit
+spec:
+  type: object
+  description: "Schema for a unit object, including labels for different languages."
+  properties:
+    kind:
+      type: string
+      enum:
+        - "unit"
+      description: "The type of object, fixed to 'unit'."
+    labels:
+      $ref: "/schemas/scriptor_labeled"
+      description: "Localized labels containing title, overview, and details."
+  required:
+    - kind
+    - labels
+---
+kind: schema
+name: lesson
+spec:
+  type: object
+  description: "Schema for a lesson object, including labels for different languages."
+  properties:
+    kind:
+      type: string
+      enum:
+        - "lesson"
+      description: "The type of object, fixed to 'lesson'."
+    labels:
+      $ref: "/schemas/scriptor_labeled"
+      description: "Localized labels containing title, overview, and details."
+  required:
+    - kind
+    - labels
+---
+kind: schema
+name: lesson_exercise_complete_one_verbe
+spec:
+  type: object
+  description: "Schema for defining exercise templates."
+  properties:
+    kind:
+      type: string
+      enum: ["complete"]
+      description: "The type of exercise."
+    type:
+      type: string
+      enum: ["LLM"]
+      description: "The type of content generation used."
+    theme:
+      type: string
+      enum: ["VERB"]
+      description: "The main theme of the exercise."
+    label_templates:
+      $ref: "schemas/label_templates"
+      description: "Localized label templates with title, overview, and details."
+    variations:
+      type: array
+      description: "List of allowed variations for the exercise."
+      items:
+        type: object
+        properties:
+          group:
+            type: string
+            enum: ["first", "second", "third"]
+            description: "The verb group category."
+          level:
+            type: string
+            enum: ["b1", "a1"]
+            description: "The CEFR level."
+          difficulty:
+            type: string
+            enum: ["easy", "medium", "hard"]
+            description: "The difficulty level."
+    prompt:
+      type: string
+      description: "The prompt used to generate exercises."
+    schema:
+      type: string
+      enum: ["one_verb"]
+      description: "The schema used for structuring the exercise."
+    cache:
+      type: object
+      description: "Cache configuration settings."
+      properties:
+        enabled:
+          type: boolean
+          description: "Indicates if caching is enabled."
+    learn:
+      type: object
+      description: "Learning-specific metadata."
+      properties:
+        type:
+          type: string
+          enum: ["verb"]
+          description: "Specifies the learning type."
+  required:
+    - kind
+    - type
+    - theme
+    - label_templates
+    - prompt
+    - schema
+
+---
+kind: schema
+name: lesson_exercise_complete_one_verbe
+spec:
+  type: object
+  description: "A set of labels for localized text in various languages."
+  properties:
+    details:
+      type: string
+      description: "A detailed explanation."
+    overview:
+      type: string
+      description: "A summary or short description."
+    title:
+      type: string
+      description: "A concise title."
+  required:
+    - details
+    - overview
+    - title

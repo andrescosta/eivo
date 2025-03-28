@@ -1,0 +1,57 @@
+kind: maker
+name: maker_for_french
+prompt: >-
+  You are a French teacher expert who can teach every level. You are creating a
+  curriculum to teach French at every level.
+spec:
+  - name: curriculum
+    prompt: >
+      A curriculum is the principal component of the teaching activity. It
+      provides information precise about what is the course about.
+
+      The labels are information to show to the users on the UI. Generate the
+      information in French[cultre=FR], 
+
+      English[culture=US] and Spanish[culture=SP]
+    schema: curriculum
+  - name: syllabus
+    prompt: >-
+      The French curriculum will be organized in syllabus areas, each of them
+      will be a CEFR Level, generate them.
+    schema: syllabus
+  - name: syllabuses
+    forEach:
+      col: syllabus
+      steps:
+        - name: unit
+          prompt: >-
+            The CEFR level ${level.learn.objective} will be organized in
+            semantic units. Generate each of them.
+          schema: unit
+        - name: units
+          forEach:
+            col: unit
+            steps:
+              - name: lesson
+                prompt: >-
+                  For the CEFR level ${level.learn.objective} and the unit
+                  ${unit.learn.objective}. Generate a list of lessons.
+                schema: lesson
+              - name: lessons
+                forEach:
+                  col: lesson
+                  steps:
+                    - name: material
+                      prompt: >
+                        For this lesson, generate a prompt for a LLM  (could be
+                        you) for asking him to learning materia 
+
+                        when the student request it.
+                      schema: material
+                    - name: exercises
+                      prompt: >
+                        For this lesson, generate a prompt for a LLM  (could be
+                        you) for asking him to exercises 
+
+                        when the student request it.
+                      schema: exercise

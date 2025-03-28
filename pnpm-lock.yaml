@@ -215,7 +215,7 @@ importers:
         specifier: ^5
         version: 5.8.2
 
-  apps/scriptor:
+  apps/thecreator:
     dependencies:
       '@automapper/classes':
         specifier: ^8.8.1
@@ -317,6 +317,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.11)(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.13.11)(typescript@5.8.2))
+      rimraf:
+        specifier: ~6.0.0
+        version: 6.0.1
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
