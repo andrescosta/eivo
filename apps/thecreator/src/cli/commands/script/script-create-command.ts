@@ -1,12 +1,11 @@
-import { Curriculum, CurriculumService, NamespaceService } from '@eivo/api';
+import { CurriculumService, NamespaceService } from '@eivo/api';
 import fs from 'fs';
-import yaml from 'js-yaml';
 import { CommandRunner, Option, SubCommand } from 'nest-commander';
-import { LLMSchema } from 'apps/api/dist/entities/LLMSchema.entity';
-import { parse } from '../../../specs/MakerParser';
-import { MakerSpec, SchemaSpec } from '../../../specs/Specs';
+import { load } from '../../../types/SpecLoader';
+import { Pipeline } from '../../../types/Specs';
+import { PipelineExecutor } from '../../executors/PipelineExecutor';
 
-@SubCommand({ name: 'generate' })
+@SubCommand({ name: 'execute' })
 export class ScriptExecCommand extends CommandRunner {
   constructor(
     private readonly namespaceService: NamespaceService,
@@ -15,16 +14,36 @@ export class ScriptExecCommand extends CommandRunner {
     super();
   }
   async run(input: string[], options: Record<string, string>) {
-    if (input.length < 3){
-      console.log("invalid arguments.");
+    if (input.length == 0) {
+      console.log('invalid arguments.');
       return;
     }
     const yamlString = fs.readFileSync(input[0], 'utf8');
-    const [maker, schemas] = parse(yamlString);
-    const yaml_maker = yaml.dump(maker);
-    const yaml_schemas = yaml.dump(Array.from(schemas.values()));
-    fs.writeFileSync(input[1], yaml_schemas, 'utf8');
-    fs.writeFileSync(input[2], yaml_maker, 'utf8');
+    const pipelineName = input.at(1) ?? '';
+    const specs = load(yamlString);
+    let pipelineSpec;
+    if (pipelineName) {
+      pipelineSpec = specs.get(pipelineName);
+      if (!pipelineSpec) {
+        throw new Error(`Pipeline ${pipelineName} does not exist `);
+      }
+      if (!(pipelineSpec instanceof Pipeline)) {
+        throw new Error(`${pipelineName} is not a pipeline `);
+      }
+    } else {
+      pipelineSpec = [...specs.values()].find((p) => p instanceof Pipeline);
+      if (!pipelineSpec) {
+        throw new Error(`Not Pipeline present in the file.`);
+      }
+    }
+    const res = await new PipelineExecutor().start(
+      pipelineSpec,
+      specs,
+    );
+    // const yaml_maker = yaml.dump(maker);
+    // const yaml_schemas = yaml.dump(Array.from(schemas.values()));
+    // fs.writeFileSync(input[1], yaml_schemas, 'utf8');
+    // fs.writeFileSync(input[2], yaml_maker, 'utf8');
     // const [curr, schs] = this.execute(maker, schemas) ?? [];
     // console.log(curr);
     // console.log(schs);
@@ -35,11 +54,5 @@ export class ScriptExecCommand extends CommandRunner {
   })
   parseLoad(val: string) {
     return val;
-  }
-  execute(
-    maker: MakerSpec,
-    schemas: Map<string, SchemaSpec>,
-  ): [Curriculum, LLMSchema] | null {
-    return null;
   }
 }

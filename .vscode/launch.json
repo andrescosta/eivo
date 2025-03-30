@@ -41,6 +41,25 @@
       "sourceMaps": true,
       "stopOnEntry": false,
       "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Create",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "run",
+        "--dir",
+        "apps/thecreator",
+        "llm",
+        "--",
+        "--inspect-brk"
+      ],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "sourceMaps": true,
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
     }
   ]
 }

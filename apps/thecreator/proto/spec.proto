@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "common.proto";
+
+message Namespace {
+  string kind = 1;
+  string name = 2;
+  repeated Label labels = 3;
+}
+
+
+
+
+
