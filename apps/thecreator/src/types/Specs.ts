@@ -2,7 +2,7 @@ export type AnyDef = Map<string, Record<string, string | number | object>>;
 
 export abstract class Spec {
   protected abstract kind: string;
-  public metadata!: Metadata;
+  metadata!: Metadata;
   constructor(data?: Partial<Spec>) {
     Object.assign(this, data);
   }
@@ -11,7 +11,7 @@ export abstract class Spec {
   }
 }
 export abstract class SpecWithLabels extends Spec {
-  public labels!: Array<Label>;
+  labels!: Array<Label>;
   constructor(data?: Partial<SpecWithLabels>) {
     super(data);
     Object.assign(this, data);
@@ -58,7 +58,7 @@ export class Schema extends Spec {
 
 export class Modeler extends Spec {
   protected kind = 'modeler';
-  declare public def: ModelerBody;
+  def!: ModelerBody;
   constructor(data?: Partial<Modeler>) {
     super(data);
     Object.assign(this, data);

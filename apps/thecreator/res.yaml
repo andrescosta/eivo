@@ -1,0 +1,340 @@
+metadata:
+  entity: curriculum
+  name: |-
+    Curriculum de Fran
+    çais
+  namespace: langue
+  learn:
+    objective: |-
+      Maîtriser la langue fran
+      çaise
+kind: aggregate
+labels:
+  - culture: FR
+    title: |-
+      Cours de Fran
+      çais
+    overview: |-
+      Cours de fran
+      çais pour tous les niveaux
+    details: >-
+      Ce cours de fran
+
+      çais est con
+
+      çu pour les apprenants de tous niveaux, du d
+
+
+      ébutant au niveau avancé. Il couvre tous les aspects de la langue, y
+      compris la grammaire, le vocabulaire, la compr
+
+
+      éhension orale et 
+
+
+      écrite, et l'expression orale et 
+
+
+      écrite. Les cours sont dispensés par des professeurs exp
+
+
+      érimentés et qualifiés. 
+  - culture: US
+    title: French Course
+    overview: French course for all levels
+    details: >-
+      This French course is designed for learners of all levels, from beginner
+      to advanced. It covers all aspects of the language, including grammar,
+      vocabulary, listening and reading comprehension, and speaking and writing.
+      Classes are taught by experienced and qualified teachers.
+  - culture: SP
+    title: |-
+      Curso de Franc
+
+      és
+    overview: |-
+      Curso de franc
+
+      és para todos los niveles
+    details: >-
+      Este curso de franc
+
+
+      és es para estudiantes de todos los niveles, desde principiantes hasta
+      avanzados. Abarca todos los aspectos del idioma, incluyendo gram
+
+
+      ática, vocabulario, comprensi
+
+
+      ón auditiva y lectora, y expresi
+
+
+      ón oral y escrita. Las clases son impartidas por profesores experimentados
+      y cualificados.
+def:
+  - metadata:
+      entity: syllabus
+      name: A1 French Syllabus
+      learn:
+        objective: A1
+    kind: aggregate
+    labels:
+      - culture: French
+        title: 'A1 French: Bonjour le Monde!'
+        overview: A1 Level French Syllabus
+        details: >-
+          This syllabus covers the basics of French grammar and vocabulary,
+          focusing on everyday communication. Students will learn to introduce
+          themselves, ask basic questions, and understand simple responses. 
+          Emphasis will be placed on pronunciation and basic sentence structure.
+    def:
+      - metadata:
+          entity: syllabus
+          name: A1-Unit1
+          learn:
+            objective: Greetings, introductions
+        kind: aggregate
+        labels:
+          - culture: British
+            title: 'Unit 1: Getting Started'
+            overview: >-
+              This unit covers greetings, introductions, and basic personal
+              information exchange. Students will learn common phrases for
+              meeting people and talking about themselves.
+            details: Greetings and introductions. Basic personal information.
+        def:
+          - metadata:
+              entity: syllabus
+              name: A1-Unit1-Greetings-Introductions
+              learn:
+                objective: Greetings, introductions
+            kind: aggregate
+            labels:
+              - culture: British
+                title: Greetings and Introductions (British English)
+                overview: >-
+                  This unit covers essential greetings and introductions for
+                  beginners. Students will learn how to greet people, introduce
+                  themselves, and ask for names.
+                details: Learn basic greetings and introductions in British English.
+            def:
+              - metadata:
+                  name: Flashcard Creation Prompt
+                  learn:
+                    objective: >-
+                      Learn vocabulary related to greetings and introductions at
+                      CEFR A1 level
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create flashcards for learning vocabulary related to
+                      greetings and introductions at the CEFR A1 level.  The
+                      lesson is on greetings and introductions.  Include only
+                      one learning material.
+                    schema: string
+      - metadata:
+          entity: syllabus
+          name: A1-Unit2
+          learn:
+            objective: Basic sentences, numbers
+        kind: aggregate
+        labels:
+          - culture: American
+            title: 'Unit 2: Basic Communication'
+            overview: >-
+              This unit introduces basic sentence structures, simple questions
+              and answers, and numbers from 1 to 100. Students will learn to
+              form simple sentences and ask basic questions.
+            details: >-
+              Basic sentence structures. Simple questions and answers. Numbers
+              1-100.
+        def:
+          - metadata:
+              entity: syllabus
+              name: 'A1 Unit: Basic Sentences, Numbers'
+              learn:
+                objective: Basic sentences, numbers
+            kind: aggregate
+            labels:
+              - culture: Global
+                title: Basic Sentences and Numbers
+                overview: >-
+                  This unit introduces fundamental sentence structures and
+                  number recognition, forming the base for further language
+                  acquisition.
+                details: >-
+                  Learn to construct basic sentences and understand numbers from
+                  0 to 100.
+            def:
+              - metadata:
+                  name: Flashcard Generation Prompt
+                  learn:
+                    objective: >-
+                      Learn basic vocabulary related to numbers and common
+                      phrases for CEFR A1 level
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create flashcards for learning vocabulary related to the
+                      CEFR A1 unit 'Basic sentences, numbers' and lesson 'Basic
+                      sentences, numbers'.  The flashcards should focus on basic
+                      vocabulary for numbers (0-100) and common greetings and
+                      basic sentences.  Include both the word/phrase and its
+                      translation in English.  Limit the number of flashcards to
+                      1.
+                    schema: string
+      - metadata:
+          entity: syllabus
+          name: A1-Unit3
+          learn:
+            objective: Verbs, daily routines
+        kind: aggregate
+        labels:
+          - culture: Global
+            title: 'Unit 3: Daily Life'
+            overview: >-
+              This unit focuses on common verbs, daily routines, and the simple
+              past tense. Students will learn to talk about their daily
+              activities and past experiences.
+            details: Common verbs. Daily routines. Simple past tense.
+        def:
+          - metadata:
+              entity: syllabus
+              name: A1_Verbs_DailyRoutines
+              learn:
+                objective: Daily routines verbs
+            kind: aggregate
+            labels:
+              - culture: Global
+                title: Verbs, Daily Routines
+                overview: >-
+                  This unit focuses on the most common verbs used to describe
+                  daily routines.  It includes activities to practice sentence
+                  construction and pronunciation.
+                details: >-
+                  This unit introduces basic verbs related to daily routines.
+                  Learners will be able to talk about their daily activities
+                  using simple sentences.
+            def:
+              - metadata:
+                  name: Daily Routines Verbs Flashcards
+                  learn:
+                    objective: >-
+                      Learn vocabulary related to daily routines verbs for CEFR
+                      level A1
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create flashcards for learning vocabulary related to daily
+                      routines verbs for CEFR level A1.  The flashcards should
+                      include the verb in English, its translation in [Specify
+                      Target Language], and an example sentence in [Specify
+                      Target Language].
+                    schema: string
+          - metadata:
+              entity: syllabus
+              name: A1_Verbs_DailyRoutines_Lesson1
+              learn:
+                objective: Basic verbs
+            kind: aggregate
+            labels:
+              - culture: Global
+                title: 'Lesson 1: Basic Verbs of Daily Routines'
+                overview: >-
+                  This lesson focuses on introducing and practicing the most
+                  common verbs related to daily routines. Activities include
+                  matching exercises, sentence completion, and simple dialogues.
+                details: >-
+                  Lesson 1 introduces basic verbs like wake up, get up, go to
+                  school/work, eat, sleep etc.  Learners will practice using
+                  these verbs in simple sentences.
+            def:
+              - metadata:
+                  name: Flashcard Generation Prompt
+                  learn:
+                    objective: >-
+                      Learn basic verbs related to daily routines at CEFR A1
+                      level
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create flashcards for learning basic verbs related to
+                      daily routines, suitable for CEFR level A1 learners.  The
+                      flashcards should include the verb in English, its
+                      translation in [Specify Target Language], and an example
+                      sentence in [Specify Target Language].
+                    schema: string
+          - metadata:
+              entity: syllabus
+              name: A1_Verbs_DailyRoutines_Lesson2
+              learn:
+                objective: Time expressions
+            kind: aggregate
+            labels:
+              - culture: Global
+                title: 'Lesson 2: Time Expressions with Daily Routines'
+                overview: >-
+                  This lesson builds on Lesson 1 by introducing time
+                  expressions. Activities include ordering sentences, creating
+                  short paragraphs, and simple role-playing.
+                details: >-
+                  Lesson 2 focuses on using time expressions with daily routine
+                  verbs (e.g., in the morning, in the afternoon, at night).
+                  Learners will practice forming simple sentences with time
+                  expressions.
+            def:
+              - metadata:
+                  name: FlashcardPrompt
+                  learn:
+                    objective: >-
+                      Learn vocabulary related to time expressions in the
+                      context of daily routines at CEFR level A1
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create a flashcard for learning vocabulary related to time
+                      expressions for CEFR level A1, focusing on the unit
+                      'Verbs, daily routines'.  The flashcard should include a
+                      term related to time, its definition, and an example
+                      sentence using the term in a daily routine context.
+                    schema: flashcard
+          - metadata:
+              entity: syllabus
+              name: A1_Verbs_DailyRoutines_Lesson3
+              learn:
+                objective: Frequency adverbs
+            kind: aggregate
+            labels:
+              - culture: Global
+                title: 'Lesson 3: Frequency Adverbs and Daily Routines'
+                overview: >-
+                  This lesson focuses on expressing frequency in relation to
+                  daily routines. Activities include sentence transformation,
+                  creating personal schedules, and short presentations.
+                details: >-
+                  Lesson 3 introduces the use of frequency adverbs (e.g.,
+                  always, usually, often, sometimes, never) with daily routine
+                  verbs. Learners will practice forming sentences expressing
+                  frequency.
+            def:
+              - metadata:
+                  name: Frequency Adverbs Flashcard Prompt
+                  learn:
+                    objective: >-
+                      Learn frequency adverbs related to daily routines at CEFR
+                      A1 level
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create a flashcard for learning frequency adverbs related
+                      to daily routines at the CEFR A1 level.  The flashcard
+                      should include the adverb, its meaning, and an example
+                      sentence using the adverb in a daily routine context.
+                    schema: flashcard
