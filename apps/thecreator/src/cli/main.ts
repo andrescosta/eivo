@@ -8,7 +8,7 @@ const bootstrap = async () => {
     const app = await NestFactory.create(AppCommandModule);
     await CommandFactory.run(AppCommandModule);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

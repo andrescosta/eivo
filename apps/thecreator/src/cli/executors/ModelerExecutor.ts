@@ -2,7 +2,6 @@ import { google } from '@ai-sdk/google';
 import { generateObject, LanguageModel } from 'ai';
 import { render } from 'mustache';
 import { dezerialize } from 'zodex';
-import { SpecFactory } from '../../types/SpecLoader';
 import {
   Aggregate,
   Modeler,
@@ -11,24 +10,25 @@ import {
   Schema,
   Spec,
 } from '../../types/Specs';
+import { SpecFactory } from '../../types/SpecFactory';
 export type model = 'google_gemini' | 'openapi';
 const SYSTEM_PROMPT = 'system_prompt';
-type VartType = Spec | Spec[];
-type ContextType = Spec | Spec[] | string;
+type ResultType = Spec | Spec[];
+type ContextType = Spec | Spec[];
 
 export class ModelerExecutor {
   public async execute(
     modeler: Modeler,
     specs: Map<string, Spec>,
     systemPrompt?: string,
-  ): Promise<VartType | null> {
+  ): Promise<ResultType> {
     const context = new Map<string, ContextType>();
     if (systemPrompt) {
       const prompt = specs.get(systemPrompt) as Prompt;
       if (prompt) {
         context.set(SYSTEM_PROMPT, prompt);
       } else {
-        console.log(`Warning: System prompt not found.`);
+        console.error(`Warning: System prompt not found.`);
       }
     }
     return await this.executeModeler(modeler, specs, context);
@@ -38,7 +38,7 @@ export class ModelerExecutor {
     modeler: Modeler,
     specs: Map<string, Spec>,
     context: Map<string, ContextType>,
-  ): Promise<VartType | null> {
+  ): Promise<ResultType> {
     const resultPrompt = await this.executePrompt(
       modeler.def.prompt,
       specs,
@@ -82,38 +82,34 @@ export class ModelerExecutor {
     specs: Map<string, Spec>,
     context: Map<string, ContextType>,
     system?: PromptDef,
-  ): Promise<VartType | null> {
-    try {
-      if (!prompt.schema) return null;
-      const schema = specs.get(prompt.schema) as Schema;
-      if (!schema) {
-        throw new Error(`The schema ${prompt.schema} does not exist.`);
-      }
-
-      const systemPrompt =
-        (context.get(SYSTEM_PROMPT) as Prompt)?.def.prompt.text ?? system?.text;
-      const systemPromptRendered = systemPrompt
-        ? render(systemPrompt, Object.fromEntries(context))
-        : '';
-      const promptRendered = render(prompt.text, Object.fromEntries(context));
-
-      const zodSchema = dezerialize(
-        JSON.parse(JSON.stringify(schema.def, null, 2)),
-      );
-      const { object } = await generateObject({
-        model: this.getLanguageModel(),
-        schema: zodSchema,
-        system: systemPromptRendered,
-        prompt: promptRendered,
-      });
-
-      return Array.isArray(object)
-        ? object.map((p) => SpecFactory.build(p))
-        : SpecFactory.build(object);
-    } catch (e) {
-      console.log(e);
-      throw e;
+  ): Promise<ResultType> {
+    if (!prompt.schema) return [];
+    const schema =
+      prompt.schema instanceof Schema
+        ? prompt.schema
+        : (specs.get(prompt.schema) as Schema);
+    if (!schema) {
+      throw new Error(`The schema ${prompt.schema} does not exist.`);
     }
+
+    const systemPrompt =
+      (context.get(SYSTEM_PROMPT) as Prompt)?.def.prompt.text ?? system?.text;
+    const systemPromptRendered = systemPrompt
+      ? render(systemPrompt, Object.fromEntries(context))
+      : '';
+    const promptRendered = render(prompt.text, Object.fromEntries(context));
+
+    const zodSchema = dezerialize(JSON.parse(JSON.stringify(schema.def)));
+    const { object } = await generateObject({
+      model: this.getLanguageModel(),
+      schema: zodSchema,
+      system: systemPromptRendered,
+      prompt: promptRendered,
+    });
+
+    return Array.isArray(object)
+      ? object.map((o) => SpecFactory.build(o))
+      : SpecFactory.build(object);
   }
 
   private getLanguageModel(mdl?: model): LanguageModel {

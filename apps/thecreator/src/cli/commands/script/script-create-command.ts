@@ -1,10 +1,10 @@
 import { CurriculumService, NamespaceService } from '@eivo/api';
 import fs from 'fs';
 import { CommandRunner, Option, SubCommand } from 'nest-commander';
-import { load } from '../../../types/SpecLoader';
-import { Modeler } from '../../../types/Specs';
+import { Modeler, Spec } from '../../../types/Specs';
 import { ModelerExecutor } from '../../executors/ModelerExecutor';
 import yaml from 'js-yaml';
+import { SpecFactory } from 'apps/thecreator/src/types/SpecFactory';
 @SubCommand({ name: 'execute' })
 export class ScriptExecCommand extends CommandRunner {
   constructor(
@@ -15,11 +15,11 @@ export class ScriptExecCommand extends CommandRunner {
   }
   async run(input: string[], options: Record<string, string>) {
     if (input.length == 0) {
-      console.log('invalid arguments.');
+      console.error('invalid arguments.');
       return;
     }
     const yamlString = fs.readFileSync(input[0], 'utf8');
-    const specs = load(yamlString);
+    const specs = this.load(yamlString);
 
     const modelerName = input.at(2) ?? '';
     const modeler = modelerName
@@ -45,5 +45,14 @@ export class ScriptExecCommand extends CommandRunner {
   })
   parseSystem(val: string) {
     return val;
+  }
+
+  load(specString: string): Map<string, Spec> {
+    const specs = new Map<string, Spec>();
+    yaml.loadAll(specString, (p) => {
+      const spec = SpecFactory.build(p);
+      specs.set(spec.metadata.name, spec);
+    });
+    return specs;
   }
 }
