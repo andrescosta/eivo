@@ -15,7 +15,7 @@
     "clean": "rimraf ./dist",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lesson:insert": "nest start cli -- app:lesson add /home/andres/projs/eivo/_infra/defs/def_new.yaml -d",
-    "llm": "nest start cli -- llm execute specs/french.spec.yaml"
+    "llm": "nest start cli -- llm execute specs/french.spec.yaml ./res.yaml"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.25",

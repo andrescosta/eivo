@@ -24,7 +24,7 @@ export class Metadata {
   public learn?: Learn;
   public cache?: Cache;
   public entity?: string;
-  public output?:boolean;
+  public output?: boolean;
 }
 export class Cache {
   public enabled!: boolean;
@@ -56,6 +56,24 @@ export class Schema extends Spec {
   }
 }
 
+export class Modeler extends Spec {
+  protected kind = 'modeler';
+  declare public def: ModelerBody;
+  constructor(data: Partial<Modeler>) {
+    super(data);
+    Object.assign(this, data);
+  }
+}
+export class ModelerBody {
+  context?: AnyDef;
+  prompt!: PromptDef;
+  children!: Modeler[];
+}
+export class PromptDef {
+  text!: string;
+  schema!: string;
+}
+
 export class Prompt extends Spec {
   protected kind = 'prompt';
   def!: PromptBody;
@@ -65,37 +83,9 @@ export class Prompt extends Spec {
   }
 }
 export class PromptBody {
-  prompt!: string;
-  schema!: string;
+  prompt!: PromptDef;
   context?: AnyDef;
 }
-export class Pipeline extends Spec {
-  protected kind = 'pipeline';
-  declare public def: PipelineBody;
-  constructor(data: Partial<Pipeline>) {
-    super(data);
-    Object.assign(this, data);
-  }
-}
-export class Loop extends Pipeline {
-  protected kind = 'loop';
-  declare public def: LoopBody;
-  constructor(data: Partial<Pipeline>) {
-    super(data);
-    Object.assign(this, data);
-  }
-}
-export class PipelineBody {
-  context?: AnyDef;
-  prompt?: Prompt;
-  tasks!: PipelineTask[];
-}
-export class LoopBody extends PipelineBody {
-  param!: string;
-}
-
-export type PipelineTask = Pipeline | Prompt;
-
 export class Aggregate extends SpecWithLabels {
   protected kind = 'aggregate';
   def!: AggregateBody;
@@ -104,37 +94,4 @@ export class Aggregate extends SpecWithLabels {
     Object.assign(this, data);
   }
 }
-export type AggregateBody = Prompt[] | Aggregate[];
-
-// export class MakerSpec extends SpecBase {
-//   type?: string;
-//   prompt!: string;
-//   steps!: Step[];
-//   constructor(data: Partial<MakerSpec>) {
-//     super(data);
-//     Object.assign(this, data);
-//   }
-// }
-// export type Step = ForEachStep | SimpleStep;
-// export class SimpleStep {
-//   name?: string;
-//   prompt!: string;
-//   schema!: string;
-// }
-
-// export class ForEachStep {
-//   name?: string;
-//   forEach!: ForEach;
-// }
-
-// export class ForEach {
-//   col!: string;
-//   steps!: Step[];
-// }
-// export class SchemaSpec extends SpecBase {
-//   def!: Map<string, Record<string, string | number | object>>;
-//   constructor(data: Partial<SchemaSpec>) {
-//     super(data);
-//     Object.assign(this, data);
-//   }
-// }
+export type AggregateBody = Spec[];

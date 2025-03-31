@@ -1,79 +1,68 @@
-kind: pipeline
+# kind: modeler
+# metadata:
+#   name: maker_for_french
+#   namespace: andres
+# def:
+#   prompt: 
+#     text: |
+#       You are a French teacher expert who can teach every level. 
+#       You are creating a curriculum to teach French at every level.
+#   children:
+kind: modeler
 metadata:
-  name: maker_for_french
-  namespace: andres
+  name: curriculumO
 def:
-  prompt: |
-    You are a French teacher expert who can teach every level. 
-    You are creating a curriculum to teach French at every level.
-  tasks:
-    - kind: prompt
+  prompt:
+    text: |
+      A curriculum is the principal component of the teaching activity. It provides information precise about what is the course about.
+      The labels are information to show to the users on the UI. Generate the information in French[cultre=FR], 
+      English[culture=US] and Spanish[culture=SP].
+      Create the labels to describe a French course for all the CEFR Level. 
+    schema: curriculum
+  children:
+    - kind: modeler
       metadata:
-        name: curriculum
-        output: true
+        name: syllabusO
       def:
-        prompt: |
-          A curriculum is the principal component of the teaching activity. It provides information precise about what is the course about.
-          The labels are information to show to the users on the UI. Generate the information in French[cultre=FR], 
-          English[culture=US] and Spanish[culture=SP].
-          Create the labels to describe a French course for all the CEFR Level. 
-        schema: curriculum
-    # - kind: prompt
-    #   metadata:
-    #    name: syllabus
-    #    output: true
-    #   def:
-    #     prompt: The French curriculum will be organized in syllabus areas, each of them will be a CEFR Level, generate one syllabus for each of them.
-    #     schema: syllabus
-    # - kind: loop
-    #   metadata:
-    #     name: syllabuses
-    #     output: true
-    #   def:
-    #     param: syllabus
-    #     tasks:
-    #       - kind: prompt
-    #         metadata:
-    #           name: unit
-    #           output: true
-    #         def:
-    #           prompt: | 
-    #             The CEFR level {{syllabus[].metadata.learn.objective}} will be organized in semantic units. 
-    #             Generate each of them.
-    #           schema: unit
-    #       - kind: loop
-    #         metadata:
-    #           name: units
-    #           output: true
-    #         def:
-    #           param: unit
-    #           tasks:
-    #             - kind: prompt
-    #               metadata:
-    #                 name: lesson
-    #                 output: true
-    #               def:
-    #                 prompt: |  
-    #                   For the CEFR level {{syllabus[].metadata.learn.objective}} and the unit '{{unit[].metadata.learn.objective}}'. 
-    #                   Generate a list of lessons.
-    #                 schema: lesson
-    #             - kind: loop
-    #               metadata:
-    #                 name: lessons
-    #                 output: true
-    #               def:
-    #                 param: lesson
-    #                 tasks:
-    #                   - kind: prompt
-    #                     metadata:
-    #                       name: material_template
-    #                       output: true
-    #                     def:
-    #                       prompt: | 
-    #                         For the CEFR level {{syllabus[].metadata.learn.objective}} and the unit '{{unit[].metadata.learn.objective}}'
-    #                         and the Lesson: {{lesson[].metadata.learn.objective}}. 
-    #                         Generate a prompt for a LLM  (could be you) for asking him to learning materia when the student request it.
-    #                       schema: material_template
+        prompt: 
+          text: |
+            The French curriculum will be organized in syllabus areas,
+             each of them will be a CEFR Level, generate one syllabus for each of them.
+             Restrict to 1 level only.
+          schema: syllabus
+        children:
+            - kind: modeler
+              metadata:
+                name: unitO
+              def:
+                prompt: 
+                  text: | 
+                    The CEFR level {{syllabusO[].metadata.learn.objective}} will be organized in semantic units. 
+                    Generate each of them. Restrict the number of units to generate to 3.
+                  schema: unit
+                children:
+                  - kind: modeler
+                    metadata:
+                      name: lessonO
+                    def:
+                      prompt: 
+                        text: |  
+                          For the CEFR level {{syllabusO[].metadata.learn.objective}} and the unit '{{unitO[].metadata.learn.objective}}'. 
+                          Generate a list of lessons. Restrict the number of lessons to 3.
+                        schema: lesson
+                      children:
+                        - kind: modeler
+                          metadata:
+                            name: material_templateO
+                          def:
+                            prompt: 
+                              text: | 
+                                For the CEFR level {{syllabusO[].metadata.learn.objective}}, the unit '{{unitO[].metadata.learn.objective}}'
+                                and the lesson: {{lessonO[].metadata.learn.objective}}. 
+                                Generate a prompt for a LLM  for asking to create flashcard for learning vocabulary related to this lesson.
+                                Generate a zod template for the prompt.
+                                Restrict the number of learn material to 1.
+                              schema: material_template
                           # context:
                           #   schema: material
 #                       - kind: prompt
@@ -275,6 +264,58 @@ def:
             details:
               type: string
 
+---
+kind: schema
+metadata:
+  name: material_template
+def:
+  type: array
+  element:
+    type: object
+    properties:
+      kind:
+        type: literal
+        value: prompt
+        description: "Specifies the type of this element, which is a prompt specification."
+      metadata:
+        type: object
+        description: "Metadata related to the prompt specification."
+        properties:
+          name:
+            type: string
+            value: material
+            description: "The name of the prompt specification."
+          learn:
+            type: object
+            description: "Learning-related metadata."
+            properties:
+              objective:
+                type: string
+                description: "The learning objective associated with this prompt specification."
+          # cache:
+          #   type: object
+          #   description: "Cache settings for storing generated content."
+          #   properties:
+          #     enabled:
+          #       type: boolean
+          #       description: "Indicates whether caching is enabled."
+      def:
+        type: object
+        description: "Definition of the prompt including text and schema type."
+        properties:
+          prompt:
+            type: object
+            description: "The prompt configuration for generating educational material."
+            properties:
+              text:
+                type: string
+                description: "The actual prompt text used to generate content."
+              schema:
+                type: string
+                value: flashcards
+                description: "The schema type for the generated content, specifying the format (e.g., flashcards)."
+
+
 # ---
 # kind: schema
 # metadata:
@@ -423,3 +464,18 @@ def:
 #     - details
 #     - overview
 #     - title
+
+
+# kind: prompt
+# metadata:
+#   name: material
+#   learn:
+#     objective: "vocabulary"
+# def:
+#   prompt:
+#     text: |
+#       Generate prompts for an LLM to generate educational material for the course.
+#       The theme of the material is verbs related to the unit {{}}, lesson
+#       The style of the material is a flashcard with one side  
+#     schema: 'flashcards'
+

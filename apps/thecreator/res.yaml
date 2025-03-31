@@ -1,0 +1,153 @@
+metadata:
+  entity: curriculum
+  name: |-
+    Curriculum de Fran
+    çais
+  namespace: langue
+  learn:
+    objective: |-
+      Maîtriser la langue fran
+      çaise
+kind: aggregate
+labels:
+  - culture: FR
+    title: |-
+      Cours de Fran
+      çais
+    overview: |-
+      Cours de fran
+      çais pour tous les niveaux
+    details: >-
+      Ce cours de fran
+
+      çais est con
+
+      çu pour les apprenants de tous niveaux, du d
+
+      ébutant au niveau avancé. Il couvre tous les aspects de la langue, y
+      compris la grammaire, le vocabulaire, la compr
+
+      hension orale et 
+
+      écrite, et l'expression orale et écrite. Les cours sont dispensés par des
+      professeurs exp
+
+      érimentés et qualifiés.
+  - culture: US
+    title: French Course
+    overview: French course for all levels
+    details: >-
+      This French course is designed for learners of all levels, from beginner
+      to advanced. It covers all aspects of the language, including grammar,
+      vocabulary, listening and reading comprehension, and speaking and writing.
+      Classes are taught by experienced and qualified teachers.
+  - culture: SP
+    title: |-
+      Curso de Franc
+      és
+    overview: |-
+      Curso de franc
+      és para todos los niveles
+    details: >-
+      Este curso de franc
+
+      és est
+
+      á dise
+
+      ñado para estudiantes de todos los niveles, desde principiantes hasta
+      avanzados. Abarca todos los aspectos del idioma, incluyendo gram
+
+      ática, vocabulario, comprensi
+
+      ón auditiva y lectora, y expresi
+
+      ón oral y escrita. Las clases son impartidas por profesores experimentados
+      y cualificados.
+def:
+  - metadata:
+      entity: syllabus
+      name: A1 French Syllabus
+      learn:
+        objective: A1
+    kind: aggregate
+    labels:
+      - culture: French
+        title: A1 French
+        overview: A1 Level French Syllabus
+        details: >-
+          This syllabus covers the basics of French grammar and vocabulary,
+          including greetings, introductions, and basic sentence structures.
+          Students will learn to understand and use simple French phrases in
+          everyday situations.
+    def:
+      - metadata:
+          entity: syllabus
+          name: CEFR A1 Syllabus
+          learn:
+            objective: A1 vocabulary
+        kind: aggregate
+        labels:
+          - culture: British
+            title: 'Unit 1: Greetings and Introductions'
+            overview: >-
+              This unit covers essential vocabulary and phrases for everyday
+              communication.
+            details: Basic greetings and introductions. Numbers 1-10. Days of the week.
+          - culture: American
+            title: 'Unit 2: Food and Dining'
+            overview: >-
+              This unit focuses on vocabulary and phrases related to food and
+              dining.
+            details: >-
+              Common food items. Ordering food in a restaurant. Basic sentence
+              structure.
+          - culture: International
+            title: 'Unit 3: Travel and Directions'
+            overview: >-
+              This unit covers essential phrases for navigating unfamiliar
+              places.
+            details: Simple directions. Asking for help. Basic travel vocabulary.
+        def:
+          - metadata:
+              entity: syllabus
+              name: A1 Vocabulary
+              learn:
+                objective: A1 vocabulary
+            kind: aggregate
+            labels:
+              - culture: Global
+                title: 'Lesson 1: Greetings and Introductions'
+                overview: >-
+                  Learn how to greet people and introduce yourself in different
+                  situations.
+                details: This lesson introduces basic greetings and introductions.
+              - culture: Global
+                title: 'Lesson 2: Everyday Objects'
+                overview: >-
+                  Expand your vocabulary by learning the names of everyday
+                  objects around you.
+                details: >-
+                  This lesson focuses on common everyday objects and their
+                  names.
+              - culture: Global
+                title: 'Lesson 3: Actions and Verbs'
+                overview: Learn how to describe simple actions and activities.
+                details: This lesson teaches basic verbs and actions.
+            def:
+              - metadata:
+                  name: A1 Vocabulary Flashcards
+                  learn:
+                    objective: >-
+                      Learn vocabulary related to the CEFR level A1 unit 'A1
+                      vocabulary' and lesson 'A1 vocabulary'.
+                kind: prompt
+                def:
+                  prompt:
+                    text: >-
+                      Create flashcards for learning vocabulary related to the
+                      CEFR level A1 unit 'A1 vocabulary' and lesson 'A1
+                      vocabulary'.  The flashcards should include the word, its
+                      pronunciation (in IPA), its definition, and an example
+                      sentence.  Restrict the number of flashcards to 1.
+                    schema: string

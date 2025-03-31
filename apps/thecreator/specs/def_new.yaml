@@ -80,12 +80,13 @@ def:
                   cache:
                     enabled: true
                 def:
-                  prompt: |
-                      Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ variations.ending }}.
-                      In each of these phrases the verb is missing and the student must complete it.
-                      Use a mix of personal pronouns and normal French people names.
-                      Provide the solution and verb in the infinitive in the corresponding fields.
-                  schema: 'one_verb'
+                  prompt: 
+                    text: |
+                        Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ variations.ending }}.
+                        In each of these phrases the verb is missing and the student must complete it.
+                        Use a mix of personal pronouns and normal French people names.
+                        Provide the solution and verb in the infinitive in the corresponding fields.
+                    schema: 'one_verb'
                   context:
                     type: 'flashcard'
                     theme: 'terminaison'

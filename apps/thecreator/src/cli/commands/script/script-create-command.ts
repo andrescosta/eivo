@@ -2,9 +2,9 @@ import { CurriculumService, NamespaceService } from '@eivo/api';
 import fs from 'fs';
 import { CommandRunner, Option, SubCommand } from 'nest-commander';
 import { load } from '../../../types/SpecLoader';
-import { Pipeline } from '../../../types/Specs';
-import { PipelineExecutor } from '../../executors/PipelineExecutor';
-
+import { Modeler } from '../../../types/Specs';
+import { ModelerExecutor } from '../../executors/ModelerExecutor';
+import yaml from 'js-yaml';
 @SubCommand({ name: 'execute' })
 export class ScriptExecCommand extends CommandRunner {
   constructor(
@@ -19,34 +19,20 @@ export class ScriptExecCommand extends CommandRunner {
       return;
     }
     const yamlString = fs.readFileSync(input[0], 'utf8');
-    const pipelineName = input.at(1) ?? '';
     const specs = load(yamlString);
-    let pipelineSpec;
-    if (pipelineName) {
-      pipelineSpec = specs.get(pipelineName);
-      if (!pipelineSpec) {
-        throw new Error(`Pipeline ${pipelineName} does not exist `);
-      }
-      if (!(pipelineSpec instanceof Pipeline)) {
-        throw new Error(`${pipelineName} is not a pipeline `);
-      }
-    } else {
-      pipelineSpec = [...specs.values()].find((p) => p instanceof Pipeline);
-      if (!pipelineSpec) {
-        throw new Error(`Not Pipeline present in the file.`);
-      }
+
+    const modelerName = input.at(2) ?? '';
+    const modeler = modelerName
+      ? specs.get(modelerName)
+      : [...specs.values()].find((p) => p instanceof Modeler);
+    if (!modeler && modelerName) {
+      throw new Error(`Modeler ${modelerName} does not exist`);
     }
-    const res = await new PipelineExecutor().start(
-      pipelineSpec,
-      specs,
-    );
-    // const yaml_maker = yaml.dump(maker);
-    // const yaml_schemas = yaml.dump(Array.from(schemas.values()));
-    // fs.writeFileSync(input[1], yaml_schemas, 'utf8');
-    // fs.writeFileSync(input[2], yaml_maker, 'utf8');
-    // const [curr, schs] = this.execute(maker, schemas) ?? [];
-    // console.log(curr);
-    // console.log(schs);
+    if (!(modeler instanceof Modeler)) {
+      throw new Error("Modeler not found.");
+    }
+    const res = await new ModelerExecutor().execute(modeler, specs);
+    fs.writeFileSync(input[1], yaml.dump(res));
   }
   @Option({
     flags: '-d, --debug',

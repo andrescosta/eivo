@@ -1,13 +1,5 @@
 import * as yaml from 'js-yaml';
-import {
-  Aggregate,
-  Pipeline,
-  Prompt,
-  Schema,
-  Spec,
-  PipelineTask,
-  Loop,
-} from './Specs';
+import { Aggregate, Modeler, Prompt, Schema, Spec } from './Specs';
 
 export function load(specString: string): Map<string, Spec> {
   try {
@@ -39,9 +31,8 @@ export class SpecFactory {
   } = {
     prompt: Prompt,
     schema: Schema,
-    pipeline: Pipeline,
+    modeler: Modeler,
     aggregate: Aggregate,
-    loop: Loop,
   };
   public static build(data: any): Spec {
     if (!data.kind) {
@@ -54,16 +45,16 @@ export class SpecFactory {
     }
     const res = new ClassConstructor(data);
     if (res.specKind() == 'pipeline' || res.specKind() == 'loop') {
-      const tasks = new Array<PipelineTask>();
-      for (const t of (res as Pipeline).def.tasks) {
+      const tasks = new Array<Modeler>();
+      for (const t of (res as Modeler).def.children) {
         const s = this.build(t);
-        if (s instanceof Prompt || s instanceof Pipeline || s instanceof Loop) {
+        if (s instanceof Modeler) {
           tasks.push(s);
         } else {
           throw new Error(`Illegal kind for a Pipeline: ${kind}`);
         }
       }
-      (res as Pipeline).def.tasks = tasks;
+      (res as Modeler).def.children = tasks;
     }
     return res;
   }
