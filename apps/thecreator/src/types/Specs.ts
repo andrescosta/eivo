@@ -67,11 +67,12 @@ export class Modeler extends Spec {
 export class ModelerBody {
   context?: AnyDef;
   prompt!: PromptDef;
+  system?: PromptDef;
   children!: Modeler[];
 }
 export class PromptDef {
   text!: string;
-  schema!: string;
+  schema?: string;
 }
 
 export class Prompt extends Spec {

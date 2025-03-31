@@ -1,69 +1,40 @@
 metadata:
   entity: curriculum
-  name: |-
-    Curriculum de Fran
-    çais
+  name: Curriculum Français
   namespace: langue
   learn:
-    objective: |-
-      Maîtriser la langue fran
-      çaise
+    objective: Maîtriser la langue française à tous les niveaux du CECR.
 kind: aggregate
 labels:
   - culture: FR
-    title: |-
-      Cours de Fran
-      çais
-    overview: |-
-      Cours de fran
-      çais pour tous les niveaux
+    title: Cours de Français - Tous niveaux
+    overview: Apprenez le français de A1 à C2 avec notre programme complet et engageant.
     details: >-
-      Ce cours de fran
-
-      çais est con
-
-      çu pour les apprenants de tous niveaux, du d
-
-      ébutant au niveau avancé. Il couvre tous les aspects de la langue, y
-      compris la grammaire, le vocabulaire, la compr
-
-      hension orale et 
-
-      écrite, et l'expression orale et écrite. Les cours sont dispensés par des
-      professeurs exp
-
-      érimentés et qualifiés.
+      Ce cours de français est conçu pour les niveaux A1 à C2 du Cadre européen
+      commun de référence pour les langues (CECR). Il couvre tous les aspects de
+      la langue, de la grammaire au vocabulaire, en passant par la prononciation
+      et la compréhension orale et écrite.  Chaque niveau comprend des exercices
+      pratiques, des jeux et des activités culturelles pour une immersion
+      complète.
   - culture: US
-    title: French Course
-    overview: French course for all levels
+    title: French Course - All Levels
+    overview: Learn French from A1 to C2 with our comprehensive and engaging program.
     details: >-
-      This French course is designed for learners of all levels, from beginner
-      to advanced. It covers all aspects of the language, including grammar,
-      vocabulary, listening and reading comprehension, and speaking and writing.
-      Classes are taught by experienced and qualified teachers.
+      This French course is designed for levels A1 to C2 of the Common European
+      Framework of Reference for Languages (CEFR). It covers all aspects of the
+      language, from grammar and vocabulary to pronunciation, listening and
+      reading comprehension. Each level includes practical exercises, games, and
+      cultural activities for complete immersion.
   - culture: SP
-    title: |-
-      Curso de Franc
-      és
-    overview: |-
-      Curso de franc
-      és para todos los niveles
+    title: Curso de Francés - Todos los niveles
+    overview: Aprende francés de A1 a C2 con nuestro programa completo y atractivo.
     details: >-
-      Este curso de franc
-
-      és est
-
-      á dise
-
-      ñado para estudiantes de todos los niveles, desde principiantes hasta
-      avanzados. Abarca todos los aspectos del idioma, incluyendo gram
-
-      ática, vocabulario, comprensi
-
-      ón auditiva y lectora, y expresi
-
-      ón oral y escrita. Las clases son impartidas por profesores experimentados
-      y cualificados.
+      Este curso de francés está diseñado para los niveles A1 a C2 del Marco
+      Común Europeo de Referencia para las Lenguas (MCER). Cubre todos los
+      aspectos del idioma, desde la gramática y el vocabulario hasta la
+      pronunciación, la comprensión auditiva y la lectura. Cada nivel incluye
+      ejercicios prácticos, juegos y actividades culturales para una inmersión
+      completa.
 def:
   - metadata:
       entity: syllabus
@@ -77,77 +48,73 @@ def:
         overview: A1 Level French Syllabus
         details: >-
           This syllabus covers the basics of French grammar and vocabulary,
-          including greetings, introductions, and basic sentence structures.
-          Students will learn to understand and use simple French phrases in
-          everyday situations.
+          including greetings, introductions, basic sentence structures, and
+          common verbs. Students will learn to understand and respond to simple
+          questions and statements, and will be able to introduce themselves and
+          others.
     def:
       - metadata:
           entity: syllabus
-          name: CEFR A1 Syllabus
+          name: French A1 Curriculum
           learn:
-            objective: A1 vocabulary
+            objective: Learn French A1
         kind: aggregate
         labels:
-          - culture: British
-            title: 'Unit 1: Greetings and Introductions'
+          - culture: French culture
+            title: 'Unit 1: Bonjour! - Greetings and Introductions'
             overview: >-
-              This unit covers essential vocabulary and phrases for everyday
-              communication.
-            details: Basic greetings and introductions. Numbers 1-10. Days of the week.
-          - culture: American
-            title: 'Unit 2: Food and Dining'
+              This unit introduces learners to common French greetings, basic
+              self-introductions, and useful everyday expressions.  It focuses
+              on practical communication in simple situations.
+            details: Greetings, basic introductions, and everyday expressions.
+          - culture: French daily life
+            title: 'Unit 2: Ma journée - My Day'
             overview: >-
-              This unit focuses on vocabulary and phrases related to food and
-              dining.
-            details: >-
-              Common food items. Ordering food in a restaurant. Basic sentence
-              structure.
-          - culture: International
-            title: 'Unit 3: Travel and Directions'
+              This unit expands on basic communication by introducing vocabulary
+              and sentence structures related to daily routines, family members,
+              and hobbies. Learners will be able to describe their own daily
+              life and ask simple questions about others.
+            details: Talking about daily routines, family, and hobbies.
+          - culture: French food and shopping
+            title: 'Unit 3: À table! - Food and Shopping'
             overview: >-
-              This unit covers essential phrases for navigating unfamiliar
-              places.
-            details: Simple directions. Asking for help. Basic travel vocabulary.
+              This unit focuses on vocabulary and phrases related to food,
+              shopping, and expressing preferences. Learners will be able to
+              order food in a simple setting and ask for items in a shop.
+            details: Ordering food, shopping for groceries, and describing preferences.
         def:
           - metadata:
               entity: syllabus
-              name: A1 Vocabulary
+              name: Learn French A1
               learn:
-                objective: A1 vocabulary
+                objective: Greetings, introductions
             kind: aggregate
             labels:
-              - culture: Global
-                title: 'Lesson 1: Greetings and Introductions'
+              - culture: French
+                title: 'Learn French A1: Unit 1 - Bonjour le monde!'
                 overview: >-
-                  Learn how to greet people and introduce yourself in different
-                  situations.
-                details: This lesson introduces basic greetings and introductions.
-              - culture: Global
-                title: 'Lesson 2: Everyday Objects'
-                overview: >-
-                  Expand your vocabulary by learning the names of everyday
-                  objects around you.
+                  This is the first unit in the Learn French A1 course. It
+                  covers essential topics such as greetings, introductions, and
+                  basic sentence structure.
                 details: >-
-                  This lesson focuses on common everyday objects and their
-                  names.
-              - culture: Global
-                title: 'Lesson 3: Actions and Verbs'
-                overview: Learn how to describe simple actions and activities.
-                details: This lesson teaches basic verbs and actions.
+                  This unit introduces basic French vocabulary and grammar for
+                  beginners. Students will learn to introduce themselves, ask
+                  basic questions, and understand simple sentences.
             def:
               - metadata:
-                  name: A1 Vocabulary Flashcards
+                  name: French A1 Greetings and Introductions Flashcards
                   learn:
-                    objective: >-
-                      Learn vocabulary related to the CEFR level A1 unit 'A1
-                      vocabulary' and lesson 'A1 vocabulary'.
+                    objective: Learn French greetings and introductions at A1 level
                 kind: prompt
                 def:
                   prompt:
                     text: >-
-                      Create flashcards for learning vocabulary related to the
-                      CEFR level A1 unit 'A1 vocabulary' and lesson 'A1
-                      vocabulary'.  The flashcards should include the word, its
-                      pronunciation (in IPA), its definition, and an example
-                      sentence.  Restrict the number of flashcards to 1.
+                      Create flashcards for learning French greetings and
+                      introductions at the A1 CEFR level.  Include French words
+                      and phrases with their English translations and example
+                      sentences.  Focus on vocabulary relevant to meeting
+                      people, saying hello and goodbye, and introducing oneself
+                      and others.  The flashcards should be suitable for
+                      memorization and spaced repetition.  Limit the number of
+                      flashcards to 1.
                     schema: string

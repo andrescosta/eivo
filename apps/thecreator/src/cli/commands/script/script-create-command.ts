@@ -29,16 +29,21 @@ export class ScriptExecCommand extends CommandRunner {
       throw new Error(`Modeler ${modelerName} does not exist`);
     }
     if (!(modeler instanceof Modeler)) {
-      throw new Error("Modeler not found.");
+      throw new Error('Modeler not found.');
     }
-    const res = await new ModelerExecutor().execute(modeler, specs);
+    const systemPrompt = options['system'];
+    const res = await new ModelerExecutor().execute(
+      modeler,
+      specs,
+      systemPrompt,
+    );
     fs.writeFileSync(input[1], yaml.dump(res));
   }
   @Option({
-    flags: '-d, --debug',
-    description: 'Load and print.',
+    flags: '-s, --system [spec name]',
+    description: 'Spec name for System prompt.',
   })
-  parseLoad(val: string) {
+  parseSystem(val: string) {
     return val;
   }
 }

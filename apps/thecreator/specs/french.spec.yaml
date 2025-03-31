@@ -1,13 +1,12 @@
-# kind: modeler
-# metadata:
-#   name: maker_for_french
-#   namespace: andres
-# def:
-#   prompt: 
-#     text: |
-#       You are a French teacher expert who can teach every level. 
-#       You are creating a curriculum to teach French at every level.
-#   children:
+kind: prompt
+metadata:
+  name: modeler_from_french
+def:
+  prompt: 
+    text: |
+      You are a French teacher expert who can teach every level. 
+      You are creating a curriculum to teach French at every level.
+---
 kind: modeler
 metadata:
   name: curriculumO

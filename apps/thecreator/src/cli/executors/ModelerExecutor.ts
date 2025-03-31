@@ -3,7 +3,14 @@ import { generateObject, LanguageModel } from 'ai';
 import { render } from 'mustache';
 import { dezerialize } from 'zodex';
 import { SpecFactory } from '../../types/SpecLoader';
-import { Aggregate, Modeler, PromptDef, Schema, Spec } from '../../types/Specs';
+import {
+  Aggregate,
+  Modeler,
+  Prompt,
+  PromptDef,
+  Schema,
+  Spec,
+} from '../../types/Specs';
 export type model = 'google_gemini' | 'openapi';
 const SYSTEM_PROMPT = 'system_prompt';
 type VartType = Spec | Spec[];
@@ -13,11 +20,17 @@ export class ModelerExecutor {
   public async execute(
     modeler: Modeler,
     specs: Map<string, Spec>,
+    systemPrompt?: string,
   ): Promise<VartType | null> {
     const context = new Map<string, ContextType>();
-    // if (objectSpec.def.prompt) {
-    //   context.set(SYSTEM_PROMPT, objectSpec.def.prompt.text);
-    // }
+    if (systemPrompt) {
+      const prompt = specs.get(systemPrompt) as Prompt;
+      if (prompt) {
+        context.set(SYSTEM_PROMPT, prompt);
+      } else {
+        console.log(`Warning: System prompt not found.`);
+      }
+    }
     return await this.executeModeler(modeler, specs, context);
   }
 
@@ -68,25 +81,29 @@ export class ModelerExecutor {
     prompt: PromptDef,
     specs: Map<string, Spec>,
     context: Map<string, ContextType>,
+    system?: PromptDef,
   ): Promise<VartType | null> {
     try {
+      if (!prompt.schema) return null;
       const schema = specs.get(prompt.schema) as Schema;
       if (!schema) {
         throw new Error(`The schema ${prompt.schema} does not exist.`);
       }
 
-      const systemPrompt = context.get(SYSTEM_PROMPT) as string;
+      const systemPrompt =
+        (context.get(SYSTEM_PROMPT) as Prompt)?.def.prompt.text ?? system?.text;
+      const systemPromptRendered = systemPrompt
+        ? render(systemPrompt, Object.fromEntries(context))
+        : '';
+      const promptRendered = render(prompt.text, Object.fromEntries(context));
 
       const zodSchema = dezerialize(
         JSON.parse(JSON.stringify(schema.def, null, 2)),
       );
-
-      const promptRendered = render(prompt.text, Object.fromEntries(context));
-
       const { object } = await generateObject({
         model: this.getLanguageModel(),
         schema: zodSchema,
-        system: systemPrompt,
+        system: systemPromptRendered,
         prompt: promptRendered,
       });
 
