@@ -4,8 +4,8 @@ import { AppModule, curriculumProvider, CurriculumService, databaseProviders, na
 
 import { AppLessonAddCommand } from './lesson/lesson-add-command';
 import { AppLessonCommand } from './lesson/lesson-command';
-import { ScriptCommand } from './script/script-command';
-import { ScriptExecCommand } from './script/script-create-command';
+import { LlmCommand } from './llm/LlmCommand';
+import { LlmGenerateCommand } from './llm/LlmGenerateCommand';
 
 
 @Module({
@@ -17,8 +17,8 @@ import { ScriptExecCommand } from './script/script-create-command';
     CurriculumService,
     AppLessonCommand,
     AppLessonAddCommand,
-    ScriptCommand,
-    ScriptExecCommand
+    LlmCommand,
+    LlmGenerateCommand
   ],
   imports: [AppModule, ConfigModule.forRoot()],
 })

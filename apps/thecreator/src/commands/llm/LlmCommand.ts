@@ -1,13 +1,13 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
-import { ScriptExecCommand } from './script-create-command';
+import { LlmGenerateCommand } from './LlmGenerateCommand';
 
 @Command({
   name: 'llm',
   arguments: '[command]',
   description: 'Execute script.',
-  subCommands: [ScriptExecCommand],
+  subCommands: [LlmGenerateCommand],
 })
-export class ScriptCommand extends CommandRunner {
+export class LlmCommand extends CommandRunner {
   constructor() {
     super();
   }

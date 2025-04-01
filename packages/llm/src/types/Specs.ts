@@ -1,10 +1,9 @@
-export type AnyDef = Map<string, Record<string, string | number | object>>;
-
 export abstract class Spec {
   protected abstract kind: string;
   metadata!: Metadata;
   constructor(data?: Partial<Spec>) {
     Object.assign(this, data);
+    this.metadata = this.metadata ?? ({ name: '', namespace: '' } as Metadata);
   }
   public specKind() {
     return this.kind;
@@ -15,22 +14,20 @@ export abstract class SpecWithLabels extends Spec {
   constructor(data?: Partial<SpecWithLabels>) {
     super(data);
     Object.assign(this, data);
+    this.labels = this.labels ?? [];
   }
 }
 
-export class Metadata {
-  public name!: string;
-  public namespace?: string;
-  public learn?: Learn;
-  public cache?: Cache;
-  public entity?: string;
-  public output?: boolean;
-}
-export class Cache {
-  public enabled!: boolean;
-}
-export class Learn {
-  public objective!: string;
+export class Metadata<T extends Record<string, unknown> = {}> {
+  name!: string;
+  namespace!: string;
+  extra?: T;
+  constructor(data: Partial<Metadata>) {
+    const { name, namespace, ...extra } = data;
+    this.name = name ?? '';
+    this.namespace = namespace ?? '';
+    this.extra = (extra ?? {}) as T;
+  }
 }
 
 export class Label {
@@ -47,12 +44,13 @@ export class Namespace extends Spec {
     Object.assign(this, data);
   }
 }
-export class Schema extends Spec {
+export class Schema<T extends Record<string, unknown> = {}> extends Spec {
   protected kind = 'schema';
-  def!: AnyDef;
+  def!: T;
   constructor(data?: Partial<Schema>) {
     super(data);
     Object.assign(this, data);
+    this.def = this.def ?? ({} as T);
   }
 }
 
@@ -62,10 +60,11 @@ export class Modeler extends Spec {
   constructor(data?: Partial<Modeler>) {
     super(data);
     Object.assign(this, data);
+    this.def = this.def ?? { prompt: { text: '' } as PromptDef, children: [] };
   }
 }
-export class ModelerBody {
-  context?: AnyDef;
+export class ModelerBody<T extends Record<string, unknown> = {}> {
+  context?: T;
   prompt!: PromptDef;
   system?: PromptDef;
   children!: Modeler[];
@@ -74,18 +73,18 @@ export class PromptDef {
   text!: string;
   schema?: string | Schema;
 }
-
 export class Prompt extends Spec {
   protected kind = 'prompt';
   def!: PromptBody;
   constructor(data?: Partial<Prompt>) {
     super(data);
     Object.assign(this, data);
+    this.def = this.def ?? { prompt: '' };
   }
 }
-export class PromptBody {
+export class PromptBody<T extends Record<string, unknown> = {}> {
   prompt!: PromptDef;
-  context?: AnyDef;
+  context?: T;
 }
 export class Aggregate extends SpecWithLabels {
   protected kind = 'aggregate';
@@ -93,6 +92,7 @@ export class Aggregate extends SpecWithLabels {
   constructor(data?: Partial<Aggregate>) {
     super(data);
     Object.assign(this, data);
+    this.def = this.def ?? [];
   }
 }
 export type AggregateBody = Spec[];

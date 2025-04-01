@@ -4,8 +4,10 @@ metadata:
 def:
   prompt: 
     text: |
-      You are a French teacher expert who can teach every level. 
+      You are a French teacher expert who can teach at every level. 
       You are creating a curriculum to teach French at every level.
+      The objects to create contains labels. The labels are information to show to the users on the different UIs.
+      Generate each label in French[culture=FR], English[culture=US] and Spanish[culture=SP].
 ---
 kind: modeler
 metadata:
@@ -14,9 +16,6 @@ def:
   prompt:
     text: |
       A curriculum is the principal component of the teaching activity. It provides information precise about what is the course about.
-      The labels are information to show to the users on the UI. Generate the information in French[cultre=FR], 
-      English[culture=US] and Spanish[culture=SP].
-      Create the labels to describe a French course for all the CEFR Level. 
     schema: curriculum
   children:
     - kind: modeler

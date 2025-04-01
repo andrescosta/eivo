@@ -9,77 +9,74 @@ import {
   PromptDef,
   Schema,
   Spec,
-} from '../../types/Specs';
-import { SpecFactory } from '../../types/SpecFactory';
-export type model = 'google_gemini' | 'openapi';
+} from '../types/Specs';
+import { SpecFactory } from '../types/SpecFactory';
+import { model } from './LlmGenerator';
 const SYSTEM_PROMPT = 'system_prompt';
 type ResultType = Spec | Spec[];
 type ContextType = Spec | Spec[];
+type Executable = Modeler | Prompt;
 
-export class ModelerExecutor {
+export class DefaultExecutor {
+  private specs!: ReadonlyMap<string, Spec>;
+  constructor(specs: ReadonlyMap<string, Spec>) {
+    this.specs = specs;
+  }
   public async execute(
-    modeler: Modeler,
-    specs: Map<string, Spec>,
+    modeler: Executable,
     systemPrompt?: string,
   ): Promise<ResultType> {
     const context = new Map<string, ContextType>();
     if (systemPrompt) {
-      const prompt = specs.get(systemPrompt) as Prompt;
+      const prompt = this.specs.get(systemPrompt) as Prompt;
       if (prompt) {
         context.set(SYSTEM_PROMPT, prompt);
       } else {
         console.error(`Warning: System prompt not found.`);
       }
     }
-    return await this.executeModeler(modeler, specs, context);
+    return await this.doExecute(modeler, context);
   }
 
-  protected async executeModeler(
-    modeler: Modeler,
-    specs: Map<string, Spec>,
+  protected async doExecute(
+    modeler: Executable,
     context: Map<string, ContextType>,
   ): Promise<ResultType> {
-    const resultPrompt = await this.executePrompt(
-      modeler.def.prompt,
-      specs,
-      context,
-    );
-    if (!Array.isArray(resultPrompt)) {
-      const newcontext = new Map(context);
-      if (resultPrompt != null) {
-        newcontext.set(modeler.metadata.name, resultPrompt);
-      }
-      for (const child of modeler.def.children ?? []) {
-        const resModeler = await this.executeModeler(child, specs, newcontext);
-        if (resultPrompt instanceof Aggregate && resModeler) {
-          resultPrompt.def = Array.isArray(resModeler)
-            ? resModeler
-            : [resModeler];
+    const resultPrompt = await this.executePrompt(modeler.def.prompt, context);
+    if (modeler instanceof Modeler) {
+      if (!Array.isArray(resultPrompt)) {
+        const newcontext = new Map(context);
+        if (resultPrompt != null) {
+          newcontext.set(modeler.metadata.name, resultPrompt);
         }
-      }
-    } else {
-      for (const resp of resultPrompt) {
-        const newcontext = new Map(context).set(
-          `${modeler.metadata.name}[]`,
-          resp,
-        );
-        for (const children of modeler.def.children ?? []) {
-          const resModeler = await this.executeModeler(
-            children,
-            specs,
-            newcontext,
+        for (const child of modeler.def.children ?? []) {
+          const resModeler = await this.doExecute(child, newcontext);
+          if (resultPrompt instanceof Aggregate && resModeler) {
+            resultPrompt.def = Array.isArray(resModeler)
+              ? resModeler
+              : [resModeler];
+          }
+        }
+      } else {
+        for (const resp of resultPrompt) {
+          const newcontext = new Map(context).set(
+            `${modeler.metadata.name}[]`,
+            resp,
           );
-          if (resp instanceof Aggregate && resModeler) {
-            resp.def = Array.isArray(resModeler) ? resModeler : [resModeler];
+          for (const children of modeler.def.children ?? []) {
+            const resModeler = await this.doExecute(children, newcontext);
+            if (resp instanceof Aggregate && resModeler) {
+              resp.def = Array.isArray(resModeler) ? resModeler : [resModeler];
+            }
           }
         }
       }
     }
     return resultPrompt;
   }
+
   protected async executePrompt(
     prompt: PromptDef,
-    specs: Map<string, Spec>,
     context: Map<string, ContextType>,
     system?: PromptDef,
   ): Promise<ResultType> {
@@ -87,7 +84,7 @@ export class ModelerExecutor {
     const schema =
       prompt.schema instanceof Schema
         ? prompt.schema
-        : (specs.get(prompt.schema) as Schema);
+        : (this.specs.get(prompt.schema) as Schema);
     if (!schema) {
       throw new Error(`The schema ${prompt.schema} does not exist.`);
     }
