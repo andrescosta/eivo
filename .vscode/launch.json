@@ -50,8 +50,8 @@
       "runtimeArgs": [
         "run",
         "--dir",
-        "apps/thecreator",
-        "llm",
+        "ops/cli",
+        "app:llm",
         "--",
         "--inspect-brk"
       ],
