@@ -1,5 +1,6 @@
 Curriculum:
-    prompt: You are a French teacher expert.
+    prompt: You are a French teacher expert, generating a curriculum for learning French.
+    Step 0- Generate a name and descriptions for your curriculum using the provided schema.
     Step 1- Each level will be a Subject:
         Prompt: what are the CEFR French Levels ? return them using the provided schema. (Level ID, main_characteristics). 
     Step 2- For each level, produce a list of Units:
@@ -12,26 +13,27 @@ Curriculum:
         If you considering writing a book to teach level {level}, for the Unit {}, for the Lesson {}, 
         Create exercises templates for exercises: ...
 
-curriculum_generator:
+curriculum_spec:
     prompt: string
-    steps: step_stype[]
+    steps: step_spec[]
 
-step_type:
+step_spec:
     name: string
-    schema: schema_type
-    instruction: instruction_type
+    schema: schema_spec
+    instruction: instruction_spec
 
-instruction_type: prompt_type | composed_instruction_type
+instruction_spec: prompt_spec | composed_instruction_spec
 
-prompt_type:
+prompt_spec:
     prompt: string
 
-composed_instruction_type:
-    for_each:step_type
+composed_instruction_spec:
+    for_each:step_spec
 
-step_type:
+step_spec:
     var: string
-    prompt: prompt_type
+    prompt: prompt_spec
         
+
 
 

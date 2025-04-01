@@ -15,27 +15,27 @@ import { LLMSchema } from './LLMSchema.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
-export class Tenant extends EivoNamedEntity implements Translatable {
-  @OneToMany((type) => Curriculum, (curriculum) => curriculum.tenant, {
+export class Namespace extends EivoNamedEntity implements Translatable {
+  @OneToMany((type) => Curriculum, (curriculum) => curriculum.namespace, {
     cascade: true,
     eager: true,
   })
   public curriculums!: Curriculum[];
 
-  @OneToMany((type) => LLMSchema, (schema) => schema.tenant, {
+  @OneToMany((type) => LLMSchema, (schema) => schema.namespace, {
     eager: true,
     cascade: true,
   })
   public llmSchemas!: LLMSchema[];
 
-  @ManyToMany((type) => User, (user) => user.tenants, {
+  @ManyToMany((type) => User, (user) => user.namespaces, {
     eager: true,
     cascade: true,
   })
   @JoinTable()
   public users!: User[];
 
-  @OneToMany((type) => Course, (course) => course.tenant, {
+  @OneToMany((type) => Course, (course) => course.namespace, {
     eager: true,
     cascade: true,
   })
@@ -44,18 +44,18 @@ export class Tenant extends EivoNamedEntity implements Translatable {
   /**
    * @autoMapIgnore
    */
-  @OneToMany(() => TenantTranslation, (translation) => translation.base, {
+  @OneToMany(() => NamespaceTranslation, (translation) => translation.base, {
     eager: true,
     cascade: true,
   })
-  translations!: Array<Translation<Tenant>>;
+  translations!: Array<Translation<Namespace>>;
 }
 
 @Entity()
-export class TenantTranslation
+export class NamespaceTranslation
   extends EivoNamedEntityTranslation
-  implements Translation<Tenant>
+  implements Translation<Namespace>
 {
-  @ManyToOne(() => Tenant)
-  base!: Tenant;
+  @ManyToOne(() => Namespace)
+  base!: Namespace;
 }

@@ -2,13 +2,13 @@ import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Curriculum } from './Curriculum.entity';
 import { EivoNamedEntity } from './EntityBase.entity';
 import { Member } from './Member.entity';
-import { Tenant } from './Tenant.entity';
+import { Namespace } from './Namespace.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
 export class Course extends EivoNamedEntity implements Translatable {
-  @ManyToOne(() => Tenant)
-  tenant!: Tenant;
+  @ManyToOne(() => Namespace)
+  namespace!: Namespace;
   @ManyToOne(() => Curriculum)
   curriculum!: Curriculum;
   @ManyToMany(() => Member, (member) => member.course)

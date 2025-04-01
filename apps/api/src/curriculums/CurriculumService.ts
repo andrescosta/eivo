@@ -32,7 +32,7 @@ export class CurriculumService {
   }
 
   async findFull(
-    tenant: number,
+    namespace: number,
     curriculum: number,
     findculture?: LanguageCode,
   ): Promise<Curriculum | null> {
@@ -40,7 +40,7 @@ export class CurriculumService {
     return await this.curriculumRepository
       .findOne({
         where: {
-          ...this.commonWhere(culture, tenant, curriculum),
+          ...this.commonWhere(culture, namespace, curriculum),
         },
         relations: this.commonRelations(),
       })
@@ -65,7 +65,7 @@ export class CurriculumService {
   }
 
   async findFullForSubject(
-    tenant: number,
+    namespace: number,
     curriculum: number,
     subject: number,
     findculture?: LanguageCode,
@@ -74,7 +74,7 @@ export class CurriculumService {
     return await this.curriculumRepository
       .findOne({
         where: {
-          ...this.commonWhere(culture, tenant, curriculum, subject),
+          ...this.commonWhere(culture, namespace, curriculum, subject),
         },
         relations: this.commonRelations(),
       })
@@ -101,7 +101,7 @@ export class CurriculumService {
 
   commonWhere(
     culture: string,
-    tenant: number,
+    namespace: number,
     curriculum?: number,
     subject?: number,
     unit?: number,
@@ -110,8 +110,8 @@ export class CurriculumService {
     materialTemplate?: number,
   ): FindOptionsWhere<Curriculum> {
     const t = {
-      tenant: {
-        id: tenant,
+      namespace: {
+        id: namespace,
       },
       ...this.getId(curriculum),
       translations: {
@@ -178,8 +178,8 @@ export class CurriculumService {
 
   commonWhere1(q: Queryable<Curriculum>): FindOptionsWhere<Curriculum> {
     const t = {
-      tenant: {
-        ...this.getId(q.tenant?.id),
+      namespace: {
+        ...this.getId(q.namespace?.id),
       },
       ...this.getId(q.id),
       translations: {

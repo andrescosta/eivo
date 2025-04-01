@@ -1,0 +1,479 @@
+kind: prompt
+metadata:
+  name: modeler_from_french
+def:
+  prompt: 
+    text: |
+      You are a French teacher expert who can teach at every level. 
+      You are creating a curriculum to teach French at every level.
+      The objects to create contains labels. The labels are information to show to the users on the different UIs.
+      Generate each label in French[culture=FR], English[culture=US] and Spanish[culture=SP].
+---
+kind: modeler
+metadata:
+  name: curriculumO
+def:
+  prompt:
+    text: |
+      A curriculum is the principal component of the teaching activity. It provides information precise about what is the course about.
+    schema: curriculum
+  children:
+    - kind: modeler
+      metadata:
+        name: syllabusO
+      def:
+        prompt: 
+          text: |
+            The French curriculum will be organized in syllabus areas,
+             each of them will be a CEFR Level, generate one syllabus for each of them.
+             Restrict to 1 level only.
+          schema: syllabus
+        children:
+            - kind: modeler
+              metadata:
+                name: unitO
+              def:
+                prompt: 
+                  text: | 
+                    The CEFR level {{syllabusO[].metadata.learn.objective}} will be organized in semantic units. 
+                    Generate each of them. Restrict the number of units to generate to 3.
+                  schema: unit
+                children:
+                  - kind: modeler
+                    metadata:
+                      name: lessonO
+                    def:
+                      prompt: 
+                        text: |  
+                          For the CEFR level {{syllabusO[].metadata.learn.objective}} and the unit '{{unitO[].metadata.learn.objective}}'. 
+                          Generate a list of lessons. Restrict the number of lessons to 3.
+                        schema: lesson
+                      children:
+                        - kind: modeler
+                          metadata:
+                            name: material_templateO
+                          def:
+                            prompt: 
+                              text: | 
+                                For the CEFR level {{syllabusO[].metadata.learn.objective}}, the unit '{{unitO[].metadata.learn.objective}}'
+                                and the lesson: {{lessonO[].metadata.learn.objective}}. 
+                                Generate a prompt for a LLM  for asking to create flashcard for learning vocabulary related to this lesson.
+                                Generate a zod template for the prompt.
+                                Restrict the number of learn material to 1.
+                              schema: material_template
+                          # context:
+                          #   schema: material
+#                       - kind: prompt
+#                         metadata:
+#                           name: exercise_template
+#                         def:
+#                           prompt: | 
+#                             For this lesson, generate a prompt for a LLM  (could be you) for asking him to exercises 
+#                             when the student request it.
+#                           schema: exercise
+#                           context:
+#                             schema: exercise_templare
+# ---
+# kind: schema
+# metadata:
+#   name: scriptor_labeled
+#   namespace: andres
+# def:
+#   type: array
+#   description: "A list of labels providing localized information."
+#   items:
+#     type: object
+#     description: "A set of labels in a specific language."
+#     properties:
+#       culture:
+#         type: string
+#         description: "The culture or language code (e.g., 'us' for English)."
+#       title:
+#         type: string
+#         description: "A short title for the object."
+#       overview:
+#         type: string
+#         description: "A brief summary."
+#       details:
+#         type: string
+#         description: "A detailed description."
+#     required:
+#       - culture
+#       - title
+#       - overview
+#       - details
+---
+kind: schema
+metadata:
+  name: curriculum
+  namespace: andres
+def:
+  type: object
+  properties:
+    kind:
+      type: literal
+      value: aggregate
+    metadata:
+      type: object
+      properties:
+        entity:
+          type: literal
+          value: curriculum
+        name:
+          type: string
+        namespace:
+          type: string
+        learn:
+          type: object
+          properties:
+            objective:
+              type: string
+    labels:
+      type: array
+      element:
+        type: object
+        properties:
+          culture:
+            type: string
+          title:
+            type: string
+          overview:
+            type: string
+          details:
+            type: string
+---
+kind: schema
+metadata:
+  name: syllabus
+def:
+  type: array
+  element:
+    type: object
+    properties:
+      kind:
+        type: literal
+        value: aggregate
+      metadata:
+        type: object
+        properties:
+          entity:
+            type: literal
+            value: syllabus
+          name:
+            type: string
+            value: syllabus
+          learn:
+            type: object
+            properties:
+              objective:
+                type: string
+                description: "The two letter ID of the level(like A1, B2, etc.)."
+      labels:
+        type: array
+        element:
+          type: object
+          properties:
+            culture:
+              type: string
+            title:
+              type: string
+            overview:
+              type: string
+            details:
+              type: string
+---
+kind: schema
+metadata:
+  name: unit
+def:
+  type: array
+  element:
+    type: object
+    properties:
+      kind:
+        type: literal
+        value: aggregate
+      metadata:
+        type: object
+        properties:
+          entity:
+            type: literal
+            value: syllabus
+          name:
+            type: string
+            value: syllabus
+          learn:
+            type: object
+            properties:
+              objective:
+                type: string
+                description: Short introduction (two or three words) to this unit. This will be used for lessons.
+      labels:
+        type: array
+        element:
+          type: object
+          properties:
+            culture:
+              type: string
+            title:
+              type: string
+            overview:
+              type: string
+            details:
+              type: string
+---
+kind: schema
+metadata:
+  name: lesson
+def:
+  type: array
+  element:
+    type: object
+    properties:
+      kind:
+        type: literal
+        value: aggregate
+      metadata:
+        type: object
+        properties:
+          entity:
+            type: literal
+            value: syllabus
+          name:
+            type: string
+            value: syllabus
+          learn:
+            type: object
+            properties:
+              objective:
+                type: string
+                description: Short introduction (two or three words) to this lesson. This will be used for generating exercise and material templates.
+      labels:
+        type: array
+        element:
+          type: object
+          properties:
+            culture:
+              type: string
+            title:
+              type: string
+            overview:
+              type: string
+            details:
+              type: string
+
+---
+kind: schema
+metadata:
+  name: material_template
+def:
+  type: array
+  element:
+    type: object
+    properties:
+      kind:
+        type: literal
+        value: prompt
+        description: "Specifies the type of this element, which is a prompt specification."
+      metadata:
+        type: object
+        description: "Metadata related to the prompt specification."
+        properties:
+          name:
+            type: string
+            value: material
+            description: "The name of the prompt specification."
+          learn:
+            type: object
+            description: "Learning-related metadata."
+            properties:
+              objective:
+                type: string
+                description: "The learning objective associated with this prompt specification."
+          # cache:
+          #   type: object
+          #   description: "Cache settings for storing generated content."
+          #   properties:
+          #     enabled:
+          #       type: boolean
+          #       description: "Indicates whether caching is enabled."
+      def:
+        type: object
+        description: "Definition of the prompt including text and schema type."
+        properties:
+          prompt:
+            type: object
+            description: "The prompt configuration for generating educational material."
+            properties:
+              text:
+                type: string
+                description: "The actual prompt text used to generate content."
+              schema:
+                type: string
+                value: flashcards
+                description: "The schema type for the generated content, specifying the format (e.g., flashcards)."
+
+
+# ---
+# kind: schema
+# metadata:
+#   name: subject
+# def:
+#   type: object
+#   description: "Schema for a subject object, including labels for different languages."
+#   properties:
+#     kind:
+#       type: string
+#       enum:
+#         - "subject"
+#       description: "The type of object, fixed to 'subject'."
+#     labels:
+#       description: "Localized labels containing title, overview, and details."
+#   required:
+#     - kind
+#     - labels
+# ---
+# kind: schema
+# metadata:
+#   name: unit
+#   namespace: andres
+# def:
+#   type: object
+#   description: "Schema for a unit object, including labels for different languages."
+#   properties:
+#     kind:
+#       type: string
+#       enum:
+#         - "unit"
+#       description: "The type of object, fixed to 'unit'."
+#     labels:
+#       description: "Localized labels containing title, overview, and details."
+#   required:
+#     - kind
+#     - labels
+# ---
+# kind: schema
+# metadata:
+#   name: lesson
+#   namespace: andres
+# def:
+#   type: object
+#   description: "Schema for a lesson object, including labels for different languages."
+#   properties:
+#     kind:
+#       type: string
+#       enum:
+#         - "lesson"
+#       description: "The type of object, fixed to 'lesson'."
+#     labels:
+#       description: "Localized labels containing title, overview, and details."
+#   required:
+#     - kind
+#     - labels
+# ---
+# kind: schema
+# metadata:
+#   name: lesson_exercise_complete_one_verbe
+#   namespace: andres
+# def:
+#   type: object
+#   description: "Schema for defining exercise templates."
+#   properties:
+#     kind:
+#       type: string
+#       enum: ["complete"]
+#       description: "The type of exercise."
+#     type:
+#       type: string
+#       enum: ["LLM"]
+#       description: "The type of content generation used."
+#     theme:
+#       type: string
+#       enum: ["VERB"]
+#       description: "The main theme of the exercise."
+#     label_templates:
+#       description: "Localized label templates with title, overview, and details."
+#     variations:
+#       type: array
+#       description: "List of allowed variations for the exercise."
+#       items:
+#         type: object
+#         properties:
+#           group:
+#             type: string
+#             enum: ["first", "second", "third"]
+#             description: "The verb group category."
+#           level:
+#             type: string
+#             enum: ["b1", "a1"]
+#             description: "The CEFR level."
+#           difficulty:
+#             type: string
+#             enum: ["easy", "medium", "hard"]
+#             description: "The difficulty level."
+#     prompt:
+#       type: string
+#       description: "The prompt used to generate exercises."
+#     schema:
+#       type: string
+#       enum: ["one_verb"]
+#       description: "The schema used for structuring the exercise."
+#     cache:
+#       type: object
+#       description: "Cache configuration settings."
+#       properties:
+#         enabled:
+#           type: boolean
+#           description: "Indicates if caching is enabled."
+#     learn:
+#       type: object
+#       description: "Learning-specific metadata."
+#       properties:
+#         type:
+#           type: string
+#           enum: ["verb"]
+#           description: "Specifies the learning type."
+#   required:
+#     - kind
+#     - type
+#     - theme
+#     - label_templates
+#     - prompt
+#     - schema
+# ---
+# kind: schema
+# metadata:
+#   name: lesson_exercise_complete_one_verbe
+#   namespace: andres
+# def:
+#   type: object
+#   description: "A set of labels for localized text in various languages."
+#   properties:
+#     details:
+#       type: string
+#       description: "A detailed explanation."
+#     overview:
+#       type: string
+#       description: "A summary or short description."
+#     title:
+#       type: string
+#       description: "A concise title."
+#   required:
+#     - details
+#     - overview
+#     - title
+
+
+# kind: prompt
+# metadata:
+#   name: material
+#   learn:
+#     objective: "vocabulary"
+# def:
+#   prompt:
+#     text: |
+#       Generate prompts for an LLM to generate educational material for the course.
+#       The theme of the material is verbs related to the unit {{}}, lesson
+#       The style of the material is a flashcard with one side  
+#     schema: 'flashcards'
+

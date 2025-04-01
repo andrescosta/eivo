@@ -7,13 +7,13 @@ import {
   EivoNamedEntity,
 } from './EntityBase.entity';
 import { Subject } from './Subject.entity';
-import { Tenant } from './Tenant.entity';
+import { Namespace } from './Namespace.entity';
 import { EivoNamedEntityTranslation, Translation } from './i18n';
 
 @Entity()
 export class Curriculum extends EivoNamedEntity {
-  @ManyToOne(() => Tenant, (tenant) => tenant.curriculums)
-  tenant!: Tenant;
+  @ManyToOne(() => Namespace, (namespace) => namespace.curriculums)
+  namespace!: Namespace;
 
   @OneToMany(() => Subject, (subject) => subject.curriculum, { cascade: true })
   subjects!: Subject[];

@@ -23,7 +23,8 @@
     "baseUrl": "./",
     "paths": {
       "@eivo/contracts/*": ["packages/contracts/src/*"],
-      "@eivo/api/*": ["apps/api/src/*"]
+      "@eivo/api/*": ["apps/api/src/*"],
+      "@eivo/llm/*": ["packages/llm/src/*"],
     }
   }
 }

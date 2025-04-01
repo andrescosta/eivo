@@ -1,0 +1,127 @@
+kind: namespace
+metadata:
+  name: andres
+labels:
+  - culture: us
+    title: 'My namespace'
+---
+kind: schema
+metadata:
+  name: one_verb
+  namespace: andres
+def:
+  one_verb:
+    type: object
+  definitions:
+    exercises:
+      type: array
+      element:
+        type: object
+        properties:
+          phrase:
+            type: string
+            description: Phrase with the verbe to complete.
+          solution:
+            type: string
+            description: Solution.
+          verb:
+            type: string
+            description: Verbe in the infinitve.
+          tense:
+            type: string
+            description: Tense of the verb to complete.
+---
+kind: aggregate
+metadata:
+  name: curriculum
+  namespace: andres
+  learn:
+    objective: "french"
+labels:
+  - culture: us
+    title: 'My French classes' # curriculum(eng, fra, spa)
+    overview: 'mmmm'
+    details: 'mmmm'
+def:
+  - kind: aggregate
+    name: syllabus
+    metadata:
+      learn:
+        objective: "a1"
+    labels:
+      - culture: us
+        title: 'Level A1' # syllabus(A1, A2, B2, B3, etc.)
+        overview: 'Grammar'
+        details: 'Grammar'
+    def:
+      - kind: aggregate 
+        name: unit
+        metadata:
+          learn:
+            objective: "a1"
+        labels:
+          - culture: us
+            title: 'Present.'
+            overview: 'Present'
+            details: 'Present'
+        def:
+          - kind: aggregate
+            name: lesson
+            metadata:
+              labels:
+                - culture: us
+                  title: 'You are a teacher in {{ req.level }} French class.'
+            def:
+              - kind: prompt
+                name: material
+                metadata:
+                  learn:
+                    objective: "verb"
+                  cache:
+                    enabled: true
+                def:
+                  prompt: 
+                    text: |
+                        Generate {{ qty }} {{ level }} phrases in French using a verbe ending with {{ variations.ending }}.
+                        In each of these phrases the verb is missing and the student must complete it.
+                        Use a mix of personal pronouns and normal French people names.
+                        Provide the solution and verb in the infinitive in the corresponding fields.
+                    schema: 'one_verb'
+                  context:
+                    type: 'flashcard'
+                    theme: 'terminaison'
+                    variations:
+                      - ending:
+                          anyOf: ['er', 'ir', 'dre']
+                    label_templates:
+                      title: 'Le Present({{ variations.ending }})'
+                      overview: 'Le Present({{ variations.ending }})'
+                      details: 'Le Present({{ variations.ending }})'
+              - kind: prompt
+                name: exercise
+                metadata:
+                  cache:
+                    enabled: true
+                  learn:
+                    type: "verb"
+                def:
+                  prompt: |
+                    Generate {{ req.qty }} {{ req.level }} French phrases in present tense and using ONLY verbs that belongs to the {{ variations.group }} group of French verbs. 
+                    In each of these phrases the verb is missing and the student must complete it. 
+                    Use a mix of personal pronouns and normal French people names.  
+                    Provide the solution and verb in the infinitive in the corresponding fields.
+                  schema: 'one_verb'
+                  context:
+                    type: 'complete' # crosswords, listening, multiplechoice
+                    theme: 'VERB'
+                    label_templates:
+                      details: 'Le Present({{ variations.group }} group)'
+                      overview: 'Le Present({{ variations.group }} group)'
+                      details: 'Le Present({{ variations.group }} group)'
+                    variations:
+                      - group:
+                          anyOf: ['first', 'second', 'third']
+                      - level:
+                          anyOf: ['b1', 'a1']
+                      - difficulty:
+                          anyOf: ['easy', 'medium', 'hard']

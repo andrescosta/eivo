@@ -1,0 +1,3 @@
+- The course modeler will generate only descriptions with context information.
+- New modeler for generating exercises... how ? If it depends on information generated previously:
+  - Supporting passing context parameters to the API <done>
