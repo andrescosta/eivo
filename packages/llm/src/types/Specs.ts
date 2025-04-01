@@ -1,3 +1,5 @@
+export type AnyData = Record<string, unknown>;
+
 export abstract class Spec {
   protected abstract kind: string;
   metadata!: Metadata;
@@ -18,7 +20,7 @@ export abstract class SpecWithLabels extends Spec {
   }
 }
 
-export class Metadata<T extends Record<string, unknown> = {}> {
+export class Metadata<T extends AnyData = {}> {
   name!: string;
   namespace!: string;
   extra?: T;
@@ -44,7 +46,7 @@ export class Namespace extends Spec {
     Object.assign(this, data);
   }
 }
-export class Schema<T extends Record<string, unknown> = {}> extends Spec {
+export class Schema<T extends AnyData = {}> extends Spec {
   protected kind = 'schema';
   def!: T;
   constructor(data?: Partial<Schema>) {
@@ -63,7 +65,7 @@ export class Modeler extends Spec {
     this.def = this.def ?? { prompt: { text: '' } as PromptDef, children: [] };
   }
 }
-export class ModelerBody<T extends Record<string, unknown> = {}> {
+export class ModelerBody<T extends AnyData = {}> {
   context?: T;
   prompt!: PromptDef;
   system?: PromptDef;
@@ -82,7 +84,7 @@ export class Prompt extends Spec {
     this.def = this.def ?? { prompt: '' };
   }
 }
-export class PromptBody<T extends Record<string, unknown> = {}> {
+export class PromptBody<T extends AnyData = {}> {
   prompt!: PromptDef;
   context?: T;
 }

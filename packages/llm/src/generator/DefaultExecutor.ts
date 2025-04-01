@@ -4,6 +4,7 @@ import { render } from 'mustache';
 import { dezerialize } from 'zodex';
 import {
   Aggregate,
+  AnyData,
   Modeler,
   Prompt,
   PromptDef,
@@ -12,9 +13,11 @@ import {
 } from '../types/Specs';
 import { SpecFactory } from '../types/SpecFactory';
 import { model } from './LlmGenerator';
+
+export type ContextType = Spec | Spec[] | AnyData;
+
 const SYSTEM_PROMPT = 'system_prompt';
 type ResultType = Spec | Spec[];
-type ContextType = Spec | Spec[];
 type Executable = Modeler | Prompt;
 
 export class DefaultExecutor {
@@ -25,15 +28,14 @@ export class DefaultExecutor {
   public async execute(
     modeler: Executable,
     systemPrompt?: string,
+    proContext?: Map<string, ContextType>,
   ): Promise<ResultType> {
-    const context = new Map<string, ContextType>();
+    const context = new Map(proContext);
     if (systemPrompt) {
       const prompt = this.specs.get(systemPrompt) as Prompt;
       if (prompt) {
         context.set(SYSTEM_PROMPT, prompt);
-      } else {
-        console.error(`Warning: System prompt not found.`);
-      }
+      } else console.error(`Warning: System prompt not found.`);
     }
     return await this.doExecute(modeler, context);
   }

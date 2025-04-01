@@ -3,12 +3,11 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import { Modeler, Prompt, PromptDef, Spec } from '../types/Specs';
 import { SpecFactory } from '../types/SpecFactory';
-import { DefaultExecutor } from './DefaultExecutor';
+import { ContextType, DefaultExecutor } from './DefaultExecutor';
 
 export type model = 'google_gemini' | 'openapi';
 
 export class LlmGenerator {
-
   private specs = new Map<string, Spec>();
   private constructor() {}
 
@@ -27,7 +26,11 @@ export class LlmGenerator {
     return exec;
   }
 
-  public async generate(name: string, systemPrompt?: string): Promise<any> {
+  public async generate(
+    name: string,
+    systemPrompt?: string,
+    context?: Map<string, ContextType>,
+  ): Promise<any> {
     if (!name) throw new Error('element required.');
     const spec = this.specs.get(name);
     if (!spec && name) {
@@ -40,6 +43,7 @@ export class LlmGenerator {
     const res = await new DefaultExecutor(this.specs).execute(
       spec,
       systemPrompt,
+      context,
     );
     return res;
   }
