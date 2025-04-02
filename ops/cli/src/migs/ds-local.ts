@@ -19,5 +19,5 @@ export const AppDataSource = new DataSource({
       rejectUnauthorized: false,
     },
   },
-  entities: ['/home/andres/projs/eivo/apps/api/src/entities/*{.ts,.js}'],
+  entities: ['/home/andres/projs/eivo/apps/api/src/modules/**/entities/*{.ts,.js}'],
 });
