@@ -26,7 +26,7 @@ export class UserController {
   @ApiResponse({ type: UserData })
   @ApiBody({ type: UserData })
   async create(@Body() utilisateur: User): Promise<User> {
-    return await this.userService.create(utilisateur);
+    return await this.userService.save(utilisateur);
   }
 
   @Get()
@@ -48,10 +48,10 @@ export class UserController {
   @ApiBody({ type: UserData })
   async update(
     @Param('id') id: string,
-    @Body() utilisateur: User,
+    @Body() user: User,
   ): Promise<User> {
     try {
-      return this.userService.update(+id, utilisateur);
+      return this.userService.save(user);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw new NotFoundException(error.message);

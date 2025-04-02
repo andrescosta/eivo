@@ -11,7 +11,7 @@ export class MemberService {
     private readonly membreRepository: Repository<Member>,
   ) {}
 
-  async create(membre: Member): Promise<Member> {
+  async save(membre: Member): Promise<Member> {
     return this.membreRepository.save(membre);
   }
 
@@ -21,13 +21,6 @@ export class MemberService {
 
   async findOne(id: number): Promise<Member | null> {
     return this.membreRepository.findOne({ where: { id } });
-  }
-
-  async update(id: number, membre: Partial<Member>): Promise<void> {
-    const res = await this.membreRepository.update(id, membre);
-    if (res.affected == 0) {
-      throw new EntityNotFoundError('Namespace');
-    }
   }
 
   async remove(id: number): Promise<void> {

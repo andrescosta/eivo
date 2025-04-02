@@ -16,7 +16,7 @@ export class GameController {
   @ApiResponse({ type: GameData })
   @ApiBody({ type: GameData })
   async create(@Body() utilisateur: Game): Promise<Game> {
-    return await this.gameService.create(utilisateur);
+    return await this.gameService.save(utilisateur);
   }
 
   @Get()
@@ -43,7 +43,7 @@ export class GameController {
     @Body() utilisateur: Game,
   ): Promise<Game> {
     try {
-      return this.gameService.update(+id, utilisateur);
+      return this.gameService.save(utilisateur);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw new NotFoundException(error.message);

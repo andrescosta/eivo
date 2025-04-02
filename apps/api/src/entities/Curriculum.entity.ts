@@ -4,19 +4,19 @@ import {
   OneToMany
 } from 'typeorm';
 import {
-  EivoNamedEntity,
-} from './EntityBase.entity';
-import { Subject } from './Subject.entity';
-import { Namespace } from './Namespace.entity';
+  EivoLabeledEntity,
+} from './EivoEntity.entity';
+import { Syllabus } from './Subject.entity';
+import { EivoNamespace } from './EivoNamespace.entity';
 import { EivoNamedEntityTranslation, Translation } from './i18n';
 
 @Entity()
-export class Curriculum extends EivoNamedEntity {
-  @ManyToOne(() => Namespace, (namespace) => namespace.curriculums)
-  namespace!: Namespace;
+export class Curriculum extends EivoLabeledEntity<Curriculum> {
+  @ManyToOne(() => EivoNamespace, (eivonamespace) => eivonamespace.curriculums)
+  eivoNamespace!: EivoNamespace;
 
-  @OneToMany(() => Subject, (subject) => subject.curriculum, { cascade: true })
-  subjects!: Subject[];
+  @OneToMany(() => Syllabus, (subject) => subject.curriculum, { cascade: true })
+  syllabuses!: Syllabus[];
 
   /**
    * @autoMapIgnore

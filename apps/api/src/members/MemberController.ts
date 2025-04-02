@@ -26,7 +26,7 @@ export class MemberController {
   @ApiResponse({ type: MemberData })
   @ApiBody({ type: MemberData })
   async create(@Body() membre: Member): Promise<Member> {
-    return this.memberService.create(membre);
+    return this.memberService.save(membre);
   }
 
   @Get()
@@ -48,7 +48,7 @@ export class MemberController {
   @ApiBody({ type: MemberData })
   async update(@Param('id') id: string, @Body() membre: Member): Promise<void> {
     try {
-      return this.memberService.update(+id, membre);
+      this.memberService.save(membre);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw new NotFoundException(error.message);

@@ -1,14 +1,14 @@
 import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Curriculum } from './Curriculum.entity';
-import { EivoNamedEntity } from './EntityBase.entity';
+import { EivoLabeledEntity } from './EivoEntity.entity';
 import { Member } from './Member.entity';
-import { Namespace } from './Namespace.entity';
+import { EivoNamespace } from './EivoNamespace.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
-export class Course extends EivoNamedEntity implements Translatable {
-  @ManyToOne(() => Namespace)
-  namespace!: Namespace;
+export class Course extends EivoLabeledEntity<Course> implements Translatable {
+  @ManyToOne(() => EivoNamespace)
+  eivoNamespace!: EivoNamespace;
   @ManyToOne(() => Curriculum)
   curriculum!: Curriculum;
   @ManyToMany(() => Member, (member) => member.course)

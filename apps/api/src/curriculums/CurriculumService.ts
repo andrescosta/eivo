@@ -4,7 +4,7 @@ import { Curriculum } from '../entities/Curriculum.entity';
 import { EntityNotFoundError } from '../entities/EntityNotFoundError';
 import {
   DEFAULT_CULTURE,
-  LanguageCode,
+  CultureCode,
   Queryable,
   copyTranslationProperties,
 } from '../entities/i18n';
@@ -16,7 +16,7 @@ export class CurriculumService {
     private readonly curriculumRepository: Repository<Curriculum>,
   ) {}
 
-  async create(curriculum: Curriculum): Promise<Curriculum> {
+  async save(curriculum: Curriculum): Promise<Curriculum> {
     return this.curriculumRepository.save(curriculum);
   }
 
@@ -32,15 +32,15 @@ export class CurriculumService {
   }
 
   async findFull(
-    namespace: number,
+    eivoNamespace: number,
     curriculum: number,
-    findculture?: LanguageCode,
+    findculture?: CultureCode,
   ): Promise<Curriculum | null> {
     const culture = findculture ?? DEFAULT_CULTURE;
     return await this.curriculumRepository
       .findOne({
         where: {
-          ...this.commonWhere(culture, namespace, curriculum),
+          ...this.commonWhere(culture, eivoNamespace, curriculum),
         },
         relations: this.commonRelations(),
       })
@@ -65,16 +65,16 @@ export class CurriculumService {
   }
 
   async findFullForSubject(
-    namespace: number,
+    eivoNamespace: number,
     curriculum: number,
     subject: number,
-    findculture?: LanguageCode,
+    findculture?: CultureCode,
   ): Promise<Curriculum | null> {
     const culture = findculture ?? DEFAULT_CULTURE;
     return await this.curriculumRepository
       .findOne({
         where: {
-          ...this.commonWhere(culture, namespace, curriculum, subject),
+          ...this.commonWhere(culture, eivoNamespace, curriculum, subject),
         },
         relations: this.commonRelations(),
       })
@@ -82,14 +82,6 @@ export class CurriculumService {
         copyTranslationProperties(currObj);
         return currObj;
       });
-  }
-
-  async update(id: number, curriculum: Curriculum): Promise<Curriculum> {
-    const res = await this.curriculumRepository.update(id, curriculum);
-    if (res.affected == 0) {
-      throw new EntityNotFoundError('Domain');
-    }
-    return curriculum;
   }
 
   async remove(id: number): Promise<void> {
@@ -101,7 +93,7 @@ export class CurriculumService {
 
   commonWhere(
     culture: string,
-    namespace: number,
+    eivoNamespace: number,
     curriculum?: number,
     subject?: number,
     unit?: number,
@@ -110,38 +102,38 @@ export class CurriculumService {
     materialTemplate?: number,
   ): FindOptionsWhere<Curriculum> {
     const t = {
-      namespace: {
-        id: namespace,
+      eivoNamespace: {
+        id: eivoNamespace,
       },
       ...this.getId(curriculum),
       translations: {
-        languageCode: Or(Equal(culture), IsNull()),
+        culture: Or(Equal(culture), IsNull()),
       },
       subjects: {
         ...this.getId(subject),
         translations: {
-          languageCode: Or(Equal(culture), IsNull()),
+          culture: Or(Equal(culture), IsNull()),
         },
         units: {
           ...this.getId(unit),
           translations: {
-            languageCode: Or(Equal(culture), IsNull()),
+            culture: Or(Equal(culture), IsNull()),
           },
           lessonTemplates: {
             ...this.getId(lessonTemplate),
             translations: {
-              languageCode: Or(Equal(culture), IsNull()),
+              culture: Or(Equal(culture), IsNull()),
             },
             exerciseTemplates: {
               ...this.getId(exerciseTemplate),
               translations: {
-                languageCode: Or(Equal(culture), IsNull()),
+                culture: Or(Equal(culture), IsNull()),
               },
             },
             materialTemplates: {
               ...this.getId(materialTemplate),
               translations: {
-                languageCode: Or(Equal(culture), IsNull()),
+                culture: Or(Equal(culture), IsNull()),
               },
             },
           },
@@ -174,84 +166,5 @@ export class CurriculumService {
       'subjects.units.lessonTemplates.materialTemplates',
       'subjects.units.lessonTemplates.materialTemplates.translations',
     ];
-  }
-
-  commonWhere1(q: Queryable<Curriculum>): FindOptionsWhere<Curriculum> {
-    const t = {
-      namespace: {
-        ...this.getId(q.namespace?.id),
-      },
-      ...this.getId(q.id),
-      translations: {
-        languageCode: Or(
-          Equal(q.translations?.languageCode ?? DEFAULT_CULTURE),
-          IsNull(),
-        ),
-      },
-      subjects: {
-        ...this.getId(q.subjects?.id),
-        translations: {
-          languageCode: Or(
-            Equal(q.subjects?.translations?.languageCode ?? DEFAULT_CULTURE),
-            IsNull(),
-          ),
-        },
-        units: {
-          ...this.getId(q.subjects?.units?.id),
-          translations: {
-            languageCode: Or(
-              Equal(
-                q.subjects?.units?.translations?.languageCode ??
-                  DEFAULT_CULTURE,
-              ),
-              IsNull(),
-            ),
-          },
-          lessonTemplates: {
-            ...this.getId(q.subjects?.units?.lessonTemplates?.id),
-            translations: {
-              languageCode: Or(
-                Equal(
-                  q.subjects?.units?.lessonTemplates?.translations
-                    ?.languageCode ?? DEFAULT_CULTURE,
-                ),
-                IsNull(),
-              ),
-            },
-            exerciseTemplates: {
-              ...this.getId(
-                q.subjects?.units?.lessonTemplates?.exerciseTemplates?.id,
-              ),
-              translations: {
-                languageCode: Or(
-                  Equal(
-                    q.subjects?.units?.lessonTemplates?.exerciseTemplates
-                      ?.translations?.languageCode ?? DEFAULT_CULTURE,
-                  ),
-                  IsNull(),
-                ),
-              },
-            },
-            materialTemplates: {
-              ...this.getId(
-                q.subjects?.units?.lessonTemplates?.exerciseTemplates
-                  ?.lessonTemplate?.materialTemplates?.id,
-              ),
-              translations: {
-                languageCode: Or(
-                  Equal(
-                    q.subjects?.units?.lessonTemplates?.exerciseTemplates
-                      ?.lessonTemplate?.materialTemplates?.translations
-                      ?.languageCode ?? DEFAULT_CULTURE,
-                  ),
-                  IsNull(),
-                ),
-              },
-            },
-          },
-        },
-      },
-    };
-    return t;
   }
 }

@@ -16,7 +16,7 @@ export class ActivityController {
   @ApiResponse({ type: ActivityData })
   @ApiBody({ type: ActivityData })
   async create(@Body() domain: Activity): Promise<Activity> {
-    return await this.activityService.create(domain);
+    return await this.activityService.save(domain);
   }
 
   @Get()
@@ -43,7 +43,7 @@ export class ActivityController {
     @Body() utilisateur: Activity,
   ): Promise<Activity> {
     try {
-      return this.activityService.update(+id, utilisateur);
+      return this.activityService.save(utilisateur);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw new NotFoundException(error.message);

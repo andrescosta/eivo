@@ -1,10 +1,10 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Activity } from './Activity.entity';
-import { EivoNamedEntity  } from './EntityBase.entity';
+import { EivoLabeledEntity  } from './EivoEntity.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
-export class Game extends EivoNamedEntity implements Translatable {
+export class Game extends EivoLabeledEntity<Game> implements Translatable {
   @Column()
   date!: Date;
 

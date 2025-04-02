@@ -17,7 +17,7 @@
 // } from '@eivo/contracts';
 // import { MapInterceptor } from '@automapper/nestjs';
 // import { ApiBody, ApiResponse } from '@nestjs/swagger';
-// import { EntityNotFoundError } from '../entities/EntityNotFoundError.entity';
+// import { EntityNotFoundError } from '../../entities/EntityNotFoundError.entity';
 // import { generate } from '../llm/Llm';
 // import { render } from 'mustache';
 

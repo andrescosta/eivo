@@ -17,7 +17,6 @@ import { model } from './LlmGenerator';
 export type ContextType = Spec | Spec[] | AnyData;
 
 const SYSTEM_PROMPT = 'system_prompt';
-type ResultType = Spec | Spec[];
 type Executable = Modeler | Prompt;
 
 export class DefaultExecutor {
@@ -29,7 +28,7 @@ export class DefaultExecutor {
     modeler: Executable,
     systemPrompt?: string,
     proContext?: Map<string, ContextType>,
-  ): Promise<ResultType> {
+  ): Promise<Spec | Spec[]> {
     const context = new Map(proContext);
     if (systemPrompt) {
       const prompt = this.specs.get(systemPrompt) as Prompt;
@@ -43,7 +42,7 @@ export class DefaultExecutor {
   protected async doExecute(
     modeler: Executable,
     context: Map<string, ContextType>,
-  ): Promise<ResultType> {
+  ): Promise<Spec | Spec[]> {
     const resultPrompt = await this.executePrompt(modeler.def.prompt, context);
     if (modeler instanceof Modeler) {
       if (!Array.isArray(resultPrompt)) {
@@ -81,7 +80,7 @@ export class DefaultExecutor {
     prompt: PromptDef,
     context: Map<string, ContextType>,
     system?: PromptDef,
-  ): Promise<ResultType> {
+  ): Promise<Spec | Spec[]> {
     if (!prompt.schema) return [];
     const schema =
       prompt.schema instanceof Schema

@@ -1,13 +1,13 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { EivoNamedEntity } from './EntityBase.entity';
-import { LessonTemplate } from './LessonTemplate.entity';
+import { EivoLabeledEntity } from './EivoEntity.entity';
+import { Lesson } from './Lesson.entity';
 
-import { Subject } from './Subject.entity';
+import { Syllabus } from './Subject.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 
 @Entity()
-export class Unit extends EivoNamedEntity implements Translatable {
+export class Unit extends EivoLabeledEntity<Unit> implements Translatable {
   /**
    * @autoMapIgnore
    */
@@ -20,11 +20,11 @@ export class Unit extends EivoNamedEntity implements Translatable {
   @Column({ nullable: true })
   bigImage?: string;
 
-  @ManyToOne(() => Subject)
-  subject!: Subject;
+  @ManyToOne(() => Syllabus)
+  syllabus!: Syllabus;
 
-  @OneToMany(() => LessonTemplate, (lessonTemplate) => lessonTemplate.unit, { cascade: true })
-  lessonTemplates!: LessonTemplate[];
+  @OneToMany(() => Lesson, (lessonTemplate) => lessonTemplate.unit, { cascade: true })
+  lessons!: Lesson[];
 
   /**
    * @autoMapIgnore

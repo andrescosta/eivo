@@ -3,7 +3,7 @@
 // import { ArchiveController } from './ArchiveController';
 // import { ArchiveProfile } from './ArchiveProfile';
 // import { archiveProvider } from './ArchiveProvider';
-// import { DatabaseModule } from '../database/database.module';
+// import { DatabaseModule } from '../../database/database.module';
 
 // @Module({
 //   imports: [DatabaseModule],

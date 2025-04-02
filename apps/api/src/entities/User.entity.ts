@@ -1,14 +1,13 @@
 import { Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
-import { EivoNamedEntity } from './EntityBase.entity';
+import { EivoEntity, EivoLabeledEntity } from './EivoEntity.entity';
 import { Member } from './Member.entity';
-import { Namespace } from './Namespace.entity';
+import { EivoNamespace } from './EivoNamespace.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from './i18n';
 
 @Entity()
-export class User extends EivoNamedEntity implements Translatable{
-  @ManyToMany(() => Namespace, (namespace) => namespace.users)
-  @JoinTable()
-  public namespaces!: Namespace[];
+export class User extends EivoEntity { //extends EivoLabeledEntity<User> implements Translatable {
+  @ManyToMany(() => EivoNamespace, (eivoNamespace) => eivoNamespace.users)
+  public eivoNamespaces!: EivoNamespace[];
 
   @OneToMany(() => Member, (member) => member.user)
   public members?: Member[];

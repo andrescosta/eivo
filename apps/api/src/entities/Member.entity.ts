@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Activity } from './Activity.entity';
 import { Course } from './Course.entity';
-import { EivoEntity } from './EntityBase.entity';
+import { EivoEntity } from './EivoEntity.entity';
 import { User } from './User.entity';
 
 export enum Role {

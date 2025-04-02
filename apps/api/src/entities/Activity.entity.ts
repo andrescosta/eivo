@@ -1,16 +1,16 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { EivoEntity } from './EntityBase.entity';
+import { EivoEntity } from './EivoEntity.entity';
+import { ExerciseR } from './ExerciseR.entity';
 import { Exercise } from './Exercise.entity';
-import { ExerciseTemplate } from './ExerciseTemplate.entity';
 import { Member } from './Member.entity';
 
 @Entity()
 export class Activity extends EivoEntity {
-  @ManyToOne(() => ExerciseTemplate)
-  exerciseTemplate!: ExerciseTemplate;
+  // @ManyToOne(() => Exercise)
+  // exercise!: Exercise;
 
-  @ManyToOne(() => Exercise)
-  exercise!: Exercise;
+  // @ManyToOne(() => ExerciseR)
+  // exerciseR!: ExerciseR;
 
   @ManyToOne(() => Member, (member) => member.activities)
   member?: Member;

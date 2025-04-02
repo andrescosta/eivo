@@ -10,7 +10,7 @@ export class ActivityService {
     private readonly activityRepository: Repository<Activity>,
   ) {}
 
-  async create(activity: Activity): Promise<Activity> {
+  async save(activity: Activity): Promise<Activity> {
     return this.activityRepository.save(activity);
   }
 
@@ -20,14 +20,6 @@ export class ActivityService {
 
   async findOne(id: number): Promise<Activity | null> {
     return this.activityRepository.findOne({ where: { id } });
-  }
-
-  async update(id: number, activity: Activity): Promise<Activity> {
-    const res = await this.activityRepository.update(id, activity);
-    if (res.affected == 0) {
-      throw new EntityNotFoundError('Domain');
-    }
-    return activity;
   }
 
   async remove(id: number): Promise<void> {

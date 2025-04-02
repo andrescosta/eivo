@@ -10,7 +10,7 @@ export class GameService {
     private readonly gameRepository: Repository<Game>,
   ) {}
 
-  async create(game: Game): Promise<Game> {
+  async save(game: Game): Promise<Game> {
     return this.gameRepository.save(game);
   }
 
@@ -20,14 +20,6 @@ export class GameService {
 
   async findOne(id: number): Promise<Game | null> {
     return this.gameRepository.findOne({ where: { id } });
-  }
-
-  async update(id: number, game: Game): Promise<Game> {
-    const res = await this.gameRepository.update(id, game);
-    if (res.affected == 0) {
-      throw new EntityNotFoundError('Game');
-    }
-    return game;
   }
 
   async remove(id: number): Promise<void> {

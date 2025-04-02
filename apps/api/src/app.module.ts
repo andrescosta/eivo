@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { AppService } from './app.service';
-import { NamespaceModule } from './namespaces/NamespaceModule';
+import { EivoNamespaceModule } from './namespaces/EivoNamespaceModule';
 import { CurriculumModule } from './curriculums/CurriculumModule';
 
 @Module({
@@ -12,7 +12,7 @@ import { CurriculumModule } from './curriculums/CurriculumModule';
     // MemberModule,
     // ActivityModule,
     // JeuxModule,
-    NamespaceModule,
+    EivoNamespaceModule,
     CurriculumModule,
     AutomapperModule.forRoot({
       strategyInitializer: classes(),

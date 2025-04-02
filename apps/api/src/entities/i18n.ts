@@ -1,5 +1,5 @@
 import { Column } from 'typeorm';
-import { EivoEntity, ID } from './EntityBase.entity';
+import { EivoEntity, ID } from './EivoEntity.entity';
 
 export const DEFAULT_CULTURE = 'us';
 
@@ -7,7 +7,7 @@ export const DEFAULT_CULTURE = 'us';
 
 export class EivoEntityTranslation extends EivoEntity {
   @Column()
-  languageCode!: LanguageCode;
+  culture!: CultureCode;
 }
 
 export class DescriptionTranslation {
@@ -19,13 +19,14 @@ export class DescriptionTranslation {
 }
 export class EivoNamedEntityTranslation extends EivoEntityTranslation {
   @Column({ nullable: true })
-  name?: string;
-
-  @Column(() => DescriptionTranslation)
-  description?: DescriptionTranslation;
+  title!: LocaleString;
+  @Column({ nullable: true })
+  overview!: LocaleString;
+  @Column({ nullable: true })
+  details!: LocaleString;
 }
 
-export type LanguageCode = string;
+export type CultureCode = string;
 
 export type LocaleString = string & { __localeString: never };
 
@@ -35,13 +36,19 @@ export interface Translatable {
 
 export type Translation<T> = {
   id: ID;
-  languageCode: LanguageCode;
+  culture: CultureCode;
   base: T;
 } & { [K in TranslatableKeys<T>]: string };
 
 export type TranslatableKeys<T, U = Omit<T, 'translations'>> = {
-  [K in keyof U]: U[K] extends LocaleString ? K : never;
+  [K in keyof U]: U[K] extends LocaleString | undefined ? K : never;
 }[keyof U];
+
+// export type TranslatableKeys<T> = Extract<
+//   { [K in keyof T]: T[K] extends LocaleString ? K : never }[keyof T],
+//   string
+// >;
+
 
 // mmmmm
 export function copyTranslationProperties(obj: any) {
@@ -55,7 +62,7 @@ export function copyTranslationProperties(obj: any) {
             key !== 'id' &&
             key !== 'createdAt' &&
             key !== 'updatedAt' &&
-            key !== 'languageCode'
+            key !== 'culture'
           ) {
             obj[key] = value ?? '';
           }
@@ -109,7 +116,7 @@ export type Queryable<T, U = Omit<T, 'base'>> = {
       ? Queryable<U[K][number]>
       : never;
 } & (U extends EivoNamedEntityTranslation
-  ? { languageCode: string }
+  ? { culture: string }
   : U extends EivoEntity
     ? { id?: number }
     : never);

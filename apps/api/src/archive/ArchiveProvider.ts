@@ -1,5 +1,5 @@
 // import { DataSource } from 'typeorm';
-// import { ArchiveEntry } from '../entities/ArchiveEntry.entity';
+// import { ArchiveEntry } from '../../entities/ArchiveEntry.entity';
 
 // export const archiveProvider = [
 //     {
