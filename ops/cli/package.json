@@ -15,7 +15,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "db:create": "nest start -- db:exec-sql /home/andres/projs/eivo/_infra/bd/creds.sql -u \"postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify\"",
     "db:create:debug": "nest start --debug -- exec-sql /home/andres/projs/eivo/_infra/bd/creds.sql postgres://postgres:postgres@db.jobico.local:5432/postgres?ssl=true&sslmode=no-verify",
-    "app:schema": "npm run typeorm schema:sync -- -d src/migs/ds-local.ts",
+    "app:schema": "npm run typeorm schema:sync -- -d src/database/ds-local.ts",
     "app:llm": "nest start -- app:llm generate ../../_infra/specs/french.spec.yaml ./res.yaml",
     "typeorm": "typeorm-ts-node-commonjs"
   },

@@ -4,7 +4,7 @@ import {
   EivoEntity,
   EivoNamespace,
   EivoNamespaceService,
-  transform,
+  convert,
 } from '@eivo/api';
 import { LlmGenerator } from '@eivo/llm';
 import fs from 'fs';
@@ -28,7 +28,7 @@ export class LlmGenerateCommand extends CommandRunner {
     const res = await (
       await LlmGenerator.build([input[0]])
     ).generate('curriculumO', options['system']);
-    const e = Array.isArray(res) ? transform(res) : transform(res);
+    const e = Array.isArray(res) ? convert(res) : convert(res);
     this.storeIfSupported(e);
     if (input.length > 2) {
       fs.writeFileSync(input[1], yaml.dump(e));

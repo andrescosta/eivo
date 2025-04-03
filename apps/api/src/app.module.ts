@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { AppService } from './app.service';
-import { EivoNamespaceModule } from './modules/common/eivonamespaces/EivoNamespaceModule';
-import { CurriculumModule } from './modules/catalog/curriculums/CurriculumModule';
+import { EivoNamespaceModule } from './modules/common/eivonamespace/eivo-namespace.module';
+import { CurriculumModule } from './modules/catalog/curriculum/curriculum.module';
 
 @Module({
   imports: [

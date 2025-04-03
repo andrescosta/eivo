@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { SnakeCaseNamingStrategy } from './SnakeCaseNamingStrategy';
+import { SnakeCaseNamingStrategy } from './snake-case-naming.strategy';
 
 export const databaseProviders = [
   {
@@ -30,7 +30,7 @@ export const databaseProviders = [
           },
         },
         //entities: ['/home/andres/projs/eivo/apps/api/src/entities/*.entity.ts'],
-        entities: [__dirname + '/../../**/entities/*{.ts,.js}'],
+        entities: [__dirname + '/../../**/entity/*{.ts,.js}'],
       });
 
       return dataSource.initialize();

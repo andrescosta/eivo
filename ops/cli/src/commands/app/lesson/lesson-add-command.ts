@@ -20,14 +20,14 @@ export class AppLessonAddCommand extends CommandRunner {
   }
   async run(input: string[], options: Record<string, string>) {
     const yamlString = fs.readFileSync(input[0], 'utf8');
-    const namespace = yaml.load(yamlString) as EivoNamespace;
+    const eivonamespace = yaml.load(yamlString) as EivoNamespace;
     if (options['debug']) {
       console.log('=============================================');
       console.log('Application loaded from file:');
-      console.log(JSON.stringify(namespace, null, 2));
+      console.log(JSON.stringify(eivonamespace, null, 2));
     }
-    copyNamedObjectPropertiesToTranslations(namespace);
-    const namespaceS = await this.namespaceService.save(namespace);
+    copyNamedObjectPropertiesToTranslations(eivonamespace);
+    const namespaceS = await this.namespaceService.save(eivonamespace);
     if (options['debug']) {
       console.log('=============================================');
       console.log(`Loading application ${namespaceS.id} from DB.`);

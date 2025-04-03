@@ -1,3 +1,3 @@
-export * from './types/Specs';
-export * from './types/SpecFactory';
-export * from './generator/LlmGenerator';
+export * from './spec/specs';
+export * from './spec/spec-factory';
+export * from './generator/llm-generator';
