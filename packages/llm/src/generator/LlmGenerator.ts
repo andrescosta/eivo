@@ -1,7 +1,7 @@
 import fg from 'fast-glob';
 import fs from 'fs';
 import yaml from 'js-yaml';
-import { Modeler, Prompt, PromptDef, Spec } from '../types/Specs';
+import { Modeler, Prompt, Spec } from '../types/Specs';
 import { SpecFactory } from '../types/SpecFactory';
 import { ContextType, DefaultExecutor } from './DefaultExecutor';
 
@@ -30,7 +30,7 @@ export class LlmGenerator {
     name: string,
     systemPrompt?: string,
     context?: Map<string, ContextType>,
-  ): Promise<any> {
+  ): Promise<Spec | Spec[]> {
     if (!name) throw new Error('element required.');
     const spec = this.specs.get(name);
     if (!spec && name) {

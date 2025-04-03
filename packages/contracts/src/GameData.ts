@@ -1,7 +1,7 @@
 import { ActivityData } from './ActivityData';
-import { NamedData } from './Data';
+import { LabeledData } from './Data';
 
-export class GameData extends NamedData {
+export class GameData extends LabeledData {
   date!: Date;
   activity!: ActivityData;
 }

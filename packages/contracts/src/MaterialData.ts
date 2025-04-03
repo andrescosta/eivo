@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { NamedData } from './Data';
+import { LabeledData } from './Data';
 import { LessonData } from './LessonData';
 import { LearnData } from './LearnData';
 
-export class MaterialData extends NamedData {
+export class MaterialData extends LabeledData {
   @ApiProperty()
   kind!: string;
   @ApiProperty()

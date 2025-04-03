@@ -1,35 +1,26 @@
-metadata:
-  entity: curriculum
-  name: Course Curriculum
-  namespace: education
-  learn:
-    objective: >-
-      To provide students with a clear understanding of the course content and
-      learning objectives.
-kind: aggregate
-labels:
-  - culture: en-US
-    title: Curriculum Overview
-    overview: >-
-      A structured plan for teaching and learning, specifying the course
-      content, learning objectives, and assessment methods.
-    details: >-
-      This curriculum provides a comprehensive overview of the course content,
-      learning objectives, and assessment methods.
-def:
-  - metadata:
-      entity: syllabus
-      name: A1 French Syllabus
-      learn:
-        objective: A1
-    kind: aggregate
-    labels:
-      - culture: French
-        title: 'A1 French: Bonjour le Monde!'
-        overview: A1 Level French Syllabus
+&ref_1
+syllabuses:
+  - &ref_0
+    units: []
+    translations:
+      - id: 0
+        culture: French
+        base: *ref_0
+        title: A1 French
+        overview: 'A1 Level French Syllabus: Introduction to French'
         details: >-
           This syllabus covers the basics of French grammar and vocabulary,
           focusing on everyday communication. Students will learn to introduce
           themselves, ask basic questions, and understand simple responses. 
           Emphasis will be placed on pronunciation and basic sentence structure.
-    def: []
+translations:
+  - id: 0
+    culture: en-US
+    base: *ref_1
+    title: Curriculum Overview
+    overview: >-
+      A structured plan for teaching and learning, specifying the content,
+      methods, and assessment of a course.
+    details: >-
+      This curriculum provides a comprehensive overview of the course, outlining
+      its objectives, topics, and assessment methods.

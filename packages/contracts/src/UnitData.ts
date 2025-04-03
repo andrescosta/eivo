@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { NamedData } from './Data';
+import { LabeledData } from './Data';
 import { LessonData } from './LessonData';
-import { SubjectData } from './SubjectData';
+import { SyllabusData } from './SubjectData';
 
-export class UnitData extends NamedData {
+export class UnitData extends LabeledData {
   @ApiProperty({})
   smallImage?: string;
 
@@ -11,7 +11,7 @@ export class UnitData extends NamedData {
   bigImage?: string;
 
   @ApiProperty({})
-  subject!: SubjectData;
+  subject!: SyllabusData;
 
   @ApiProperty({})
   lessonTemplates!: LessonData[];

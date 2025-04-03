@@ -39,9 +39,9 @@ export class Label {
   public details?: string;
 }
 
-export class Namespace extends Spec {
+export class NamespaceSpec extends Spec {
   protected kind = 'namespace';
-  constructor(data?: Partial<Namespace>) {
+  constructor(data?: Partial<NamespaceSpec>) {
     super(data);
     Object.assign(this, data);
   }

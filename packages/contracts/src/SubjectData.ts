@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CurriculumData } from './CurriculumData';
-import { NamedData } from './Data';
+import { LabeledData } from './Data';
 import { UnitData } from './UnitData';
 
-export class SubjectData extends NamedData {
+export class SyllabusData extends LabeledData {
 
   @ApiProperty({})
   curriculum!: CurriculumData;
