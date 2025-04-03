@@ -2,7 +2,7 @@ export type ID = string;
 export class Data {
   id!: ID;
 }
-export class NamedData extends Data {
+export class LabeledData extends Data {
   name?: string;
   description?: LvDescription;
 }

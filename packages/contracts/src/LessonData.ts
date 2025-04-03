@@ -1,9 +1,9 @@
 import { ExerciseData } from './ExerciseData';
 import { MaterialData } from './MaterialData';
-import { NamedData } from './Data';
+import { LabeledData } from './Data';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class LessonData extends NamedData {
+export class LessonData extends LabeledData {
   @ApiProperty({})
   exercises!: ExerciseData[];
   @ApiProperty({})
