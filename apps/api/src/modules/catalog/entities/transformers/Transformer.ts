@@ -1,12 +1,13 @@
 import { Aggregate, Label, Metadata, Spec } from '@eivo/llm';
+import { EivoEntity } from '../../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../../common/entities/EivoLabeledEntity.entity';
+import { CultureCode, Translation } from '../../../common/entities/i18n';
 import { Curriculum } from '../../entities/Curriculum.entity';
 import { Exercise } from '../../entities/Exercise.entity';
 import { Lesson } from '../../entities/Lesson.entity';
 import { Material } from '../../entities/Material.entity';
-import { Syllabus } from '../Syllabus.entity';
 import { Unit } from '../../entities/Unit.entity';
-import { EivoEntity, EivoLabeledEntity } from '../../../common/entities/EivoEntity.entity';
-import { Translation, CultureCode } from '../../../common/entities/i18n';
+import { Syllabus } from '../Syllabus.entity';
 
 class MetadataWithEntity extends Metadata {
   entity!: string;

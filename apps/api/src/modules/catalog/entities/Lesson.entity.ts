@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Exercise } from './Exercise.entity';
 import { EivoNamedEntityTranslation, Translation } from '../../common/entities/i18n';
-import { EivoLabeledEntity } from '../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../common/entities/EivoLabeledEntity.entity';
 import { Material } from './Material.entity';
 import { Unit } from './Unit.entity';
 

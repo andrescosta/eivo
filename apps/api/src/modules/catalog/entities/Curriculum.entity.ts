@@ -4,7 +4,7 @@ import {
   OneToMany
 } from 'typeorm';
 import { Syllabus } from './Syllabus.entity';
-import { EivoLabeledEntity } from '../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../common/entities/EivoLabeledEntity.entity';
 import { EivoNamedEntityTranslation, Translation } from '../../common/entities/i18n';
 import { EivoNamespace } from '../../common/entities/EivoNamespace.entity';
 

@@ -2,7 +2,7 @@ import { Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Curriculum } from './Curriculum.entity';
 import { Unit } from './Unit.entity';
 import { EivoNamedEntityTranslation, Translation } from '../../common/entities/i18n';
-import { EivoLabeledEntity } from '../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../common/entities/EivoLabeledEntity.entity';
 
 @Entity()
 export class Syllabus extends EivoLabeledEntity<Syllabus> {

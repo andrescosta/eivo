@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Lesson } from './Lesson.entity';
 import { EivoNamedEntityTranslation, Translation } from '../../common/entities/i18n';
 import { AnyData } from '@eivo/llm';
-import { EivoLabeledEntity } from '../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../common/entities/EivoLabeledEntity.entity';
 
 @Entity()
 export class Material extends EivoLabeledEntity<Material> {

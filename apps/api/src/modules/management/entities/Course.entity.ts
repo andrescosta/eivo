@@ -1,6 +1,6 @@
 import { Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Member } from './Member.entity';
-import { EivoLabeledEntity } from '../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../common/entities/EivoLabeledEntity.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from '../../common/entities/i18n';
 import { Curriculum } from '../../catalog/entities/Curriculum.entity';
 import { EivoNamespace } from '../../common/entities/EivoNamespace.entity';

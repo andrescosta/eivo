@@ -3,7 +3,7 @@ import { Lesson } from './Lesson.entity';
 
 import { Syllabus } from './Syllabus.entity';
 import { EivoNamedEntityTranslation, Translatable, Translation } from '../../common/entities/i18n';
-import { EivoLabeledEntity } from '../../common/entities/EivoEntity.entity';
+import { EivoLabeledEntity } from '../../common/entities/EivoLabeledEntity.entity';
 
 
 @Entity()
